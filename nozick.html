@@ -1,0 +1,767 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>노직 원전 학습지</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FCFCFB; --surface:#FFFFFF; --ink:#1B2229; --ink-soft:#39434C;
+  --muted:#5F6C74; --rule:#E1E5E7; --rule-strong:#C6CDD1;
+  --accent:#125E63; --accent-soft:#E9F1F1; --accent-line:#9FC0C2;
+  --answer:#B32318; --quote:#F4F6F6; --shadow:0 1px 2px rgba(27,34,41,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12171B; --surface:#171D22; --ink:#E7ECEE; --ink-soft:#C4CDD2;
+    --muted:#93A0A7; --rule:#2A333A; --rule-strong:#3B464E;
+    --accent:#63BFC2; --accent-soft:#18292B; --accent-line:#2E5254;
+    --answer:#FF8F82; --quote:#1B2226; --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12171B; --surface:#171D22; --ink:#E7ECEE; --ink-soft:#C4CDD2;
+  --muted:#93A0A7; --rule:#2A333A; --rule-strong:#3B464E;
+  --accent:#63BFC2; --accent-soft:#18292B; --accent-line:#2E5254;
+  --answer:#FF8F82; --quote:#1B2226; --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif;
+  font-size:16px; line-height:1.75; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace}
+
+/* ── 도구 막대 ── */
+.bar{
+  position:sticky; top:0; z-index:20; background:var(--surface);
+  border-bottom:1px solid var(--rule);
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:10px max(20px,calc(50vw - 480px));
+}
+.bar .who{font-size:12.5px; color:var(--muted); letter-spacing:.04em; margin-right:auto}
+.btn{
+  font:500 13.5px/1 "IBM Plex Sans KR",sans-serif; color:var(--ink);
+  background:var(--surface); border:1px solid var(--rule-strong);
+  border-radius:3px; padding:8px 13px; cursor:pointer;
+}
+.btn:hover{border-color:var(--accent); color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.btn[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .btn[aria-pressed="true"],
+@media (prefers-color-scheme:dark){}
+.btn[aria-pressed="true"]{color:#fff}
+
+.only-framed{display:none; text-decoration:none}
+body.framed .only-framed{display:inline-block}
+.tip{
+  position:fixed; inset:auto 16px 16px 16px; z-index:40; background:var(--surface);
+  border:1px solid var(--rule-strong); border-radius:6px; padding:16px 18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.18); display:none; max-width:640px; margin:0 auto;
+}
+.tip.on{display:block}
+.tip h4{margin:0 0 6px; font-size:15px; font-weight:600}
+.tip p{margin:0 0 10px; font-size:13.5px; color:var(--muted); line-height:1.7}
+.tip .url{
+  font-family:"IBM Plex Mono",monospace; font-size:12.5px; word-break:break-all;
+  background:var(--accent-soft); color:var(--accent); border-radius:3px; padding:9px 11px; margin-bottom:11px;
+}
+.tip .acts{display:flex; gap:8px; flex-wrap:wrap}
+
+/* ── 페이지 ── */
+.sheet{max-width:960px; margin:0 auto; padding:34px 20px 90px}
+.runhead{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  font-size:12px; letter-spacing:.05em; color:var(--muted);
+  border-bottom:1px solid var(--rule); padding-bottom:9px; margin-bottom:26px;
+}
+
+/* 표제 */
+.titlebox{
+  display:grid; grid-template-columns:112px 1fr 210px; align-items:stretch;
+  border:1px solid var(--rule-strong); border-radius:3px; overflow:hidden; margin-bottom:34px;
+}
+.titlebox .lab{
+  background:var(--accent-soft); color:var(--accent); font-weight:600; font-size:13.5px;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  border-right:1px solid var(--rule-strong);
+}
+.titlebox .mid{padding:16px 18px; display:flex; flex-direction:column; justify-content:center; gap:3px}
+.titlebox h1{font-size:21px; font-weight:600; margin:0; letter-spacing:-.01em}
+.titlebox .sub{font-size:12.5px; color:var(--muted)}
+.titlebox .id{
+  border-left:1px solid var(--rule-strong); display:flex; flex-direction:column;
+  font-size:13px; color:var(--ink-soft);
+}
+.titlebox .id div{flex:1; display:flex; align-items:center; padding:0 14px}
+.titlebox .id div+div{border-top:1px solid var(--rule)}
+
+/* 섹션 */
+h2.sec{
+  font-size:19px; font-weight:600; margin:44px 0 14px; letter-spacing:-.01em;
+  border-bottom:2px solid var(--ink); padding-bottom:7px;
+}
+h2.sec .n{font-family:"IBM Plex Mono",monospace; color:var(--accent); margin-right:9px; font-weight:500}
+h3.sub{font-size:15.5px; font-weight:600; margin:30px 0 11px; color:var(--ink)}
+h3.sub .mk{color:var(--accent); margin-right:6px}
+p.note{font-size:14px; color:var(--ink-soft); margin:9px 0}
+p.note .mk{color:var(--accent); font-weight:600; margin-right:5px}
+
+/* 라벨/내용 표 */
+.grid{border:1px solid var(--rule-strong); border-radius:3px; overflow:hidden; background:var(--surface)}
+.row{display:grid; grid-template-columns:130px 1fr; border-top:1px solid var(--rule)}
+.row:first-child{border-top:0}
+.row>.k{
+  background:var(--accent-soft); color:var(--accent); font-weight:600; font-size:13.5px;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  padding:14px 8px; border-right:1px solid var(--rule); line-height:1.45;
+}
+.row>.v{padding:13px 17px; font-size:14.5px; line-height:2.15}
+.row>.v>p{margin:0}
+.row>.v>p+p{margin-top:5px}
+.row.wide{grid-template-columns:96px 1fr}
+.row .k .star{color:var(--answer)}
+ul.tight{margin:0; padding-left:18px}
+ul.tight li{margin:3px 0}
+
+/* 빈칸 */
+.bl{
+  display:inline-block; min-width:3.4em; text-align:center;
+  border-bottom:1px solid var(--rule-strong); padding:0 .4em; margin:0 .12em;
+  font-weight:500;
+}
+.bl .h{
+  display:inline-block; position:relative; top:-.78em; font-style:normal;
+  font-size:.66em; letter-spacing:.1em; color:var(--muted); line-height:0; white-space:nowrap;
+}
+.bl .a{display:none; color:var(--answer); font-weight:600}
+body.ans .bl .h{display:none}
+body.ans .bl .a{display:inline}
+body.ans .bl{border-bottom-color:var(--answer)}
+
+.bl{cursor:pointer; -webkit-user-select:none; user-select:none; border-radius:2px 2px 0 0;
+     transition:background .12s}
+.bl:hover{background:var(--accent-soft)}
+.bl:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.bl.open .h{display:none}
+.bl.open .a{display:inline}
+.bl.open{border-bottom-color:var(--answer); background:transparent}
+
+/* 선택형 */
+.ch{white-space:nowrap; cursor:pointer; -webkit-user-select:none; user-select:none;
+    border-radius:3px; padding:0 .1em; transition:background .12s}
+.ch:hover{background:var(--accent-soft)}
+.ch:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.ch.open b.ok{color:var(--answer); font-weight:700; text-decoration:underline; text-underline-offset:3px}
+.ch b{font-weight:400}
+body.ans .ch b.ok{color:var(--answer); font-weight:700; text-decoration:underline; text-underline-offset:3px}
+
+/* 원문 */
+.src{
+  border:1px dashed var(--rule-strong); border-radius:3px; background:var(--quote);
+  padding:15px 18px 16px; margin:16px 0;
+}
+.src .hd{
+  font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace; font-size:12.5px;
+  color:var(--accent); font-weight:500; margin-bottom:7px; letter-spacing:.01em;
+}
+.src .hd .pp{color:var(--muted); font-weight:400}
+.src p{
+  font-family:"Noto Serif KR",Georgia,serif; font-size:14.5px; line-height:1.95;
+  margin:0; color:var(--ink-soft);
+}
+.src p+p{margin-top:6px}
+.src em{font-style:normal; font-weight:600; color:var(--ink)}
+
+/* 발문 */
+.q{border:1px solid var(--rule-strong); border-radius:3px; padding:15px 18px; margin:18px 0; background:var(--surface)}
+.q .qt{font-size:14.5px; font-weight:600; line-height:1.8}
+.q .qt .no{font-family:"IBM Plex Mono",monospace; color:var(--accent); margin-right:6px}
+.q .lines{margin-top:12px}
+.q .lines i{display:block; height:30px; border-bottom:1px solid var(--rule)}
+.q .lines i:first-child::before{content:"A."; font-style:normal; color:var(--muted); font-size:13.5px}
+.q .model{display:none; margin-top:12px; font-size:13.5px; line-height:1.85; color:var(--answer)}
+.q .model .cap{
+  display:block; font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace; font-size:11.5px;
+  letter-spacing:.08em; color:var(--muted); margin-bottom:4px;
+}
+body.ans .q .lines{display:none}
+body.ans .q .model{display:block}
+.q{cursor:pointer}
+.q:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.q .peek{font-size:12px; color:var(--muted); margin-top:9px}
+body.ans .q .peek,.q.open .peek{display:none}
+.q.open .lines{display:none}
+.q.open .model{display:block}
+
+/* 활동 */
+.act{border:1px solid var(--rule-strong); border-radius:3px; overflow:hidden; background:var(--surface)}
+.act .it{display:grid; grid-template-columns:1fr 74px; border-top:1px solid var(--rule); font-size:14.5px}
+.act .it:first-child{border-top:0}
+.act .it>span{padding:11px 16px}
+.act .it>.slot{
+  border-left:1px solid var(--rule); text-align:center; color:var(--muted);
+  font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace;
+}
+.act .it>.slot b{display:none; color:var(--answer); font-size:16px}
+body.ans .act .it>.slot span,.act .it.open>.slot span{display:none}
+body.ans .act .it>.slot b,.act .it.open>.slot b{display:inline}
+.act .it{cursor:pointer}
+.act .it:hover{background:var(--accent-soft)}
+
+/* 비교표 */
+.cmp{width:100%; border-collapse:collapse; font-size:13.8px; background:var(--surface);
+     border:1px solid var(--rule-strong); border-radius:3px; overflow:hidden}
+.cmp th,.cmp td{border:1px solid var(--rule); padding:10px 13px; vertical-align:middle; line-height:1.95}
+.cmp thead th{background:var(--ink); color:var(--paper); font-weight:600; text-align:center; font-size:13.5px}
+.cmp tbody th{background:var(--accent-soft); color:var(--accent); font-weight:600; text-align:center; width:118px}
+.cmp td.full{text-align:left}
+.wrap{overflow-x:auto}
+
+/* T/F */
+.tf{width:100%; border-collapse:collapse; font-size:14px; background:var(--surface);
+    border:1px solid var(--rule-strong)}
+.tf th,.tf td{border:1px solid var(--rule); padding:9px 12px}
+.tf thead th{background:var(--ink); color:var(--paper); font-weight:600}
+.tf td.n{width:44px; text-align:center; color:var(--muted); font-family:"IBM Plex Mono",monospace}
+.tf td.v{width:96px; text-align:center; font-family:"IBM Plex Mono",monospace; letter-spacing:.06em}
+.tf td.v b{font-weight:400}
+body.ans .tf td.v b.ok,.tf tr.open td.v b.ok{color:var(--answer); font-weight:700}
+body.ans .tf td.v b:not(.ok),.tf tr.open td.v b:not(.ok){color:var(--rule-strong)}
+.tf tbody tr{cursor:pointer}
+.tf tbody tr:hover{background:var(--accent-soft)}
+
+.foot{margin-top:52px; padding-top:14px; border-top:1px solid var(--rule);
+      font-size:12px; color:var(--muted); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap}
+
+@media (max-width:640px){
+  .titlebox{grid-template-columns:1fr}
+  .titlebox .lab{border-right:0; border-bottom:1px solid var(--rule-strong); padding:7px}
+  .titlebox .id{border-left:0; border-top:1px solid var(--rule-strong); flex-direction:row}
+  .titlebox .id div+div{border-top:0; border-left:1px solid var(--rule)}
+  .row,.row.wide{grid-template-columns:1fr}
+  .row>.k{justify-content:flex-start; border-right:0; border-bottom:1px solid var(--rule); padding:9px 16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+@media print{
+  :root{--paper:#fff; --surface:#fff; --ink:#000; --ink-soft:#1a1a1a; --muted:#555;
+        --rule:#bbb; --rule-strong:#888; --accent:#0d4a4e; --accent-soft:#eef4f4;
+        --quote:#f7f7f7; --answer:#c00000}
+  @page{size:A4; margin:14mm 13mm}
+  body{font-size:10.5pt; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  .bar,.tip,.peek,.only-framed{display:none!important}
+  .bl.open .h,.ch.open{ }
+  .bl.open .a,.act .it.open>.slot b{color:#c00000}
+  .sheet{padding:0; max-width:none}
+  .grid,.src,.q,.act,.cmp,.tf{break-inside:avoid}
+  h2.sec{break-after:avoid} h3.sub{break-after:avoid}
+  .row>.v{line-height:2.05}
+}
+</style>
+
+<div class="bar">
+  <span class="who">2026-2 인문학과 윤리 · 원전 기반 학습 자료 ② <b style="color:var(--accent);font-weight:600">— 빈칸을 누르면 정답이 보입니다</b></span>
+  <button class="btn" id="ansBtn" aria-pressed="false">정답 모두 보기</button>
+  <button class="btn" id="printBtn">인쇄 / PDF</button>
+  <a class="btn only-framed" id="openNew" target="_blank" rel="noopener" href="#">새 창(사파리)에서 열기</a>
+</div>
+
+<div class="sheet">
+
+  <div class="runhead">
+    <span>2026-2 세화여자고등학교 인문학과 윤리</span>
+    <span>원전 기반 학습 자료 ② 로버트 노직</span>
+  </div>
+
+  <div class="titlebox">
+    <div class="lab">학습 주제</div>
+    <div class="mid">
+      <h1>노직, 『무정부, 국가 그리고 유토피아』</h1>
+      <span class="sub">Robert Nozick, <i>Anarchy, State, and Utopia</i> (1974)</span>
+    </div>
+    <div class="id">
+      <div>세화여자고등학교 2학년 (　　)반</div>
+      <div>이름:</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ [1] ═══════════ -->
+  <h2 class="sec"><span class="n">[1]</span>노직의 사상 살펴보기</h2>
+
+  <div class="grid">
+    <div class="row">
+      <div class="k">문제 의식</div>
+      <div class="v">
+        <p>20세기 후반 미국 사회에서 국가가 세금을 걷어 재분배하는 복지 정책이 크게 확대되는 것을 목격</p>
+        <p>→ 국가가 정의(正義)를 명분으로 개인의 정당한 <span class="bl"><i class="h">ㅅㅇㅁ</i><b class="a">소유물</b></span>에 손을 대는 것은, 개인이 가진 침해할 수 없는 <span class="bl"><i class="h">ㄱㄹ</i><b class="a">권리</b></span>를 짓밟는 일이 아닌가?</p>
+        <p>→ 특히 롤스가 『정의론』(1971)에서 제시한 <span class="bl"><i class="h">ㅊㄷ</i><b class="a">차등</b></span>의 <span class="bl"><i class="h">ㅇㅊ</i><b class="a">원칙</b></span>처럼 최소 수혜자를 위해 국가가 재화를 재분배하는 방식을 정면으로 겨냥함</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">해결 방안</div>
+      <div class="v">
+        <p>개인의 권리를 침해하지 않는 <span class="ch">[ <b>최대</b> / <b class="ok">최소</b> ]</span>국가만을 인정하고, 분배의 정의를 국가의 재분배가 아니라 개인의 <span class="bl"><i class="h">ㅅㅇ ㄱㄹ</i><b class="a">소유 권리</b></span>로 설명하자!</p>
+        <p>→ 1974년 『아나키, 국가, 그리고 유토피아』 출간. 이 책으로 <span class="bl"><i class="h">ㅈㅇㅈㅅㅈㅇ</i><b class="a">자유지상주의</b></span>(libertarianism)를 대표하게 됨</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub"><span class="mk">※</span>노직 사상의 핵심</h3>
+  <div class="grid">
+    <div class="row">
+      <div class="k">개인의 권리<br>(자연권)</div>
+      <div class="v">
+        <p>개인은 생명·자유·재산에 대하여 매우 강력한 권리를 가짐. 이 권리는 법이나 사회가 만들어 준 것이 아니라 인간이라는 이유만으로 갖는 <span class="bl"><i class="h">ㅈㅇㄱ</i><b class="a">자연권</b></span>임</p>
+        <p>→ 어떤 사람도, 어떤 집단도, 심지어 <span class="bl"><i class="h">ㄱㄱ</i><b class="a">국가</b></span>조차 이 권리를 함부로 침해할 수 없음</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">측면적 제약</div>
+      <div class="v">
+        <p>권리는 좋은 결과를 위해 계산되는 항목이 아니라, 애초에 넘어서는 안 되는 울타리로 작동함</p>
+        <p>→ 칸트 정언 명령의 제2형식 : 인간을 결코 단지 <span class="bl"><i class="h">ㅅㄷ</i><b class="a">수단</b></span>으로 대하지 말고 언제나 동시에 <span class="bl"><i class="h">ㅁㅈ</i><b class="a">목적</b></span>으로 대하라</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">공리주의 비판</div>
+      <div class="v">
+        <ul class="tight">
+          <li>고통을 겪는 사람과 이익을 얻는 사람은 서로 <span class="ch">[ <b>같은 사람</b> / <b class="ok">다른 사람</b> ]</span>이므로, 한 사람의 손해가 다른 사람의 이익으로 상쇄될 수 없음</li>
+          <li>쾌락과 고통을 느끼는 사회라는 실체는 존재하지 않으며, 존재하는 것은 오직 <span class="bl"><i class="h">ㄱㅇ</i><b class="a">개인</b></span> 뿐임</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 1&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 11</span> 개인의 권리와 최소국가</div>
+    <p>개인들은 권리를 가지고 있다. 어떤 사람이나 집단도 이들 개인들에게 해서는 안 될 것들이 있다. […] 국가에 관한 주된 우리의 결론은, 강요·절도·사기·계약의 강제 등등으로부터의 보호와 같은 좁은 기능들에 제한된 <em>최소국가</em>는 정당화되며, 그 이상의 포괄적 국가는 특정의 것들을 하도록 강제되지 않을 개인의 권리를 침해할 것이며, 최소국가는 옳을 뿐 아니라 고무적이다.</p>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 2&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 54</span> 측면적 제약과 목적으로서의 인간</div>
+    <p>행위의 <em>측면적 제약</em> 사항의 이념은, 그 근저에서 개인은 목적이지 단순한 수단이 아니라는 칸트적 원리를 반영한다. 개인들은 그들의 동의 없이는 다른 목적을 성취하기 위해 희생될 수도, 사용되어서도 안 된다. 개인들은 신성불가침의 존재이다.</p>
+  </div>
+
+  <div class="q">
+    <div class="qt"><span class="no">Q1.</span>공리주의는 ‘다수의 더 큰 이익을 위해 소수가 손해를 보아도 전체적으로는 이득’이라고 말한다. 노직은 왜 이 계산 자체가 성립하지 않는다고 보았는지 서술하시오.</div>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="peek">눌러서 예시 답안 보기</div>
+    <div class="model"><span class="cap">예시 답안</span>내가 미래를 위해 지금 참는 것은 부담을 지는 사람과 이익을 누리는 사람이 ‘나’ 한 사람이므로 상쇄가 성립한다. 그러나 갑의 것을 빼앗아 을에게 주는 경우에는 손해를 보는 사람과 이익을 얻는 사람이 서로 다른 개인이므로 갑의 손해는 결코 상쇄되지 않는다. 쾌락과 고통을 겪는 ‘사회’라는 하나의 실체는 존재하지 않고 서로 구별되는 개인들만 존재하므로, 전체의 이익을 위해 개인을 수단으로 쓰는 계산은 애초에 성립하지 않는다.</div>
+  </div>
+
+  <!-- ═══════════ [2] ═══════════ -->
+  <h2 class="sec"><span class="n">[2]</span>소유권 – ‘분배’가 아니라 ‘소유에서의 정의’</h2>
+
+  <div class="grid">
+    <div class="row">
+      <div class="k">용어<br>다시 보기</div>
+      <div class="v">
+        <p>‘<span class="bl"><i class="h">ㅂㅂㅈ ㅈㅇ</i><b class="a">분배적 정의</b></span>’라는 말은 중립적 X. ‘분배’라고 말하는 순간, 마치 사회라는 커다란 <span class="bl"><i class="h">ㄱㄹ</i><b class="a">그릇</b></span> 안에 재화가 이미 담겨 있고 중앙의 권위자가 그것을 나누어 주기를 기다리는 듯한 그림이 전제되기 때문임</p>
+        <p>→ 존재하는 것은 사람들, 사람들의 연합체, 자연 세계, 그리고 사람들이 <span class="bl"><i class="h">ㅅㅅ</i><b class="a">생산</b></span>해 낸 것 뿐임</p>
+        <p>→ 그러므로 이 주제를 ‘분배적 정의’가 아니라 ‘<span class="bl"><i class="h">ㅅㅇ</i><b class="a">소유</b></span>에서의 정의’라고 부르자고 제안함</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">소유 권리론<br>(entitlement<br>theory)</div>
+      <div class="v">
+        <p>어떤 사람의 소유물이 정당한가는 그것이 어떻게 그의 손에 들어왔는가로 결정됨</p>
+        <p>① <span class="bl"><i class="h">ㅊㄷ</i><b class="a">취득</b></span>에서의 정의의 원리 – 주인 없는 것을 처음 갖게 되는 절차</p>
+        <p>② <span class="bl"><i class="h">ㅇㅈ</i><b class="a">이전</b></span>에서의 정의의 원리 – 한 사람에게서 다른 사람에게로 옮겨 가는 절차</p>
+        <p>③ <span class="bl"><i class="h">ㄱㅈ</i><b class="a">교정</b></span>에서의 정의의 원리 – ①과 ②를 위반한 불의를 바로잡는 절차</p>
+        <p>→ 각 개인의 소유물이 정당하면, 그 사회 전체의 분배 상태도 <span class="ch">[ <b class="ok">정당하다</b> / <b>부당하다</b> ]</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 3&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 191~192</span> 분배라는 말의 함정</div>
+    <p><span class="bl"><i class="h">ㅂㅂㅈ ㅈㅇ</i><b class="a">분배적 정의</b></span>란 용어는 중립적인 것이 아니다. […] 우리의 입장은 이제, 부주의한 분할을 교정하기 위한 마지막 조정을 하는 어떤 어른으로부터 파이 조각을 받아 쥔 어린 아이의 그것이 아니다. 우리의 경우 중앙 분배, 모든 자산을 관리하는 어떤 사람이나 자산이 어떻게 분배될 것인가를 합동으로 결정하는 집단도 존재하지 않는다. 각 개인이 갖는 바는 그가 다른 사람과 교환하여 또는 선물로서 그 다른 사람으로부터 얻은 바이다. […] <em>사람들이 자신들의 배우자를 선택하는 그러한 사회에서 배우자의 분배란 있을 수 없듯이, 우리의 경우에도 몫의 분배 행위 또는 분배란 있을 수 없다.</em></p>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 4&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 193</span> 소유 권리론의 귀납적 정의</div>
+    <p>1. <em>취득</em>에서의 정의의 원리에 따라 소유물을 취득한 자는 그 소유물에 대한 소유 권리가 있다.</p>
+    <p>2. <em>이전</em>에서의 정의의 원리에 따라 한 소유물을, 이 소유물에 대한 소유 권리가 있는 자로부터 취득한 자는 그 소유물에 대한 소유 권리가 있다.</p>
+    <p>3. 어느 누구도 (1과 2의 반복적 적용에 의하지 않고서는) 그 소유물에 대한 소유 권리가 없다.</p>
+  </div>
+
+  <div class="q">
+    <div class="qt"><span class="no">Q2.</span>노직이 ‘분배적 정의’라는 용어 자체를 거부하고 ‘소유에서의 정의’로 바꾸어 부르자고 한 이유는?</div>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="peek">눌러서 예시 답안 보기</div>
+    <div class="model"><span class="cap">예시 답안</span>‘분배’라는 말은 나눌 재화가 이미 사회라는 그릇에 모여 있고 중앙의 권위자가 그것을 배분한다는 그림을 전제한다. 그러나 실제로는 그런 그릇도 중앙 분배자도 없으며, 각자가 생산하고 교환하고 증여한 결과가 있을 뿐이다. 용어를 그대로 쓰면 국가의 재분배가 자연스러운 일처럼 보이게 되므로, 노직은 처음부터 ‘누가 무엇을 어떻게 갖게 되었는가’를 묻는 ‘소유에서의 정의’로 문제를 다시 세운 것이다.</div>
+  </div>
+
+  <!-- ═══════════ [3] ═══════════ -->
+  <h2 class="sec"><span class="n">[3]</span>최소국가 – 국가는 어디까지 정당한가?</h2>
+
+  <ul class="tight" style="font-size:14.5px;line-height:2.15;margin:0 0 12px">
+    <li>‘국가는 정당화 될 수 있다’ → 국가를 부정하는 <span class="bl"><i class="h">ㅁㅈㅂ</i><b class="a">무정부</b></span>주의(아나키즘) 반대</li>
+    <li>‘최소국가가 정당화될 수 있는 <span class="ch">[ <b>가장 작은</b> / <b class="ok">가장 포괄적인</b> ]</span> 국가’ → 복지 국가 반대</li>
+  </ul>
+  <p class="note">국가는 누군가의 권리를 침해하는 계약이나 정복 없이도 자연 상태에서 저절로 생겨날 수 있음.</p>
+
+  <div class="grid">
+    <div class="row wide">
+      <div class="k">1단계</div>
+      <div class="v"><p><span class="bl"><i class="h">ㅈㅇ</i><b class="a">자연</b></span> 상태 – 권리를 가진 개인들이 흩어져 살아간다. 각자 자신의 권리를 스스로 지키고 침해자를 스스로 처벌하지만, 자기애와 복수심 탓에 분쟁이 끝나지 않는다.</p></div>
+    </div>
+    <div class="row wide">
+      <div class="k">2단계</div>
+      <div class="v"><p><span class="bl"><i class="h">ㅂㅎ ㅎㅎ</i><b class="a">보호 협회</b></span> – 개인들이 자신을 지키기 위해 자발적으로 상호 보호 조직을 만든다. 이어 이 일을 대신해 주는 상업적 보호 대행사가 등장한다.</p></div>
+    </div>
+    <div class="row wide">
+      <div class="k">3단계</div>
+      <div class="v"><p><span class="bl"><i class="h">ㅈㅂㅈ</i><b class="a">지배적</b></span> 보호 협회 → 극소국가 – 경쟁 끝에 한 지역에서 가장 큰 협회가 살아남아 힘의 사용을 사실상 독점한다. 그러나 <span class="ch">[ <b class="ok">계약을 맺은 회원</b> / <b>모든 주민</b> ]</span>에게만 보호를 제공하므로 아직 국가가 아니다.</p></div>
+    </div>
+    <div class="row wide">
+      <div class="k">4단계<span class="star">★</span></div>
+      <div class="v"><p><span class="bl"><i class="h">ㅊㅅ</i><b class="a">최소</b></span> 국가 – 극소국가는 계약을 맺지 않은 독립인들에게도 사적 처벌(자연권 행사)을 금지한다. 권리를 금지당한 대가로 그들에게 <span class="bl"><i class="h">ㅂㅅ</i><b class="a">보상</b></span>해야 하는데, 가장 편리한 보상 방식이 곧 보호 서비스 제공이다. 그리하여 영토 내 모든 사람이 보호받게 되어 국가가 성립한다.</p></div>
+    </div>
+  </div>
+
+  <p class="note"><span class="mk">※</span>국가가 되기 위한 두 조건 : ① 힘(강제력)의 <span class="bl"><i class="h">ㄷㅈ</i><b class="a">독점</b></span> ② 영토 내 <span class="bl"><i class="h">ㅁㄷ</i><b class="a">모든</b></span> 사람에 대한 보호 서비스 제공. 극소국가는 ①만, 최소국가는 ①, ② 모두 충족.</p>
+  <p class="note"><span class="mk">※</span>이 과정에는 누구의 권리도 침해되지 않으며 어느 누구도 의도하지 않았다. 개인들이 각자 자기 이익을 따라 행동했을 뿐인데 국가가 생겨났다는 뜻에서, 이를 ‘보이지 않는 손’ 설명이라 부른다.</p>
+
+  <div class="src">
+    <div class="hd">&lt;원문 5&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 49</span> 야경국가와 극소국가</div>
+    <p>고전적 자유주의적 이론에서 말하는 야경국가 – 모든 시민들을 폭력, 절도, 사기 등으로부터 보호하는 기능과 계약을 이행케 하는 기능에 국한되어 있는 – 는 재분배적인 것처럼 보인다. 우리는 사적 보호 협회와 이 야경국가 사이의 중간적 사회 조직을 적어도 하나 상상할 수 있다. 야경국가는 종종 최소국가라 불리므로, 이 중간의 조직을 우리는 <em>극소국가(ultraminimal state)</em>라 부르겠다. […] 이는 자신의 보호 및 집행 보험 증권을 구입하는 사람들에게만 보호와 집행의 서비스를 제공한다.</p>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 6&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 60</span> 국가의 유일한 합법적 기능</div>
+    <p>[최소국가론자는] 권리의 침해로부터의 보호에 깊은 관심을 갖고 있어, <em>이를 국가의 유일한 합법적 기능이라 생각한다.</em> 그리고 다른 모든 기능들은, 그들 자체가 권리의 침해를 포함하므로 불법이라 규정한다.</p>
+  </div>
+
+  <!-- ═══════════ [4] ═══════════ -->
+  <h2 class="sec"><span class="n">[4]</span>비정형적 분배 – 자유는 정형을 깨뜨린다</h2>
+
+  <div class="grid">
+    <div class="row">
+      <div class="k">정형적 원리<br>(patterned)</div>
+      <div class="v">
+        <p>“각자에게 그의 ______에 따라”의 빈칸을 채우는 방식으로 정의를 규정하는 원리</p>
+        <p>→ 각자의 필요에 따라, 각자의 노력에 따라, 각자의 도덕적 공과에 따라, 각자의 IQ에 따라 …</p>
+        <p>→ 현재까지 제시된 분배적 정의의 원리는 <span class="ch">[ <b class="ok">거의 모두</b> / <b>일부만</b> ]</span> 정형적! 롤스의 차등의 원칙도 정형적이다.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">현재 시간<br>단면 원리</div>
+      <div class="v">
+        <p>누가 결국 무엇을 갖게 되었는가, 즉 결과의 <span class="bl"><i class="h">ㄱㅈ</i><b class="a">구조</b></span>만 보고 정의를 판단하는 원리(= 종국 상태 원리) ex. 공리주의와 복지 경제학</p>
+        <p>→ 이 원리는 그 분배가 어떻게 이루어졌는지 묻지 않으므로 <span class="ch">[ <b>역사적</b> / <b class="ok">비역사적</b> ]</span> 원리이다.</p>
+        <p>→ 반례 : 감옥에 있는 살인범과 성실히 일한 사람이 지금 가진 것이 같다고 해서 두 상황이 똑같이 정의로운가?</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">비정형적·<br>역사적 원리<span class="star">★</span></div>
+      <div class="v">
+        <p>어떤 정형에도 맞추려 하지 않고, 오직 재산을 갖게 된 <span class="bl"><i class="h">ㄱㅈ(ㅈㅊ)</i><b class="a">과정(절차)</b></span>이 정당했는가만 묻는 원리</p>
+        <p>→ 사람들이 한계 생산물을 받고, 도박에서 따고, 증여받고, 이자를 받고, 무언가를 발견하는 등으로 생긴 소유물의 집합은 어떤 정형도 이루지 않는다.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub"><span class="mk">※</span>월트 체임벌린 논변 – 노직의 가장 유명한 사고 실험</h3>
+  <div class="grid">
+    <div class="row">
+      <div class="k">상황 D₁</div>
+      <div class="v"><p>여러분이 가장 정의롭다고 여기는 분배 상태가 이미 실현되어 있다고 하자. (모두가 똑같이 나누어 가졌든, 차등의 원칙에 딱 맞든 상관없다.)</p></div>
+    </div>
+    <div class="row">
+      <div class="k">자발적 선택</div>
+      <div class="v"><p>농구 스타 체임벌린은 입장권 한 장당 25센트를 자신이 갖는 계약을 맺는다. 한 시즌에 100만 명의 관중이 기꺼이 25센트를 그의 상자에 넣고 경기를 본다.</p></div>
+    </div>
+    <div class="row">
+      <div class="k">상황 D₂</div>
+      <div class="v"><p>체임벌린은 25만 달러를 벌어 누구보다 부자가 되었다. 처음의 정형은 완전히 깨졌다.</p></div>
+    </div>
+    <div class="row">
+      <div class="k">노직의 물음</div>
+      <div class="v"><p>D₁이 정의롭고, 사람들이 자기 몫을 자발적으로 넘겨 D₂가 되었다면, D₂ 역시 <span class="ch">[ <b class="ok">정의롭다</b> / <b>부정의하다</b> ]</span> 고 해야 하지 않는가?</p></div>
+    </div>
+    <div class="row">
+      <div class="k">결론</div>
+      <div class="v"><p>정형을 계속 유지하려면 사람들 사이의 자발적 거래를 금지하거나 주기적으로 재화를 도로 거두어들여야 한다. 그것은 개인의 삶에 대한 지속적인 <span class="bl"><i class="h">ㄱㅅ</i><b class="a">간섭</b></span>이며 자유에 대한 심각한 침해이다. → “자유는 정형을 깨뜨린다”</p></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 7&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 205~206</span> 윌트 체임벌린 논변</div>
+    <p>만약 D₁이 정의로운 분배라면, 그리고 사람들이 D₁에서 그들에게 주어진 몫의 일부를 양도함으로써 D₁에서 D₂로 자발적으로 이행했다면, <em>D₂ 역시 정의롭지 않을까?</em> 만약 사람들이 자신들이 소유 권리를 갖고 있는 바의 그 재산을 처분할 소유 권리가 있다면, 이 권리는 이 재산을 체임벌린에게 줄, 또는 무엇과 교환할 권리도 포함하지 않는가?</p>
+  </div>
+
+  <h3 class="sub">활동 – 다음 분배 원리는 정형적(ⓐ)인가, 비정형적(ⓑ)인가?</h3>
+  <div class="act">
+    <div class="it"><span>① 각자에게 그의 필요에 따라 분배하라</span><span class="slot"><span>(　　)</span><b>ⓐ</b></span></div>
+    <div class="it"><span>② 최소 수혜자에게 최대의 이익이 되도록 분배하라</span><span class="slot"><span>(　　)</span><b>ⓐ</b></span></div>
+    <div class="it"><span>③ 정당하게 취득하고 정당하게 이전받았다면 그 몫은 그의 것이다</span><span class="slot"><span>(　　)</span><b>ⓑ</b></span></div>
+    <div class="it"><span>④ 사회 전체의 행복 총량이 가장 커지도록 분배하라</span><span class="slot"><span>(　　)</span><b>ⓐ</b></span></div>
+  </div>
+
+  <div class="q">
+    <div class="qt"><span class="no">Q3.</span>노직이 ‘자유는 정형을 깨뜨린다’고 말할 때, 이것이 롤스의 차등의 원칙에 대한 비판이 되는 이유를 서술하시오.</div>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="peek">눌러서 예시 답안 보기</div>
+    <div class="model"><span class="cap">예시 답안</span>차등의 원칙은 최소 수혜자에게 최대의 이익이 돌아가는 특정한 분배 상태를 정의의 기준으로 삼는 정형적 원리이다. 그런데 사람들이 자기 몫을 자유롭게 처분하는 순간 그 상태는 반드시 무너진다. 따라서 그 정형을 계속 유지하려면 국가가 자발적 거래를 금지하거나 주기적으로 재산을 다시 거두어야 하며, 이는 개인의 삶에 대한 끊임없는 간섭이자 자유의 침해가 된다. 정형을 지키는 일과 자유를 지키는 일은 양립할 수 없다는 것이 노직의 비판이다.</div>
+  </div>
+
+  <!-- ═══════════ [5] ═══════════ -->
+  <h2 class="sec"><span class="n">[5]</span>절차적 정의 – 정의로운 절차가 정의로운 결과를 만든다</h2>
+
+  <div class="grid">
+    <div class="row">
+      <div class="k">핵심 발상</div>
+      <div class="v">
+        <p>정의로운 상황에서 출발하여 정의로운 <span class="bl"><i class="h">ㅈㅊ</i><b class="a">절차</b></span>를 밟아 생겨난 것은 무엇이든 그 자체로 정의로움</p>
+        <p>→ 이전의 원리가 규정하는 이행 방식은 정의를 <span class="bl"><i class="h">ㅂㅈ</i><b class="a">보존</b></span>함.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">논리학과의<br>비유</div>
+      <div class="v"><p>참인 전제에서 출발해 올바른 <span class="bl"><i class="h">ㅊㄹ</i><b class="a">추론</b></span> 규칙을 반복 적용하면 결론도 반드시 참이 되듯, 정의로운 상태에서 출발해 정의로운 이전을 반복하면 그 결과도 반드시 정의롭다</p></div>
+    </div>
+    <div class="row">
+      <div class="k">롤스와의<br>차이</div>
+      <div class="v">
+        <p>롤스의 입장은 정의로운 <span class="ch">[ <b class="ok">결과의 상태</b> / <b>취득과 교환의 과정</b> ]</span>를 이끌어 내기 위한 것임.</p>
+        <p>현실의 개인들이 실제로 밟아 온 취득·이전의 과정 그 자체이며, 결과가 어떤 모습이든 묻지 않음</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">1) 취득의 원칙 – 주인 없는 것을 어떻게 내 것으로 만드는가?</h3>
+  <div class="grid">
+    <div class="row">
+      <div class="k">로크의 대답</div>
+      <div class="v"><p>주인 없는 대상에 자신의 <span class="bl"><i class="h">ㄴㄷ</i><b class="a">노동</b></span>을 섞으면 그것은 내 것이 된다. 나는 이미 내 노동을 소유하고 있으므로, 내 것이 섞여 든 그 대상도 내 것이 된다.</p></div>
+    </div>
+    <div class="row">
+      <div class="k">노직의 의문 ①</div>
+      <div class="v"><p>노동을 섞을 수 있는 <span class="bl"><i class="h">ㅂㅇ</i><b class="a">범위</b></span>는 어디까지인가? 우주인이 화성에 택지를 조성하면 그는 화성 전체의 주인인가, 그 조그마한 터의 주인인가?</p></div>
+    </div>
+    <div class="row">
+      <div class="k">노직의 의문 ②<br>(토마토 주스)</div>
+      <div class="v">
+        <p>내가 소유한 토마토 주스 한 깡통을 바다에 부어 입자가 바다 전체에 퍼지게 하면, 나는 바다를 소유하게 되는가, 아니면 어리석게 주스를 <span class="ch">[ <b>차지한</b> / <b class="ok">허비한</b> ]</span> 것인가?</p>
+        <p>→ 내 것을 남의 것 아닌 것에 섞는 일은 ‘취득’한 것인가 ‘상실’한 것인가?</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">노직의 의문 ③</div>
+      <div class="v"><p>노동이 대상의 가치를 높인다 해도, 왜 소유권이 그 <span class="bl"><i class="h">ㅂㄱ ㄱㅊ</i><b class="a">부가 가치</b></span>에만이 아니라 대상 <span class="bl"><i class="h">ㅈㅊ</i><b class="a">전체</b></span>에까지 미쳐야 하는가?</p></div>
+    </div>
+    <div class="row">
+      <div class="k">로크적 단서<br>(Lockean<br>proviso)</div>
+      <div class="v"><p>취득이 허용되려면 ‘다른 사람들을 위해 충분한 양의, 똑같이 좋은 질의 것이 남아 있어야’ 한다. 노직은 이 단서를 다음과 같이 다시 읽는다 → 어떤 사람의 취득이 다른 사람의 처지를 <span class="bl"><i class="h">ㅇㅎ</i><b class="a">악화</b></span>시켜서는 안 된다.</p></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 9&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 221</span> 토마토 주스의 역설</div>
+    <p>한 사람이 무엇에 노동을 가하는 행위가 왜 그를 그 무엇의 소유주이게 하는가? […] 그러나 내가 소유한 바를, 내가 소유하지 않은 바와 섞음이 왜 <em>내가 소유하지 않은 바의 취득이라기보다, 내가 소유한 바의 상실이 아닌가?</em> 내가 한 깡통의 토마토 주스를 소유하고 있어 이를 바다에 부어 그 입자들이 바다 전체에 골고루 퍼지게 한다면, 나는 이 행위를 통해 바다를 소유하게 되는가, 아니면 어리석게도 나의 토마토 주스를 허비한 것인가?</p>
+  </div>
+
+  <div class="src">
+    <div class="hd">&lt;원문 10&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 222</span> 로크적 단서의 의미</div>
+    <p>결정적인 요점은 사물의 사유화가 <em>타인의 상황을 악화시키는지의 여부</em>이다. 충분한 양의, 그리고 똑같이 좋은 질의 것들이 다른 사람들을 위해 남아 있어야 한다는 로크의 단서는, 타인의 상황이 악화되지 않을 것을 확실히 하기 위한 것이다.</p>
+  </div>
+
+  <h3 class="sub">2) 이전의 원칙 – 내 것을 남에게 어떻게 넘기는가?</h3>
+  <div class="grid">
+    <div class="row">
+      <div class="k">정당한 이전</div>
+      <div class="v"><p><span class="bl"><i class="h">ㅈㅂㅈ</i><b class="a">자발적</b></span> 교환, 증여(선물·상속), 그 사회에 확립된 관습에 따른 이전</p></div>
+    </div>
+    <div class="row">
+      <div class="k">부당한 이전</div>
+      <div class="v"><p>절도, 사기, 노예화, 생산물의 수탈, 자유 경쟁의 방해 → 이런 것은 한 상태에서 다른 상태로 넘어가는 방식으로 결코 허용될 수 없음</p></div>
+    </div>
+    <div class="row">
+      <div class="k">핵심</div>
+      <div class="v"><p>정당한 권리자로부터 정당한 절차로 넘겨받았다면, 그 결과가 아무리 불평등해 보여도 새 소유자에게는 <span class="ch">[ <b class="ok">소유 권리가 있다</b> / <b>소유 권리가 없다</b> ]</span></p></div>
+    </div>
+    <div class="row">
+      <div class="k">도둑의 예</div>
+      <div class="v"><p>피해자가 그 물건을 도둑에게 선물로 ‘줄 수도 있었다’는 사실은, 도둑이 실제로 훔친 물건에 대해 소유 권리를 갖게 해 주지 <span class="ch">[ <b class="ok">않는다</b> / <b>한다</b> ]</span>. → 소유에서의 정의는 역사적이며, 실제로 무엇이 일어났는가에 달려 있다</p></div>
+    </div>
+  </div>
+
+  <h3 class="sub">3) 교정의 원칙 – 과거의 불의를 어떻게 바로잡는가?</h3>
+  <div class="grid">
+    <div class="row">
+      <div class="k">필요성</div>
+      <div class="v"><p>현실의 소유 상태가 모두 정당한 취득과 이전으로만 이루어진 것은 아니다. 과거의 절도·사기·노예화·수탈이 오늘의 소유 상태를 만들었다면, 그것은 <span class="bl"><i class="h">ㅂㅈㅇ</i><b class="a">부정의</b></span>하다.</p></div>
+    </div>
+    <div class="row">
+      <div class="k">교정에 필요한<br>두 가지 지식</div>
+      <div class="v">
+        <p>① 과거에 어떤 불의가 있었고 그것이 지금까지 어떤 결과를 낳았는가에 관한 <span class="bl"><i class="h">ㅇㅅㅈ</i><b class="a">역사적</b></span> 지식</p>
+        <p>② 그 불의가 없었다면 지금 소유 상태가 어떠했을 것인가에 관한 가언적(가정적) 지식</p>
+        <p>→ 현재 상태가 ②와 다르다면, ②가 실현되도록 바로잡아야 한다.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">노직의 고백</div>
+      <div class="v"><p>어디까지 소급할 것인가, 후손에게도 책임을 물을 것인가 등 물음만 길게 늘어놓을 뿐, 노직 스스로 ‘나는 이 문제에 대한 철저한 또는 이론적으로 정교한 논리를 알고 있지 않다’고 인정함 → 소유 권리론에서 가장 <span class="ch">[ <b>완성된</b> / <b class="ok">미완성인</b> ]</span> 부분</p></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qt"><span class="no">Q4.</span>노직의 세 원칙(취득, 이전, 교정)에 따르면, 지금 어떤 사람이 매우 큰 부를 가지고 있다는 사실만으로는 그 분배가 정의로운지 판단할 수 없다. 그 이유는?</div>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="peek">눌러서 예시 답안 보기</div>
+    <div class="model"><span class="cap">예시 답안</span>노직의 소유 권리론은 역사적·절차적 원리이므로, 정의 여부는 결과의 크기나 모양이 아니라 그 소유물이 어떤 과정을 거쳐 그의 손에 들어왔는가에 달려 있다. 정당한 취득과 자발적 이전만을 거쳤다면 아무리 큰 부라도 정의롭고, 절도나 수탈 같은 불의가 개입했다면 아무리 평등해 보여도 부정의하다. 따라서 현재의 단면만 보고서는 판단할 수 없고 반드시 그 역사를 물어야 한다.</div>
+  </div>
+
+  <!-- ═══════════ [6] ═══════════ -->
+  <h2 class="sec"><span class="n">[6]</span>노직 사상 정리</h2>
+
+  <h3 class="sub">1. 과세는 강제 노동이다!</h3>
+  <p class="note">근로 소득에 대한 과세 = 강제 노동 / 절도와 동등함. n시간 분의 소득을 가져가는 것은 그 사람에게서 n시간을 빼앗아 남을 위해 일하게 하는 것과 같기 때문임. 그러므로 재분배를 위한 과세는 개인의 <b>자기 소유권</b>(자기 자신과 자기 노동에 대한 권리)을 침해하는 것으로 봄.</p>
+
+  <div class="src">
+    <div class="hd">&lt;원문 12&gt; 『아나키, 국가, 그리고 유토피아』 <span class="pp">pp. 214~216</span> 과세와 강제 노동</div>
+    <p><em>근로 소득에 대한 과세는 강제 노동과 동등한 것이다.</em> 일부의 사람들은 이 주장이 명백한 진리라 생각한다. n시간분의 소득을 취하는 것은 그 노동자로부터 n시간분을 빼앗는 것과 같다. 이는 마치 그 사람으로 하여금 다른 사람을 위해 n시간 일하게 하는 것과 같다. […] 영화를 선호하는(그래서 입장권 사기를 위해 가외로 일해야 하는) 사람은 곤궁한 자를 돕도록 소집되어야 하고, 노을의 관조를 선호하는(그래서 가외의 돈을 벌 필요가 없는) 사람은 왜 그렇지 않은가?</p>
+  </div>
+
+  <h3 class="sub">2. 롤스 vs 노직 – 한 눈에 비교하기</h3>
+  <div class="wrap">
+    <table class="cmp">
+      <thead><tr><th style="width:118px">구분</th><th>롤스</th><th>노직</th></tr></thead>
+      <tbody>
+        <tr><th>입장</th><td>평등주의적 자유주의</td><td>자유 지상주의</td></tr>
+        <tr><th>정의의 주제</th><td>사회의 기본 구조</td><td>개인의 소유물</td></tr>
+        <tr><th>정의의 유형</th><td>순수 절차적 정의<br>(원초적 입장이라는 가상의 절차)</td><td>역사적·절차적 정의<br>(실제로 밟아 온 취득·이전의 과정)</td></tr>
+        <tr><th>분배 원리의<br>성격</th>
+          <td><span class="bl"><i class="h">ㅈㅎㅈ</i><b class="a">정형적</b></span> 원리 (최소 수혜자 기준)</td>
+          <td><span class="bl"><i class="h">ㅂㅈㅎㅈ</i><b class="a">비정형적</b></span> 원리 (기준을 미리 정하지 않음)</td></tr>
+        <tr><th>국가의 역할</th>
+          <td>재분배를 통해 최소 수혜자의 처지를 개선하는<br><span class="ch">[ <b class="ok">재산 소유 민주주의</b> / <b>야경국가</b> ]</span></td>
+          <td>폭력·절도·사기·계약 위반으로부터의 보호에 국한된<br><span class="ch">[ <b>복지국가</b> / <b class="ok">최소국가</b> ]</span></td></tr>
+        <tr><th>재분배 과세</th>
+          <td>정의의 원칙을 실현하는 정당한 수단</td>
+          <td>개인의 소유권을 침해하는 <span class="bl"><i class="h">ㄱㅈ ㄴㄷ</i><b class="a">강제 노동</b></span></td></tr>
+        <tr><th>천부적 재능</th>
+          <td>도덕적 관점에서 임의적<br>→ 천부적 재능의 분포 = <span class="bl"><i class="h">ㄱㄷ ㅈㅅ</i><b class="a">공동 자산</b></span>으로 간주</td>
+          <td>재능도, 그것으로 얻은 소득도 온전히<br>그 <span class="bl"><i class="h">ㄱㅇ</i><b class="a">개인</b></span>의 것</td></tr>
+        <tr><th>공통점</th><td class="full" colspan="2">① 개인의 자유와 권리를 매우 중시함　② 공리주의를 비판함　③ 국가의 역할을 절차의 관점에서 정당화함</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="q">
+    <div class="qt"><span class="no">Q5.</span>롤스와 노직은 모두 개인의 자유를 중시하고 공리주의를 비판하였다. 그럼에도 두 사람이 국가의 재분배를 두고 정반대의 결론에 이른 이유를 ‘천부적 재능’에 대한 입장과 연결하여 작성해보자.</div>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="peek">눌러서 예시 답안 보기</div>
+    <div class="model"><span class="cap">예시 답안</span>롤스는 타고난 재능이나 가정 배경은 도덕적 관점에서 임의적인 우연이므로 그 우연이 분배의 몫을 좌우해서는 안 된다고 보아, 재능의 분포를 일종의 공동 자산으로 다루며 그로 얻은 이익이 최소 수혜자에게도 돌아가도록 재분배를 정당화한다. 반면 노직은 재능도 나의 일부이며 나는 나 자신과 내 노동을 온전히 소유하므로, 그것으로 정당하게 얻은 소득 역시 전적으로 나의 것이라고 본다. 그래서 그에게 재분배 과세는 정의의 실현이 아니라 자기 소유권의 침해, 곧 강제 노동이 된다.</div>
+  </div>
+
+  <h3 class="sub">3. 노직! 진실 혹은 거짓</h3>
+  <table class="tf">
+    <thead><tr><th class="n" style="width:44px">　</th><th>내용</th><th style="width:96px">T / F</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>노직은 국가 자체가 부도덕하다고 보아 무정부주의를 지지하였다.</td><td class="v"><b>T</b> / <b class="ok">F</b></td></tr>
+      <tr><td class="n">2</td><td>노직은 개인의 권리를 다른 목적을 위해 넘어설 수 없는 측면적 제약으로 보았다.</td><td class="v"><b class="ok">T</b> / <b>F</b></td></tr>
+      <tr><td class="n">3</td><td>노직은 최소국가가 정당화될 수 있는 가장 포괄적인 국가라고 보았다.</td><td class="v"><b class="ok">T</b> / <b>F</b></td></tr>
+      <tr><td class="n">4</td><td>노직에 따르면 극소국가는 영토 내 모든 사람에게 보호 서비스를 제공한다.</td><td class="v"><b>T</b> / <b class="ok">F</b></td></tr>
+      <tr><td class="n">5</td><td>노직은 정의로운 분배인지를 결과의 평등 정도로 판단해야 한다고 보았다.</td><td class="v"><b>T</b> / <b class="ok">F</b></td></tr>
+      <tr><td class="n">6</td><td>체임벌린 논변은 자발적 거래가 기존의 분배 정형을 깨뜨린다는 것을 보여 준다.</td><td class="v"><b class="ok">T</b> / <b>F</b></td></tr>
+      <tr><td class="n">7</td><td>노직은 취득의 원칙을 로크의 이론을 그대로 받아들여 완성하였다.</td><td class="v"><b>T</b> / <b class="ok">F</b></td></tr>
+      <tr><td class="n">8</td><td>노직은 타인의 처지를 악화시키지 않는 한에서 최초 취득이 정당하다고 보았다.</td><td class="v"><b class="ok">T</b> / <b>F</b></td></tr>
+      <tr><td class="n">9</td><td>노직은 근로 소득에 대한 재분배 과세를 강제 노동과 다를 바 없다고 보았다.</td><td class="v"><b class="ok">T</b> / <b>F</b></td></tr>
+      <tr><td class="n">10</td><td>노직은 과거의 불의를 바로잡는 교정의 원칙에 대해 정교한 이론을 완성하였다.</td><td class="v"><b>T</b> / <b class="ok">F</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    <span>인용 쪽수는 남경희 역 『아나키, 국가, 그리고 유토피아』(문학과지성사) 기준</span>
+    <span class="mono">2026-2 · 세화여자고등학교 인문학과 윤리</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ── iPad / Safari 대응 ── */
+  var head = document.head;
+  function meta(n,c){ var m=document.createElement('meta'); m.name=n; m.content=c; head.appendChild(m); }
+  meta('apple-mobile-web-app-capable','yes');
+  meta('mobile-web-app-capable','yes');
+  meta('apple-mobile-web-app-status-bar-style','default');
+  meta('apple-mobile-web-app-title','노직 학습지');
+  var vp = document.querySelector('meta[name="viewport"]');
+  if (vp && vp.content.indexOf('viewport-fit') < 0) vp.content += ', viewport-fit=cover';
+
+  var framed = false;
+  try { framed = window.self !== window.top; } catch(e){ framed = true; }
+  if (framed) document.body.classList.add('framed');
+
+  var here = location.href;
+  var openNew = document.getElementById('openNew');
+  if (openNew) {
+    openNew.href = here;
+    openNew.addEventListener('click', function(){
+      setTimeout(function(){ if (document.hasFocus()) showTip(); }, 700);
+    });
+  }
+  var tip = document.createElement('div');
+  tip.className = 'tip';
+  tip.innerHTML = '<h4>사파리에서 크게 보기</h4>' +
+    '<p>아래 주소를 사파리 주소창에 붙여 넣으세요. 열린 뒤 <b>공유 → 홈 화면에 추가</b>를 하면 다음부터는 아이콘만 눌러 전체 화면으로 열립니다.</p>' +
+    '<div class="url" id="tipUrl"></div>' +
+    '<div class="acts"><button class="btn" id="tipCopy">주소 복사</button><button class="btn" id="tipClose">닫기</button></div>';
+  document.body.appendChild(tip);
+  document.getElementById('tipUrl').textContent = here;
+  function showTip(){ tip.classList.add('on'); }
+  document.getElementById('tipClose').addEventListener('click', function(){ tip.classList.remove('on'); });
+  document.getElementById('tipCopy').addEventListener('click', function(){
+    var el = document.getElementById('tipUrl'), b = document.getElementById('tipCopy');
+    function done(){ b.textContent = '복사됨'; setTimeout(function(){ b.textContent='주소 복사'; }, 1600); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(here).then(done, select);
+    } else { select(); }
+    function select(){
+      var r = document.createRange(); r.selectNodeContents(el);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      try { document.execCommand('copy'); done(); } catch(e){}
+    }
+  });
+
+  /* ── 클릭으로 개별 정답 ── */
+  var pick = '.bl, .ch, .act .it, .tf tbody tr, .q';
+  document.querySelectorAll('.bl, .ch').forEach(function(el){
+    el.tabIndex = 0; el.setAttribute('role','button');
+    el.setAttribute('aria-label','정답 보기');
+  });
+  document.addEventListener('click', function(e){
+    var el = e.target.closest && e.target.closest(pick);
+    if (!el) return;
+    el.classList.toggle('open');
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var el = document.activeElement;
+    if (el && el.matches && el.matches('.bl, .ch')) { e.preventDefault(); el.classList.toggle('open'); }
+  });
+
+  /* ── 전체 토글 ── */
+  var btn = document.getElementById('ansBtn'), on = false;
+  function set(v){
+    on = v;
+    document.body.classList.toggle('ans', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? '정답 모두 숨기기' : '정답 모두 보기';
+    if (!on) document.querySelectorAll('.open').forEach(function(el){ el.classList.remove('open'); });
+  }
+  btn.addEventListener('click', function(){ set(!on); });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+  document.addEventListener('keydown', function(e){
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'a' || e.key === 'A' || e.key === '\u3141') set(!on);
+  });
+})();
+</script>
+
+</body></html>

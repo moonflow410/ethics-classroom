@@ -1,0 +1,637 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap">
+<title>에피쿠로스 학습지</title>
+<style>
+:root{
+  --paper:#F7F5FA; --surface:#FFFFFF; --ink:#1F1D2B; --ink-2:#4A4757; --muted:#7B7789;
+  --rule:#DCD7E6; --rule-soft:#EBE7F2; --band:#EFEAF7; --band-ink:#4A3374;
+  --accent:#5B3E86; --accent-soft:#F0EAF8; --answer:#B4262B; --quote-bg:#FBFAFD;
+  --shadow:0 1px 2px rgba(31,29,43,.05), 0 8px 24px -18px rgba(31,29,43,.35);
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14131C; --surface:#1C1A26; --ink:#EDEAF3; --ink-2:#C4BFD2; --muted:#948FA5;
+    --rule:#332F42; --rule-soft:#282536; --band:#2A2340; --band-ink:#CDBDEC;
+    --accent:#B79BE6; --accent-soft:#251E37; --answer:#FF8A87; --quote-bg:#1A1825;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14131C; --surface:#1C1A26; --ink:#EDEAF3; --ink-2:#C4BFD2; --muted:#948FA5;
+  --rule:#332F42; --rule-soft:#282536; --band:#2A2340; --band-ink:#CDBDEC;
+  --accent:#B79BE6; --accent-soft:#251E37; --answer:#FF8A87; --quote-bg:#1A1825;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -20px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Noto Sans KR",-apple-system,"Malgun Gothic","맑은 고딕",sans-serif;
+  font-size:16px; line-height:1.78; word-break:keep-all;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 96px}
+
+/* ---------- toolbar ---------- */
+.bar{
+  position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule);
+  display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+  padding:10px 20px; margin-bottom:0;
+}
+.bar .grow{flex:1 1 auto}
+.btn{
+  font:500 13.5px/1 "Noto Sans KR",sans-serif; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--rule); border-radius:999px;
+  padding:9px 15px; cursor:pointer; transition:.15s;
+}
+.btn:hover{border-color:var(--accent); color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.btn[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .btn[aria-pressed="true"],
+:root:not([data-theme="light"]) .btn[aria-pressed="true"]{color:#14131C}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .btn[aria-pressed="true"]{color:#fff}}
+.hint{font-size:12.5px;color:var(--muted)}
+.bar a.pop{font:700 13.5px/1 "Noto Sans KR",sans-serif;text-decoration:none;color:#fff;
+  background:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:9px 15px;display:none}
+.bar a.pop:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+body.framed .bar a.pop{display:inline-block}
+:root[data-theme="dark"] .bar a.pop,
+:root:not([data-theme="light"]) .bar a.pop{color:#14131C}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .bar a.pop{color:#fff}}
+
+#link{position:fixed;inset:0;z-index:40;display:none;place-items:center;background:rgba(20,17,32,.55);padding:24px}
+#link.open{display:grid}
+#link .card{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:26px 28px;
+  max-width:560px;width:100%;box-shadow:0 30px 70px -30px rgba(0,0,0,.6)}
+#link h3{margin:0 0 8px;font-family:"Noto Serif KR",serif;font-size:21px;color:var(--ink)}
+#link p{margin:0 0 16px;font-size:14.5px;line-height:1.75;color:var(--muted)}
+#link .u{font-size:13px;color:var(--ink-2);background:var(--accent-soft);border:1px solid var(--rule);
+  border-radius:8px;padding:11px 13px;word-break:break-all;line-height:1.6;user-select:all;-webkit-user-select:all}
+#link .row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+#link button{font:500 13.5px/1 "Noto Sans KR",sans-serif;border-radius:999px;padding:10px 16px;cursor:pointer;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink-2)}
+#link button.p{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+
+/* ---------- masthead ---------- */
+.mast{padding:34px 0 18px; border-bottom:2px solid var(--ink)}
+.eyebrow{font-size:12.5px;letter-spacing:.14em;color:var(--muted);text-transform:none;margin:0 0 12px}
+.mast h1{
+  font-family:"Noto Serif KR",serif; font-weight:700; font-size:clamp(30px,5.4vw,46px);
+  line-height:1.2; margin:0; letter-spacing:-.02em; text-wrap:balance;
+}
+.mast h1 small{display:block;font-family:"Noto Sans KR",sans-serif;font-size:15px;font-weight:400;color:var(--muted);margin-top:10px;letter-spacing:0}
+.idline{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px;font-size:14px;color:var(--muted)}
+.idline span{border-bottom:1px solid var(--rule);min-width:96px;display:inline-block;padding:2px 6px}
+
+/* ---------- sections ---------- */
+section{margin-top:40px}
+h2{
+  display:flex; align-items:baseline; gap:12px; margin:0 0 14px;
+  font-family:"Noto Serif KR",serif; font-size:21px; font-weight:700; line-height:1.4;
+  padding-bottom:9px; border-bottom:1.5px solid var(--ink); text-wrap:balance;
+}
+h2 .no{
+  font-family:"Noto Sans KR",sans-serif; font-size:12.5px; font-weight:700; letter-spacing:.06em;
+  color:var(--band-ink); background:var(--band); border-radius:5px; padding:4px 9px; flex:none;
+  position:relative; top:-2px;
+}
+h3{font-size:16.5px;font-weight:700;margin:26px 0 10px;color:var(--accent);display:flex;align-items:center;gap:8px}
+h3::before{content:"";width:16px;height:1.5px;background:var(--accent);flex:none}
+p{margin:0 0 12px}
+.lead{color:var(--ink-2)}
+ul.dots{margin:0 0 14px;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+ul.dots > li{position:relative;padding-left:17px}
+ul.dots > li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.75}
+ul.sub{margin:8px 0 0;padding-left:17px;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:15px;color:var(--ink-2)}
+ul.sub > li::before{content:"–";margin-right:8px;color:var(--muted)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:0 0 16px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15.3px}
+th,td{padding:11px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top;text-align:left;line-height:1.7}
+tr:last-child th,tr:last-child td{border-bottom:0}
+thead th{background:var(--band);color:var(--band-ink);font-weight:700;font-size:14px;text-align:center;border-bottom:1px solid var(--rule)}
+tbody th{background:var(--accent-soft);color:var(--band-ink);font-weight:700;width:23%;min-width:120px;text-align:center;font-size:14.5px}
+table.split tbody th{width:14%;min-width:84px}
+td small{display:block;color:var(--muted);font-size:13.5px;margin-top:3px}
+
+/* ---------- blanks ---------- */
+.bl{
+  display:inline-block; min-width:56px; text-align:center; cursor:pointer;
+  border-bottom:1.5px solid var(--ink); padding:0 7px; margin:0 1px;
+  font-size:12.5px; color:var(--muted); letter-spacing:.06em; line-height:1.5;
+  vertical-align:baseline; transition:background .15s; border-radius:3px 3px 0 0;
+}
+.bl:hover{background:var(--accent-soft)}
+.bl:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bl.on{
+  font-family:"Noto Serif KR",serif; font-size:inherit; font-weight:700;
+  color:var(--answer); letter-spacing:0; border-bottom-color:var(--answer); background:transparent;
+}
+.ch{display:inline-flex;gap:0;align-items:center;cursor:pointer;vertical-align:baseline;
+  border:1px solid var(--rule);border-radius:999px;overflow:hidden;margin:0 2px;background:var(--surface)}
+.ch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ch b{font-weight:500;font-size:14px;padding:1px 11px;color:var(--ink-2);transition:.15s}
+.ch b + b{border-left:1px solid var(--rule)}
+.ch:hover b{color:var(--accent)}
+.ch.on b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--muted)}
+.ch.on b.yes{background:var(--answer);color:#fff;text-decoration:none;font-weight:700}
+
+/* ---------- source boxes ---------- */
+.src{
+  margin:20px 0; background:var(--quote-bg); border:1px dashed var(--rule);
+  border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:16px 20px 16px 18px;
+}
+.src .tag{
+  font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--accent);
+  display:block;margin-bottom:9px;
+}
+.src .tag em{font-style:normal;color:var(--muted);font-weight:500;letter-spacing:0}
+.src p,.src li{font-family:"Noto Serif KR",serif;font-size:15.2px;line-height:1.9;color:var(--ink-2)}
+.src p:last-child,.src ul:last-child{margin-bottom:0}
+.src ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.src ul li{position:relative;padding-left:15px}
+.src ul li::before{content:"";position:absolute;left:0;top:.85em;width:4px;height:4px;background:var(--muted);border-radius:50%}
+
+/* ---------- questions ---------- */
+.q{margin:22px 0;border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:16px 18px;box-shadow:var(--shadow)}
+.q .qh{display:flex;gap:10px;align-items:flex-start;font-weight:700;font-size:15.8px;line-height:1.65}
+.q .qh i{font-style:normal;color:var(--accent);flex:none;font-family:"Noto Serif KR",serif}
+.lines{margin-top:14px;display:flex;flex-direction:column;gap:0}
+.lines div{height:36px;border-bottom:1px dotted var(--rule)}
+.model{margin-top:12px;border-left:2px solid var(--answer);background:var(--accent-soft);padding:12px 14px;border-radius:0 8px 8px 0;font-size:15px;line-height:1.85;color:var(--ink-2);display:none}
+.model b{color:var(--answer);font-size:12px;letter-spacing:.08em;display:block;margin-bottom:6px}
+.model.on{display:block}
+.showq{
+  margin-top:12px; font:500 13px/1 "Noto Sans KR",sans-serif; color:var(--accent);
+  background:transparent; border:1px solid var(--accent); border-radius:999px;
+  padding:8px 15px; cursor:pointer; transition:.15s; align-self:flex-start;
+}
+.showq:hover{background:var(--accent);color:#fff}
+.showq:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.showq[aria-expanded="true"]{background:var(--accent);color:#fff}
+:root[data-theme="dark"] .showq:hover,:root[data-theme="dark"] .showq[aria-expanded="true"],
+:root:not([data-theme="light"]) .showq:hover,:root:not([data-theme="light"]) .showq[aria-expanded="true"]{color:#14131C}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]) .showq:hover,:root:not([data-theme="dark"]) .showq[aria-expanded="true"]{color:#fff}
+}
+.q{display:flex;flex-direction:column;align-items:stretch}
+
+/* ---------- true / false ---------- */
+ol.tf{list-style:none;counter-reset:tf;margin:0;padding:0;display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+ol.tf li{counter-increment:tf;display:flex;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--rule-soft);font-size:15.3px;line-height:1.6}
+ol.tf li:last-child{border-bottom:0}
+ol.tf li::before{content:counter(tf) ".";font-weight:700;color:var(--muted);flex:none;width:22px;font-variant-numeric:tabular-nums}
+ol.tf li .s{flex:1 1 auto}
+
+.foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .wrap{padding:0 14px 72px}
+  .bar{padding:9px 14px}
+  h2{font-size:19px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+
+@media print{
+  .bar,.q .model,.q .showq,.foot,#link{display:none !important}
+  body{background:#fff;color:#000;font-size:10.5pt;line-height:1.6}
+  .wrap{max-width:none;padding:0}
+  .tw,.q,ol.tf{box-shadow:none}
+  section{break-inside:auto}
+  .src,.q,.tw{break-inside:avoid}
+  .bl.on{color:#000;font-family:inherit;font-weight:400}
+}
+</style>
+
+<div class="bar">
+  <button class="btn" id="toggle" aria-pressed="false">정답 모두 보기</button>
+  <button class="btn" id="reset">지우기</button>
+  <div class="grow"></div>
+  <span class="hint">빈칸을 하나씩 눌러도 정답이 나옵니다</span>
+  <button class="btn" id="print">인쇄</button>
+  <a class="pop" id="pop" target="_blank" rel="noopener">새 창에서 열기</a>
+</div>
+
+<div id="link">
+  <div class="card">
+    <h3>태블릿에서 꽉 차게 보려면</h3>
+    <p>지금 이 학습지는 Claude 앱 안의 작은 칸에서 열려 있습니다. 아래 주소를 <b>사파리에 붙여 넣어</b> 여시면 화면 전체를 씁니다. 사파리에서 <b>공유 → 홈 화면에 추가</b>까지 해 두면, 다음부터는 아이콘만 눌러도 주소창 없이 바로 열립니다.</p>
+    <div class="u" id="url"></div>
+    <div class="row">
+      <button class="p" id="copy">링크 복사</button>
+      <button id="close">닫기</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">2026-2 세화여자고등학교 인문학과 윤리 · 원전 기반 학습 자료 ③</p>
+  <h1>에피쿠로스, 『쾌락』<small>감각에서 시작해 원자를 거쳐, 고통이 없는 상태에 이르는 길</small></h1>
+  <div class="idline">세화여자고등학교 2학년 <span></span>반 &nbsp;이름 <span></span></div>
+</header>
+
+<!-- [1] -->
+<section>
+  <h2><span class="no">[1]</span>인식론 — ‘감각이 지식의 토대’</h2>
+  <div class="tw"><table>
+    <tbody>
+      <tr><th>지식의 확실한 토대</th><td>대상에서 유출된 <span class="bl" data-a="원자">ㅇㅈ</span>를 원인으로 하여 생겨나는 분명하고 뚜렷한 <span class="bl" data-a="감각 지각">ㄱㄱ ㅈㄱ</span></td></tr>
+      <tr><th>감각의 지위</th><td>감각 지각은 대상에 대한 정확한 정보를 제공한다 → 그 정보에는 오류가 <span class="ch" data-a="2">있다|없다</span></td></tr>
+      <tr><th>오류의 발생 지점</th><td><span class="bl" data-a="개념">ㄱㄴ</span>을 사용하여 이루어지는 <span class="bl" data-a="판단">ㅍㄷ</span></td></tr>
+      <tr><th>진위의 궁극적 기준</th><td>역시 분명하고 뚜렷한 <span class="bl" data-a="감각 지각">ㄱㄱ ㅈㄱ</span> → 세계에 대한 진술은 감각 지각과 <span class="bl" data-a="모순">ㅁㅅ</span>되지 않을 때에만 참임</td></tr>
+      <tr><th>행위 선택의 기준</th><td><span class="bl" data-a="쾌락">ㅋㄹ</span>의 감정 = 무엇을 선택해야 하는가의 기준 / <span class="bl" data-a="고통">ㄱㅌ</span>의 감정 = 무엇을 회피해야 하는가의 기준</td></tr>
+    </tbody>
+  </table></div>
+  <p class="lead">⟹ 감각주의적 경향은 인식뿐 아니라 행위 선택에도 그대로 적용되며, 이 기준에 따른 행위 선택에는 오류가 <span class="ch" data-a="2">있다|없다</span>고 주장함</p>
+</section>
+
+<!-- [2] -->
+<section>
+  <h2><span class="no">[2]</span>존재론 — ① 원자론</h2>
+  <p class="lead">에피쿠로스 학파는 자신들의 윤리학적 입장을 지지하기 위해 데모크리토스의 원자론을 변형하여 존재론을 확립함</p>
+  <div class="tw"><table>
+    <tbody>
+      <tr><th>우주의 궁극적 성분</th><td>크기·형태·<span class="bl" data-a="무게">ㅁㄱ</span>가 각기 다르고 수에 있어서 <span class="bl" data-a="무한">ㅁㅎ</span>한 비가시적 물질적 개체 = 원자</td></tr>
+      <tr><th>존재하는 것</th><td><span class="bl" data-a="물체">ㅁㅊ</span>(원자)와 <span class="bl" data-a="허공">ㅎㄱ</span> 외에는 아무것도 없다 → 우주는 오직 <span class="bl" data-a="물질">ㅁㅈ</span>로만 구성</td></tr>
+      <tr><th>생성과 소멸</th><td>생성 = 원자들의 <span class="bl" data-a="결합">ㄱㅎ</span> / 소멸 = 결합해 있던 원자들의 <span class="bl" data-a="분해">ㅂㅎ</span></td></tr>
+      <tr><th>인간</th><td>육체뿐 아니라 <span class="bl" data-a="정신">ㅈㅅ</span>도 원자들의 구성물 → 모든 정신 활동은 <span class="bl" data-a="원자">ㅇㅈ</span>의 운동으로 설명됨</td></tr>
+      <tr><th>쾌락과 고통</th><td>정신은 육체와 불가분의 관계를 맺고 상호작용 함.<br>그 상호작용의 대표적 <span class="bl" data-a="결과물">ㄱㄱㅁ</span>이 바로 쾌락과 고통의 감정임</td></tr>
+      <tr><th>죽음</th><td>육체의 소멸임과 동시에 <span class="bl" data-a="정신">ㅈㅅ</span>의 소멸 → 생명 활동 · 감각 · 지각 · 느낌 등 모든 것의 소멸</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- [3] -->
+<section>
+  <h2><span class="no">[3]</span>존재론 — ② 원자의 이탈과 인간의 자유</h2>
+  <ul class="dots">
+    <li>원자는 자기 무게 때문에 허공 속을 <span class="bl" data-a="직선 하강">ㅈㅅ ㅎㄱ</span> 운동함.</li>
+    <li>원자의 <span class="bl" data-a="이탈">ㅇㅌ</span> 발생 : 원자는 <b>정할 수 없는 시간과 정할 수 없는 공간</b>에서 원래 경로에서 아주 약간 벗어남</li>
+    <li>이탈이 없다면 원자들은 빗방울처럼 나란히 떨어질 뿐이어서 <span class="bl" data-a="충돌">ㅊㄷ</span>도 타격도 생기지 않고, 자연은 아무것도 낳지 못했을 것임 → 최초의 충돌 → 뒤엉킴 → <span class="bl" data-a="회전 운동">ㅎㅈ ㅇㄷ</span> → 수많은 존재자의 형성</li>
+    <li>이탈이 가능한 이유 : 직선 하강 운동에서 벗어나고자 하는 예측 불가능한 경향성, 곧 <b>자신의 운동을 스스로 결정할 수 있는 <span class="bl" data-a="내">ㄴ</span>적인 힘</b>을 원자가 지니고 있기 때문임.</li>
+    <li>따라서 원자들로 형성된 세계는 필연적 법칙에 의해 완전히 결정된 세계가 아니라 <span class="bl" data-a="불확정적">ㅂㅎㅈㅈ</span>이고 예측 <span class="ch" data-a="2">가능|불가능</span>한 세계!</li>
+    <li>인간의 영혼을 구성하는 원자도 이 힘을 지님. → 의지의 작용이 행위를 일으키는 <span class="bl" data-a="최초 원인">ㅊㅊ ㅇㅇ</span> → <span class="bl" data-a="자유 의지">ㅈㅇ ㅇㅈ</span> 긍정 → 인간은 <b>인과필연성의 강제</b>에서 벗어나 자유롭게 행위를 선택하고 의욕하며 실행할 수 있음</li>
+  </ul>
+</section>
+
+<!-- [4] -->
+<section>
+  <h2><span class="no">[4]</span>윤리설 — ① 소극적 쾌락주의: 인간의 최고선 = 쾌락</h2>
+  <div class="tw"><table>
+    <tbody>
+      <tr><th>인간 본성</th><td>다른 동물과 마찬가지로 본성적으로 <span class="bl" data-a="쾌락">ㅋㄹ</span>을 추구함</td></tr>
+      <tr><th>쾌락의 지위</th><td>인간 행위가 추구하는 <span class="bl" data-a="최상">ㅊㅅ</span>의 <span class="bl" data-a="목적">ㅁㅈ</span> → 그 자체로 바람직한 궁극 목적 = 인간의 <span class="bl" data-a="최고선">ㅊㄱㅅ</span>인 행복</td></tr>
+      <tr><th>도덕적 요구</th><td>‘자신의 쾌락을 <span class="bl" data-a="최대화">ㅊㄷㅎ</span>하라’ — 인간에게 주어진 가장 중대한 <span class="bl" data-a="의무">ㅇㅁ</span></td></tr>
+      <tr><th>쾌락의 3가지 성격</th><td>
+        1) 순간의 육체적·감각적 쾌락이 아니라 전생(全生)을 통해서 지속되는 <span class="bl" data-a="정신적">ㅈㅅㅈ</span> 쾌락임.<br>
+        2) 쾌락의 적극적 추구가 아니라 고통의 <span class="bl" data-a="제거">ㅈㄱ</span>를 통해 얻는 것! 즉, 고통의 <span class="bl" data-a="부재">ㅂㅈ</span> 상태 = 쾌락<br>
+        <small>→ 쾌락 = 신체에 어떠한 고통도 없고 정신에 어떠한 불안도 없는 영혼의 평정 상태(<span class="bl" data-a="아타락시아">ㅇㅌㄹㅅㅇ</span>)</small>
+        3) 쾌락을 동적 쾌락과 정적 쾌락으로 구분함
+      </td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="src">
+    <span class="tag">원문 1 <em>· 쾌락은 행복한 인생의 시작이자 끝</em></span>
+    <p>우리는 쾌락이 행복한 인생의 시작이고 끝이라고 말한다. 왜냐하면 우리는 쾌락을 우리에게 타고난 첫 번째 선(최고선)이라고 인식하며, 선택하고 기피하는 모든 행동을 쾌락으로부터 시작하기 때문이다. 또한 우리는 모든 선을 구별하는 기준으로서 쾌락을 사용하면서, 쾌락으로 다시 돌아간다.</p>
+  </div>
+
+  <h3>♥ 쾌락의 역설</h3>
+  <ul class="dots">
+    <li>감각적·육체적 쾌락을 직접적이고 연속적으로 추구하면 쾌락을 얻을 기회가 점점 줄어들어 <span class="bl" data-a="고통">ㄱㅌ</span>이 발생하고, 오히려 그러한 쾌락을 얻고자 하는 노력을 <span class="bl" data-a="포기">ㅍㄱ</span>할 때 참된 쾌락을 얻게 되는 현실을 의미함</li>
+    <li>②의 규정은 바로 이 역설을 피하려는 의도에서 나온 것임</li>
+  </ul>
+
+  <div class="tw"><table class="split">
+    <thead><tr><th></th><th>동적 쾌락</th><th>정적 쾌락</th></tr></thead>
+    <tbody>
+      <tr><th>획득 시점</th>
+        <td>자연적·필수적 욕구를 충족시키는 <span class="bl" data-a="과정">ㄱㅈ</span>에서 얻는 쾌락<small>(몸이 고통에서 벗어나 자연스러운 상태로 회복되어 가는 과정)</small></td>
+        <td>자연적·필수적 욕구가 충족된 <span class="bl" data-a="결과">ㄱㄱ</span>로 얻는 쾌락</td></tr>
+      <tr><th>상태</th>
+        <td>아직 회복 중인 상태</td>
+        <td>고통이 전혀 없는 상태를 완전하고 안정적으로 <span class="bl" data-a="향유">ㅎㅇ</span>하고 있는 상태 = 육체의 고통이 없고 마음에 불안이 없는 상태</td></tr>
+      <tr><th>관계</th>
+        <td colspan="2">동적 쾌락은 정적 쾌락의 <span class="bl" data-a="필요조건">ㅍㅇㅈㄱ</span>임. 그렇다고 두 쾌락이 질적으로 같은 것은 <span class="ch" data-a="2">맞다|결코 아니다</span>.</td></tr>
+      <tr><th>우열</th>
+        <td colspan="2"><b>정적 쾌락 &gt; 동적 쾌락.</b> 동적 쾌락은 욕구를 일단 충족시키고 나면 더 이상 증가하지 않으며, 과잉 충족되면 오히려 고통을 야기할 수도 있기 때문임</td></tr>
+      <tr><th>권장</th>
+        <td colspan="2">정적 쾌락 선호 + 정적 쾌락의 상태를 해치지 않는 범위 내에서 최소한의 동적 쾌락을 추구할 것을 권장</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="src">
+    <span class="tag">원문 2 <em>· 쾌락의 한계는 모든 고통의 제거</em></span>
+    <ul>
+      <li>모든 고통스러운 것들의 제거가 쾌락 크기의 한계이다. 쾌락이 있는 곳에서는, 그것이 있는 한, 몸의 고통과 마음의 혼란이 없다.</li>
+      <li>우리에게 쾌락이란 신체 영역에 어떤 고통도 느끼지 않는 동시에 정신적 영역에서 어떤 불안도 느끼지 않는 것을 의미한다. 왜냐하면 넘칠 만큼의 음식이나 아름다운 남녀와의 즐김, 또는 맛있는 생선 요리와 같이 풍성하게 차려진 식탁에 있는 것들이 쾌락적인 삶을 만들어 주는 것은 아니기 때문이다. 오히려 모든 욕구와 회피의 근거를 파악하고 영혼을 회오리바람처럼 뒤흔드는 광기를 몰아내는 명료한 사고만이 쾌락적인 삶을 만들어 주기 때문이다.</li>
+      <li>마음의 동요가 없음과 몸의 고통이 없음은 정적 쾌락이다. 하지만 즐거움과 환희는 운동을 동반한 실제적 쾌락이다.</li>
+    </ul>
+  </div>
+
+  <div class="q">
+    <div class="qh"><i>Q1.</i><span>쾌락의 역설이 무엇인지 밝히고, 에피쿠로스 학파가 쾌락을 ‘고통의 부재’로 규정한 것이 이 역설과 어떻게 연결되는지 서술하시오.</span></div>
+    <div class="lines"><div></div><div></div><div></div><div></div></div>
+    <div class="model"><b>예시 답안</b>감각적·육체적 쾌락을 직접적이고 연속적으로 추구하면 쾌락을 얻을 기회가 점점 줄어들어 오히려 고통이 발생하고, 그 쾌락을 얻으려는 노력을 포기할 때 도리어 참된 쾌락을 얻게 되는 현상이 쾌락의 역설이다. 쾌락을 계속 채워 넣어야 할 무엇으로 보는 한 이 역설을 피할 수 없다. 그래서 에피쿠로스 학파는 쾌락을 더 채워야 할 것이 아니라 고통이 제거된 상태 그 자체로 규정한다. 그러면 쾌락의 한계는 모든 고통스러운 것의 제거이고, 추구의 방향도 증대가 아니라 제거가 되어 역설에 걸리지 않는다.</div>
+  </div>
+</section>
+
+<!-- [5] -->
+<section>
+  <h2><span class="no">[5]</span>윤리설 — ② 쾌락 획득 방법 ㉮ : 신·죽음·내세·운명의 공포로부터의 해방</h2>
+  <p class="lead">쾌락의 본질 = 고통의 부재. 쾌락을 직접적으로 추구하지 않고 고통의 <span class="bl" data-a="원인">ㅇㅇ</span>을 추적하여 제거함. 그 원인 중 하나가 신·죽음·내세에 대한 공포이며, 그 공포의 근원은 세계에 대한 <span class="bl" data-a="잘못된 믿음">ㅈㅁㄷ ㅁㅇ</span>(비합리적 신념, 판단 오류)임을 밝힘으로써 인간을 해방시키고자 함</p>
+  <div class="tw"><table class="split">
+    <thead><tr><th>대상</th><th>비합리적 신념</th><th>원자론에 근거한 해방</th></tr></thead>
+    <tbody>
+      <tr><th>신</th>
+        <td>자연 세계와 인간사가 신의 <span class="bl" data-a="의지">ㅇㅈ</span>에 의해 지배된다는 믿음</td>
+        <td>자연의 모든 변화는 빈 공간에서 이루어지는 원자의 운동과 결합의 결과다. 신은 완전하고 최상의 행복을 누리는 <span class="bl" data-a="불멸">ㅂㅁ</span>의 존재인데, 인간사에 관여하려면 반드시 <span class="bl" data-a="정념">ㅈㄴ</span>과 <span class="bl" data-a="편애">ㅍㅇ</span>를 가져야 하고 그것은 신의 완전성과 평온을 파괴한다.<br>→ <b>신은 결코 인간사에 관여하지 않는다.</b></td></tr>
+      <tr><th>죽음</th>
+        <td>죽음이 나에게 <span class="bl" data-a="고통">ㄱㅌ</span>을 준다는 믿음</td>
+        <td>고통은 본질적으로 감각이고, 감각의 제일 원인은 신체가 아니라 영혼이다. 죽음은 신체와 <span class="bl" data-a="영혼">ㅇㅎ</span>을 구성하던 원자들의 분해, 곧 감각 능력의 <span class="bl" data-a="소멸">ㅅㅁ</span>이다.<br>→ 죽음은 인간에게 고통을 부여하지 않음. 살아 있는 사람에게 죽음은 존재하지 않음.</td></tr>
+      <tr><th>내세</th>
+        <td>내세에서 신의 <span class="bl" data-a="심판">ㅅㅍ</span>을 받는다는 믿음</td>
+        <td>죽음 이후 동일성을 유지하면서 영속하는 영혼은 존재하지 않음<br>→ 내세에서 처벌 받을 <span class="bl" data-a="주체">ㅈㅊ</span> 자체가 없음</td></tr>
+      <tr><th>운명</th>
+        <td>정해진 <span class="bl" data-a="운명">ㅇㅁ</span>이 나를 지배한다는 믿음</td>
+        <td>원자의 이탈이라는 관점에서 보면 <b>필연적인 운명은 존재하지 않음</b><br>→ 운명 때문에 불안해하는 것은 어리석은 일임</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="src">
+    <span class="tag">원문 3 <em>· 신은 분노하지 않는다 / 죽음은 우리에게 아무것도 아니다</em></span>
+    <ul>
+      <li>축복받은 영원한 존재들은 스스로 아무런 문제도 가지고 있지 않으며 또한 다른 어떤 존재에게 문제를 일으키지도 않는다. 따라서 그들은 분노와 편애 같은 감정을 전혀 지니지 않는다. 왜냐하면 그런 감정들은 곧 나약함을 의미하는 것이기 때문이다.</li>
+      <li>모든 불행 중에 가장 끔찍한 불행인 죽음은 우리에게 아무것도 아니다. 우리가 존재하는 한 죽음은 존재하지 않으며, 죽음이 존재하면 우리는 더 이상 존재하지 않는다. 따라서 죽음은 산 자에게도 죽은 자에게도 아무 관련이 없다. 산 자에게는 죽음이 없으며, 죽은 자는 더 이상 존재하지 않기 때문이다.</li>
+      <li>죽음은 우리에게 아무것도 아니라고 믿는 데 익숙해져야 한다. 왜냐하면 선과 악은 감각의 능력을 전제하는데 죽음은 바로 모든 감각 능력의 상실을 의미하기 때문이다. … 그러므로 죽음이 찾아올 때 고통스럽기 때문이 아니라 죽음을 예상하는 것이 고통스럽기 때문에 두렵다고 말하는 자는 어리석은 자이다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- [6] -->
+<section>
+  <h2><span class="no">[6]</span>윤리설 — ③ 쾌락 획득 방법 ㉯ : 이성적 숙고의 삶</h2>
+  <ul class="dots">
+    <li>전제 : 모든 쾌락은 좋은 것(<span class="bl" data-a="선">ㅅ</span>)이고, 모든 고통은 나쁜 것(<span class="bl" data-a="악">ㅇ</span>)임. 그러나 현명한 사람은 현재의 모든 쾌락을 추구하거나 모든 고통을 회피하려 하지 <span class="ch" data-a="1">않는다|한다</span>.
+      <ul class="sub">
+        <li>어떤 쾌락은 그 결과로 더 큰 고통을 수반한다 <b>(회피해야 할 쾌락)</b></li>
+        <li>어떤 고통은 그것을 참고 이겨냈을 때 회피할 때와는 비교도 되지 않을 더 큰 쾌락을 가져다준다 <b>(추구해야 할 고통)</b></li>
+      </ul>
+    </li>
+    <li>판단의 지평 : 순간이 아니라 <span class="bl" data-a="전생">ㅈㅅ</span>(全生)에 걸친 쾌락의 지속</li>
+    <li>결론 : 진정한 쾌락의 획득은 <span class="bl" data-a="이성적 숙고">ㅇㅅㅈ ㅅㄱ</span>를 반드시 필요로 한다. → 쾌락을 추구하는 삶과 이성을 따르는 삶은 대립하는 삶의 유형이 <span class="ch" data-a="1">아니다|맞다</span>. 오히려 이성을 따름으로써 참된 쾌락, 진정한 행복을 얻게 된다.</li>
+  </ul>
+
+  <div class="src">
+    <span class="tag">원문 4 <em>· 모든 쾌락을 다 추구하지는 않는다</em></span>
+    <p>쾌락은 우리에게 최우선적으로 주어진 자연적인 재화이다. 그렇다고 해서 우리는 모든 쾌락을 추구하지 않는다. 쾌락 때문에 보다 큰 고통이 초래될 위험이 있을 경우 우리는 많은 쾌락들을 지나쳐버린다. 보다 오랜 고통의 시간 뒤에 보다 큰 쾌락이 뒤따라올 경우에 우리는 많은 고통을 쾌락보다 높이 평가한다. 쾌락이 그 자체로서 유쾌한 것이기 때문에 모든 쾌락이 추구할 만한 가치를 가지는 것은 아니다. 반대로 모든 고통이 나쁜 것이지만 그렇다고 해서 반드시 회피되어야 하는 것은 아니다.</p>
+  </div>
+
+  <div class="q">
+    <div class="qh"><i>Q2.</i><span>에피쿠로스 학파는 쾌락주의자면서도 ‘이성’을 강조한다. 이것이 그들의 이론 안에서 어떻게 정합적으로 설명되는가?</span></div>
+    <div class="lines"><div></div><div></div><div></div><div></div></div>
+    <div class="model"><b>예시 답안</b>모든 쾌락은 선이고 모든 고통은 악이지만, 어떤 쾌락은 결과적으로 더 큰 고통을 낳고 어떤 고통은 그보다 훨씬 큰 쾌락을 가져온다. 그런데 이들이 목표로 삼는 것은 순간의 쾌락이 아니라 전생에 걸친 쾌락의 지속이므로, 무엇을 선택하고 무엇을 회피할지는 반드시 계산과 숙고를 거쳐야만 정해진다. 따라서 쾌락을 추구하는 삶과 이성을 따르는 삶은 대립하지 않으며, 이성을 따를 때에만 참된 쾌락에 이른다. 이 때문에 쾌락과 고통을 계산하는 추론 능력인 실천적 지혜가 모든 덕 가운데 최고의 덕이 된다.</div>
+  </div>
+</section>
+
+<!-- [7] -->
+<section>
+  <h2><span class="no">[7]</span>윤리설 — ③ 쾌락 획득 방법 ㉰ : 온건한 금욕의 실천</h2>
+  <p class="lead">욕구의 양과 고통의 양은 <span class="bl" data-a="비례">ㅂㄹ</span>함. 욕구의 양이 증가하면 그것에 비례하여 <span class="bl" data-a="결핍감">ㄱㅍㄱ</span>으로 인한 고통이 증가함. 고통을 제거하려면 무엇보다 욕구의 양을 줄여야 함.</p>
+  <div class="tw"><table class="split">
+    <thead><tr><th>구분</th><th>성격</th><th>충족되지 않으면</th><th>예</th><th>태도</th></tr></thead>
+    <tbody>
+      <tr><th>★자연적<br>필수적★</th>
+        <td>인간의 어떠한 노력으로도 <b>제거할 수 없는</b> 욕구</td>
+        <td>반드시 <span class="bl" data-a="고통">ㄱㅌ</span>이 발생</td>
+        <td>배고픔을 면할 음식, 갈증을 면할 물, 추위를 막을 옷</td>
+        <td>최소한으로 충족<br>자족적이고 소박한 삶</td></tr>
+      <tr><th>자연적<br>비필수적</th>
+        <td>자연적이기는 하지만 필수적이지 않은 욕구</td>
+        <td>고통이 발생하지 않음</td>
+        <td>사치스러운 음식, 풍성하게 차려진 식탁, 맛있는 생선 요리</td>
+        <td>해를 끼치지 않는 한에서만</td></tr>
+      <tr><th>비자연적<br>비필수적</th>
+        <td>아무런 근거도 없는 인위적인 것, 관행이나 사회적 평판에 의해 발생</td>
+        <td>고통이 발생하지 않음</td>
+        <td>부와 명예에 대한 추구</td>
+        <td>제거</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="q">
+    <div class="qh"><i>Q3.</i><span>에피쿠로스 학파는 욕구를 줄이라고 하면서도 모든 욕구를 제거하라고는 하지 않는다. 그 이유는?</span></div>
+    <div class="lines"><div></div><div></div><div></div><div></div></div>
+    <div class="model"><b>예시 답안</b>욕구의 양과 고통의 양은 비례하므로 고통을 줄이려면 욕구를 줄여야 한다. 그러나 자연적이고 필수적인 욕구는 충족되지 않으면 반드시 고통이 발생하고 인간의 어떠한 노력으로도 제거할 수 없으므로, 제거의 대상이 아니라 최소한으로 충족시켜야 할 대상이다. 반면 충족되지 않아도 고통이 발생하지 않는 욕구, 특히 육체의 필요가 아니라 관행과 사회적 평판에서 생겨난 부와 명예 같은 헛된 욕구는 커질수록 고통도 커지므로 제거해야 한다. 그래서 그들의 결론은 모든 욕구를 끊는 금욕이 아니라, 자족적이고 소박한 삶, 곧 온건한 금욕의 실천이 된다.</div>
+  </div>
+</section>
+
+<!-- [8] -->
+<section>
+  <h2><span class="no">[8]</span>윤리설 — ③ 쾌락 획득 방법 ㉱ : 공적인 삶으로부터의 도피</h2>
+  <ul class="dots">
+    <li>공적인 삶은 영혼의 평온을 파괴하는 <b>집착, 좌절, 다툼, 분노</b>를 불러일으켜 육체적·정신적 고통을 가져옴 ⇒ 인간이 겪는 고통의 원천 중 하나임.</li>
+    <li>∴ 공적인 삶에서 벗어나 소규모의 사적인 공동체 안에서 가까운 친구와 <span class="bl" data-a="우정">ㅇㅈ</span>을 나누고 <span class="bl" data-a="정의">ㅈㅇ</span>롭게 살 것을 권유함</li>
+  </ul>
+  <div class="tw"><table class="split">
+    <thead><tr><th></th><th>내용</th><th>왜 필요한가</th></tr></thead>
+    <tbody>
+      <tr><th>정의</th>
+        <td>사람들의 상호 관계에 있어서 <b>서로 해치지 않고 해침을 당하지 않으려는 계약</b> → 정의란 그 자체로 존재하는 것이 <span class="ch" data-a="2">맞다|아니다</span></td>
+        <td>타인과의 관계에서 오는 고통으로부터 벗어나기 위해</td></tr>
+      <tr><th>우정</th>
+        <td>소규모의 사적인 공동체에서 서로 지적인 즐거움을 나누는 것</td>
+        <td>행복하게 살기 위해</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- [9] -->
+<section>
+  <h2><span class="no">[9]</span>윤리설 — ④ 덕론 : 최고의 덕은 실천적 지혜</h2>
+  <div class="tw"><table>
+    <tbody>
+      <tr><th>덕이란</th><td>인간의 궁극 목적인 최고선이자 그 자체 <span class="bl" data-a="본래적">ㅂㄹㅈ</span> 가치를 지닌 쾌락을 <span class="bl" data-a="산출">ㅅㅊ</span>하는 능력</td></tr>
+      <tr><th>덕의 가치</th><td>덕은 오직 그것이 쾌락을 산출한다는 이유 때문에 추구할 만한 것 → 본래적 가치가 아니라 <span class="bl" data-a="도구적">ㄷㄱㅈ</span> 가치만을 지닌다. 그 자체로 바람직한 본래적 가치를 지닌 덕은 존재하지 <span class="ch" data-a="1">않는다|한다</span>.</td></tr>
+      <tr><th>덕과 행복</th><td>덕과 쾌락(행복)은 <b>동일한 것이 아니다.</b> 그러나 덕은 행복 성취를 위한 본질적 수단이 됨으로써 행복과 <span class="bl" data-a="불가분">ㅂㄱㅂ</span>의 관계를 맺는다. → 덕을 갖추지 못한 사람은 결코 행복할 수 없다.</td></tr>
+      <tr><th>최고의 덕</th><td><span class="bl" data-a="실천적">ㅅㅊㅈ</span> 지혜(프로네시스) = 사려 깊음, 심사숙고, 신중함</td></tr>
+      <tr><th>실천적 지혜</th><td>각각의 행동에서 나올 현재 또는 미래의 쾌락과 고통을 잘 <span class="bl" data-a="계산">ㄱㅅ</span>하여 선택해야 할 행동과 회피해야 할 행동을 결정하는 건전한 <span class="bl" data-a="추론">ㅊㄹ</span> 능력</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="src">
+    <span class="tag">원문 5 <em>· 실천적 지혜 – 불의는 본래 나쁜 것이 아니다</em></span>
+    <ul>
+      <li>삶을 즐겁게 만드는 것은 계속 술을 마시고 흥청거리는 일도 아니고, 욕구를 만족시키는 일도 아니며, 물고기를 마음껏 먹거나 풍성한 식탁을 가지는 것도 아니고, 오히려 모든 선택과 기피의 동기를 발견하고 공허한 추측들을 몰아내며, 멀쩡한 정신으로 계산하는 것이다. 이 모든 것의 시작이자 가장 큰 선은 실천적 지혜(사려 깊음, 심사숙고, 신중함)이다. 그것은 심지어 철학보다도 소중하다. 왜냐하면 모든 다른 탁월성은 그것에서 생겨나며, 그것은 우리에게 ‘사려 깊고 아름답고 정의롭게 살지 않고서 즐겁게 사는 것은 불가능하며, 반대로 즐겁게 살지 않고서 사려 깊고 아름답고 정의롭게 사는 것도 불가능하다.’고 가르치기 때문이다.</li>
+      <li>불의는 본래 나쁜 것이 아니다. 불의가 나쁜 유일한 이유는 그것이 나쁜 행위들을 처벌하도록 지명된 사람들을 피하지 못하리라는 공포와 연결되어 있다는 것 때문이다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- [10] -->
+<section>
+  <h2><span class="no">[10]</span>에피쿠로스 학파, 진실 혹은 거짓?!</h2>
+  <ol class="tf">
+    <li><span class="s">에피쿠로스학파는 감각 지각 자체에는 오류가 없고 오류는 판단에서 발생한다고 본다.</span><span class="ch" data-a="1">T|F</span></li>
+    <li><span class="s">에피쿠로스학파는 인간의 정신을 원자로 구성되지 않은 비물질적 실체로 본다.</span><span class="ch" data-a="2">T|F</span></li>
+    <li><span class="s">원자의 이탈은 정해진 시간과 공간에서 필연적 법칙에 따라 일어난다.</span><span class="ch" data-a="2">T|F</span></li>
+    <li><span class="s">에피쿠로스학파는 동적 쾌락이 정적 쾌락보다 우월하다고 본다.</span><span class="ch" data-a="2">T|F</span></li>
+    <li><span class="s">동적 쾌락은 정적 쾌락의 필요조건이다.</span><span class="ch" data-a="1">T|F</span></li>
+    <li><span class="s">에피쿠로스학파는 모든 쾌락이 선이지만 모든 쾌락을 추구해야 하는 것은 아니라고 본다.</span><span class="ch" data-a="1">T|F</span></li>
+    <li><span class="s">에피쿠로스학파는 인간의 모든 욕구를 제거할 것을 주장하였다.</span><span class="ch" data-a="2">T|F</span></li>
+    <li><span class="s">부와 명예에 대한 추구는 자연적이지만 필수적이지 않은 욕구에 해당한다.</span><span class="ch" data-a="2">T|F</span></li>
+    <li><span class="s">에피쿠로스학파는 정의를 그 자체로 존재하는 것이 아니라 사람들 사이의 계약으로 본다.</span><span class="ch" data-a="1">T|F</span></li>
+    <li><span class="s">에피쿠로스학파에 따르면 덕을 갖추지 못한 사람도 행복할 수 있다.</span><span class="ch" data-a="2">T|F</span></li>
+  </ol>
+</section>
+
+<div class="foot">
+  <span>2026-2 인문학과 윤리 · 원전 기반 학습 자료 ③ 에피쿠로스</span>
+  <span>빈칸 클릭 = 개별 정답 / 상단 버튼 = 전체 정답</span>
+</div>
+</div>
+
+<script>
+(function(){
+  // 선택형: "보기1|보기2" + data-a(1부터) → 클릭 시 정답 표시
+  document.querySelectorAll('.ch').forEach(function(el){
+    var parts = el.textContent.split('|');
+    var idx = parseInt(el.dataset.a, 10);
+    el.textContent = '';
+    parts.forEach(function(t, i){
+      var b = document.createElement('b');
+      b.textContent = t.trim();
+      if (i + 1 === idx) b.className = 'yes';
+      el.appendChild(b);
+    });
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.setAttribute('aria-label', '선택형 정답 보기');
+  });
+
+  function flip(el){
+    if (el.classList.contains('bl')) {
+      if (el.classList.contains('on')) {
+        el.classList.remove('on');
+        el.textContent = el.dataset.h;
+      } else {
+        el.classList.add('on');
+        el.textContent = el.dataset.a;
+      }
+    } else {
+      el.classList.toggle('on');
+    }
+  }
+
+  document.querySelectorAll('.bl').forEach(function(el){
+    el.dataset.h = el.textContent;
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.setAttribute('aria-label','빈칸 정답 보기');
+  });
+
+  // 서술형: 문항마다 '예시 답안 보기' 버튼을 달아 개별 공개
+  document.querySelectorAll('.q').forEach(function(q, i){
+    var model = q.querySelector('.model');
+    if (!model) return;
+    var id = 'model-' + (i + 1);
+    model.id = id;
+    var b = document.createElement('button');
+    b.className = 'showq';
+    b.type = 'button';
+    b.textContent = '예시 답안 보기';
+    b.setAttribute('aria-expanded', 'false');
+    b.setAttribute('aria-controls', id);
+    b.addEventListener('click', function(){ setModel(model, !model.classList.contains('on')); });
+    q.insertBefore(b, model);
+  });
+  function setModel(model, on){
+    model.classList.toggle('on', on);
+    var b = model.previousElementSibling;
+    if (b && b.classList.contains('showq')) {
+      b.setAttribute('aria-expanded', String(on));
+      b.textContent = on ? '예시 답안 숨기기' : '예시 답안 보기';
+    }
+  }
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('.bl, .ch');
+    if (el) flip(el);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var el = e.target.closest && e.target.closest('.bl, .ch');
+    if (el) { e.preventDefault(); flip(el); }
+  });
+
+  function setAll(on){
+    document.querySelectorAll('.bl').forEach(function(el){
+      el.classList.toggle('on', on);
+      el.textContent = on ? el.dataset.a : el.dataset.h;
+    });
+    document.querySelectorAll('.ch').forEach(function(el){ el.classList.toggle('on', on); });
+    document.querySelectorAll('.model').forEach(function(m){ setModel(m, on); });
+  }
+
+  var t = document.getElementById('toggle');
+  t.addEventListener('click', function(){
+    var on = t.getAttribute('aria-pressed') !== 'true';
+    t.setAttribute('aria-pressed', String(on));
+    t.textContent = on ? '정답 숨기기' : '정답 모두 보기';
+    setAll(on);
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    t.setAttribute('aria-pressed','false');
+    t.textContent = '정답 모두 보기';
+    setAll(false);
+  });
+  document.getElementById('print').addEventListener('click', function(){ window.print(); });
+
+  // 홈 화면에 추가했을 때 주소창 없이 열리도록
+  [['apple-mobile-web-app-capable','yes'],
+   ['mobile-web-app-capable','yes'],
+   ['apple-mobile-web-app-status-bar-style','default'],
+   ['apple-mobile-web-app-title','에피쿠로스 학습지']].forEach(function(pair){
+    if (document.querySelector('meta[name="' + pair[0] + '"]')) return;
+    var m = document.createElement('meta');
+    m.name = pair[0]; m.content = pair[1];
+    document.head.appendChild(m);
+  });
+  var vpm = document.querySelector('meta[name="viewport"]');
+  if (vpm && !/viewport-fit/.test(vpm.content)) vpm.content += ', viewport-fit=cover';
+
+  // 앱 안의 작은 칸에서 열렸을 때: 사파리로 꺼내기
+  var here = location.href;
+  var panel = document.getElementById('link');
+  var pop = document.getElementById('pop');
+  document.body.classList.toggle('framed', window.self !== window.top);
+  pop.href = here;
+  document.getElementById('url').textContent = here;
+  pop.addEventListener('click', function(){
+    setTimeout(function(){ if (document.hasFocus()) panel.classList.add('open'); }, 500);
+  });
+  document.getElementById('close').addEventListener('click', function(){ panel.classList.remove('open'); });
+  panel.addEventListener('click', function(e){ if (e.target === panel) panel.classList.remove('open'); });
+  document.getElementById('copy').addEventListener('click', function(e){
+    var btn = e.currentTarget;
+    function done(t){ btn.textContent = t; setTimeout(function(){ btn.textContent = '링크 복사'; }, 2400); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(here).then(function(){ done('복사했습니다'); }).catch(select);
+    } else select();
+    function select(){
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById('url'));
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      done('길게 눌러 복사하세요');
+    }
+  });
+})();
+</script>
+
+</body></html>

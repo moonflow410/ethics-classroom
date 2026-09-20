@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="인문학과 윤리">
+<meta name="description" content="인문학과 윤리 — 단원별 학습지와 형성평가">
+<style>
+:root{
+  color-scheme:light dark;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html,body{margin:0;padding:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>인문학과 윤리 학습실</title>
+
+<!-- ───────────────────────────────────────────────────────────────
+     외부 연결이 하나도 없습니다.
+     글꼴·스크립트·이미지를 전부 이 파일 안에서 해결하므로,
+     링크를 받은 학생이 로그인이나 설치 없이 열기만 하면 바로 쓸 수 있고
+     CDN이 막혀 있어도 화면이 깨지지 않습니다.
+
+     ※ 학습지와 똑같은 웹폰트(IBM Plex Sans KR / Noto Serif KR)를 쓰고 싶으시면
+       아래 한 줄의 주석을 풀고, --sans / --serif 맨 앞에 폰트 이름을 넣으세요.
+       (인터넷이 안 되는 곳에서는 시스템 글꼴로 자동 대체됩니다.)
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap">
+     ─────────────────────────────────────────────────────────────── -->
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   디자인 토큰 — 보라(자수정) 계열 팔레트.
+   색을 또 바꾸시려면 아래 세 블록(:root / 다크 2개)의 값만 고치면 됩니다.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --ink:#211F2B;          /* 본문 */
+  --ink-2:#645F72;        /* 보조 */
+  --ink-3:#8E89A0;        /* 흐린 글 */
+  --line:#E4E0EB;         /* 선 */
+  --line-2:#EFECF4;
+  --bg:#F8F7FB;           /* 페이지 바닥 */
+  --surface:#FFFFFF;      /* 카드 */
+  --surface-2:#F2EFF7;    /* 카드 안쪽 면 */
+  --accent:#5B3D8F;         /* 액센트 (자수정 보라) */
+  --accent-deep:#452C71;
+  --accent-soft:#EDE7F6;    /* 라벨면 */
+  --quiz:#A5386B;         /* 형성평가 계열 (자주) */
+  --quiz-soft:#FAEAF1;
+  --ok:#1F6F4A;
+  --ok-soft:#E7F1EB;
+  --no:#B32318;
+  --no-soft:#F8EBE9;
+  --grad:linear-gradient(135deg,#2C1A4D 0%,#57388C 46%,#8257B0 100%);
+  --shadow:0 1px 2px rgba(33,31,43,.05), 0 8px 24px -12px rgba(33,31,43,.20);
+  --radius:14px;
+  /* 시스템에 이미 있는 글꼴만 씁니다 — 내려받을 것이 없어 어디서나 즉시 뜹니다 */
+  --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","맑은 고딕",sans-serif;
+  --serif:"Nanum Myeongjo","Apple Myungjo",Batang,"바탕",Georgia,serif;  /* 제시문 인용 전용 */
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"D2Coding","Courier New",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#EAE7F0; --ink-2:#A8A2B8; --ink-3:#7E788E;
+    --line:#332F3F; --line-2:#282534;
+    --bg:#141219; --surface:#1C1A24; --surface-2:#242130;
+    --accent:#B79BE6; --accent-deep:#CDB8F2; --accent-soft:#2C2342;
+    --quiz:#E294B8; --quiz-soft:#33202C;
+    --ok:#6FC79A; --ok-soft:#16281F;
+    --no:#E98A7E; --no-soft:#2C1B19;
+    --grad:linear-gradient(135deg,#1A1030 0%,#2E1E52 46%,#453072 100%);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#EAE7F0; --ink-2:#A8A2B8; --ink-3:#7E788E;
+  --line:#332F3F; --line-2:#282534;
+  --bg:#141219; --surface:#1C1A24; --surface-2:#242130;
+  --accent:#B79BE6; --accent-deep:#CDB8F2; --accent-soft:#2C2342;
+  --quiz:#E294B8; --quiz-soft:#33202C;
+  --ok:#6FC79A; --ok-soft:#16281F;
+  --no:#E98A7E; --no-soft:#2C1B19;
+  --grad:linear-gradient(135deg,#1A1030 0%,#2E1E52 46%,#453072 100%);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:1020px;margin:0 auto;padding-inline:16px}
+
+/* ── 헤더 ───────────────────────────────────────────────── */
+.hero{background:var(--grad);color:#F4F1F9;position:relative;overflow:hidden}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 82% -10%, rgba(255,255,255,.16), transparent 60%);
+}
+.hero-in{position:relative;z-index:1;padding-block:clamp(34px,7vw,58px)}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(244,241,249,.72);margin:0 0 14px;
+}
+.hero h1{
+  font-family:var(--sans);font-weight:700;
+  font-size:clamp(26px,5.4vw,44px);line-height:1.28;margin:0;text-wrap:balance;
+  letter-spacing:-.01em;
+}
+.hero p{margin:14px 0 0;max-width:56ch;color:rgba(244,241,249,.86);font-weight:300}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.stat{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;padding:5px 13px;font-size:12.5px;display:flex;gap:7px;align-items:baseline;
+}
+.stat b{font-family:var(--mono);font-weight:600;font-size:13.5px;font-variant-numeric:tabular-nums}
+
+/* ── 툴바 ───────────────────────────────────────────────── */
+.toolbar{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(1.6) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.toolbar-in{display:flex;gap:10px;align-items:center;padding-block:11px;flex-wrap:wrap}
+.search{flex:1 1 220px;min-width:0;position:relative}
+.search input{
+  width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:10px;
+  background:var(--surface);color:var(--ink);font:inherit;font-size:14px;
+}
+.search input::placeholder{color:var(--ink-3)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.tbtn{
+  border:1px solid var(--line);background:var(--surface);border-radius:10px;
+  padding:9px 13px;font-size:13.5px;font-weight:500;white-space:nowrap;
+  transition:border-color .15s,background .15s;
+}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── 대단원 아코디언 ────────────────────────────────────── */
+main{padding-block:26px 64px}
+.unit{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;
+}
+.unit > summary{
+  list-style:none;cursor:pointer;display:flex;gap:14px;align-items:center;
+  padding:17px 18px;transition:background .15s;
+}
+.unit > summary::-webkit-details-marker{display:none}
+.unit > summary:hover{background:var(--surface-2)}
+.unum{
+  flex:0 0 auto;width:38px;height:38px;border-radius:10px;
+  background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;
+  font-family:var(--sans);font-weight:700;font-size:16px;
+}
+.uhead{flex:1;min-width:0}
+.uhead h2{margin:0;font-size:16.5px;font-weight:600;letter-spacing:-.01em;line-height:1.4}
+.uhead .umeta{margin:2px 0 0;font-size:12.5px;color:var(--ink-2)}
+.uchev{flex:0 0 auto;color:var(--ink-3);transition:transform .2s}
+.unit[open] > summary .uchev{transform:rotate(180deg)}
+.unit[open] > summary{border-bottom:1px solid var(--line-2)}
+.ubody{padding:4px 18px 18px}
+
+/* ── 중단원 ─────────────────────────────────────────────── */
+.chapter{padding-top:18px}
+.chapter + .chapter{margin-top:6px;border-top:1px dashed var(--line);}
+.chead{display:flex;gap:9px;align-items:baseline;margin-bottom:12px;flex-wrap:wrap}
+.cnum{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;
+  color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:2px 7px;
+}
+.chead h3{margin:0;font-family:var(--sans);font-size:15.5px;font-weight:600;line-height:1.45}
+.cpages{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+
+/* ── 소단원 카드 ────────────────────────────────────────── */
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(296px,1fr));gap:10px}
+.topic{
+  border:1px solid var(--line);border-radius:11px;background:var(--surface-2);
+  padding:13px 14px;display:flex;flex-direction:column;gap:11px;
+}
+.topic.hit{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.tline{display:flex;gap:9px;align-items:flex-start}
+.tcode{
+  font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink-3);
+  padding-top:3px;letter-spacing:.02em;
+}
+.ttitle{flex:1;min-width:0;font-size:14.5px;font-weight:600;line-height:1.45;margin:0}
+.tsub{margin:3px 0 0;font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.chip{
+  font-size:10.5px;font-weight:600;border-radius:999px;padding:2px 8px;white-space:nowrap;
+  letter-spacing:.02em;align-self:flex-start;
+}
+.chip.ready{background:var(--accent-soft);color:var(--accent)}
+.chip.draft{background:var(--quiz-soft);color:var(--quiz)}
+.chip.none{background:var(--line-2);color:var(--ink-3)}
+.tbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.btn{
+  border:1px solid var(--line);background:var(--surface);border-radius:8px;
+  padding:7px 11px;font-size:12.5px;font-weight:500;display:inline-flex;gap:5px;align-items:center;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover:not(:disabled){background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
+.btn.quiz{background:var(--quiz-soft);border-color:transparent;color:var(--quiz);font-weight:600}
+.btn.quiz:hover:not(:disabled){border-color:var(--quiz);color:var(--quiz)}
+.score{
+  margin-left:auto;font-family:var(--mono);font-size:11.5px;font-weight:600;
+  color:var(--ink-2);align-self:center;font-variant-numeric:tabular-nums;
+}
+
+.empty{text-align:center;color:var(--ink-2);padding:48px 0;font-size:14px}
+
+/* ── 모달 ───────────────────────────────────────────────── */
+.modal[hidden]{display:none!important}
+.modal{
+  position:fixed;inset:0;z-index:100;display:flex;align-items:flex-end;justify-content:center;
+  background:rgba(12,18,22,.5);backdrop-filter:blur(3px);
+  padding:0;
+}
+@media (min-width:600px){.modal{align-items:center;padding:24px}}
+.sheet{
+  background:var(--surface);width:100%;max-width:660px;max-height:92vh;
+  border-radius:16px 16px 0 0;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 20px 60px -20px rgba(0,0,0,.5);
+  animation:rise .22s ease-out;
+}
+@media (min-width:600px){.sheet{border-radius:16px;max-height:86vh}}
+@keyframes rise{from{transform:translateY(16px);opacity:.6}to{transform:none;opacity:1}}
+.sheet.wide{max-width:1000px;height:92vh}
+@media (min-width:600px){.sheet.wide{height:86vh}}
+.shead{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:16px 18px;border-bottom:1px solid var(--line);flex:0 0 auto;
+}
+.shead .scode{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:block;margin-bottom:2px}
+.shead h4{margin:0;font-size:16px;font-weight:600;line-height:1.4}
+.sclose{
+  border:none;background:var(--surface-2);border-radius:8px;width:32px;height:32px;
+  display:grid;place-items:center;flex:0 0 auto;color:var(--ink-2);
+}
+.sclose:hover{color:var(--ink)}
+.sbody{overflow-y:auto;padding:18px;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+.sbody.flush{padding:0}
+.sbody iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+.sfoot{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  padding:14px 18px;border-top:1px solid var(--line);flex:0 0 auto;background:var(--surface);
+}
+
+/* ── 퀴즈 ───────────────────────────────────────────────── */
+.q{padding-bottom:18px;margin-bottom:18px;border-bottom:1px dashed var(--line)}
+.q:last-of-type{border-bottom:none;margin-bottom:6px}
+.qhead{display:flex;gap:8px;align-items:baseline;margin-bottom:10px}
+.qnum{
+  font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);border-radius:5px;padding:2px 7px;flex:0 0 auto;
+}
+.qtype{font-size:11px;color:var(--ink-3);margin-left:auto;flex:0 0 auto}
+.qtext{margin:0;font-size:14.5px;font-weight:500;line-height:1.6;flex:1 1 100%}
+.qpassage{
+  font-family:var(--serif);font-size:13.5px;line-height:1.85;
+  background:var(--surface-2);border-left:3px solid var(--accent);
+  padding:11px 13px;border-radius:0 8px 8px 0;margin:10px 0;color:var(--ink);
+}
+.opts{display:flex;flex-direction:column;gap:6px;margin-top:11px}
+.opt{
+  display:flex;gap:9px;align-items:flex-start;
+  border:1px solid var(--line);border-radius:9px;padding:9px 11px;
+  background:var(--surface);cursor:pointer;font-size:14px;line-height:1.5;
+  transition:border-color .12s,background .12s;
+}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:4px 0 0;accent-color:var(--accent);flex:0 0 auto}
+.opt .okey{font-family:var(--mono);font-size:12px;color:var(--ink-3);flex:0 0 auto;padding-top:1px}
+.opt.picked{border-color:var(--accent);background:var(--accent-soft)}
+.opt.correct{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--no);background:var(--no-soft)}
+.shortin{
+  width:100%;margin-top:11px;padding:10px 12px;border:1px solid var(--line);
+  border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;
+}
+.shortin.correct{border-color:var(--ok);background:var(--ok-soft)}
+.shortin.wrong{border-color:var(--no);background:var(--no-soft)}
+.feedback{margin-top:11px;border-radius:9px;padding:10px 12px;font-size:13.5px;line-height:1.65}
+.feedback.correct{background:var(--ok-soft);color:var(--ok)}
+.feedback.wrong{background:var(--no-soft);color:var(--no)}
+.feedback b{font-weight:600}
+.feedback .exp{display:block;margin-top:5px;color:var(--ink-2);font-weight:400}
+.result{
+  display:flex;gap:10px;align-items:baseline;font-size:14px;font-weight:600;margin-right:auto;
+}
+.result .big{font-family:var(--mono);font-size:19px;color:var(--accent);font-variant-numeric:tabular-nums}
+.result .msg{font-weight:400;color:var(--ink-2);font-size:13px}
+.hint{font-size:12.5px;color:var(--ink-3);margin-right:auto}
+
+.foot{
+  border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;
+  padding-block:20px 30px;
+}
+.foot code{font-family:var(--mono);font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:4px;color:var(--ink-2)}
+</style>
+
+<header class="hero">
+  <div class="wrap hero-in">
+    <p class="eyebrow">2026학년도 · 천재교육 『인문학과 윤리』</p>
+    <h1>인문학과 윤리로 빠져보시겠습니까?</h1>
+    <p>6개 대단원 · 12개 중단원 · 24개 소단원. 단원을 펼쳐 학습지를 열고, 배운 자리에서 바로 형성평가를 풀어 봅니다.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap toolbar-in">
+    <label class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="q" type="search" placeholder="소단원·사상가·키워드 검색 (예: 격몽요결, 에피쿠로스)" autocomplete="off">
+    </label>
+    <button class="tbtn" id="expandAll" type="button">전체 펼치기</button>
+    <button class="tbtn" id="collapseAll" type="button">접기</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <div id="units"></div>
+  <p class="empty" id="empty" hidden>검색 결과가 없습니다.</p>
+</main>
+
+<footer class="wrap foot">
+  <p>학습지와 형성평가 내용은 <code>curriculumData</code> 한 곳에서만 수정하면 화면 전체에 반영됩니다. 자세한 사용법은 소스 맨 위 주석을 보세요.</p>
+</footer>
+
+<!-- 형성평가 / 미리보기 공용 모달 -->
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="sheet" id="sheet">
+    <div class="shead">
+      <div style="flex:1;min-width:0">
+        <span class="scode" id="modalCode"></span>
+        <h4 id="modalTitle"></h4>
+      </div>
+      <button class="sclose" id="modalClose" type="button" aria-label="닫기">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <div class="sbody" id="modalBody"></div>
+    <div class="sfoot" id="modalFoot"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   ▣ 선생님이 고치실 곳은 여기 하나뿐입니다 — curriculumData
+   ═══════════════════════════════════════════════════════════════════════════
+
+   [구조]
+   대단원 { unitId, roman, title, blurb, chapters:[ 중단원 ] }
+     중단원 { chapterId, title, pages, topics:[ 소단원 ] }
+       소단원 { topicId, title, sub, pages, worksheetUrl, status, quiz:[ 문항 ] }
+
+   [소단원 필드]
+   topicId       "1-1-1" 형식. 화면에 코드로 표시됩니다.
+   title         소단원 제목
+   sub           한 줄 설명 (비워도 됩니다: "")
+   pages         교과서 쪽수 (비워도 됩니다: "")
+   worksheetUrl  학습지 HTML 주소. 같은 폴더면 "./sheets/1-1-1.html",
+                 구글 드라이브·Apps Script 주소를 그대로 붙여도 됩니다.
+                 아직 없으면 "" 로 두세요 → 버튼이 '준비 중'으로 잠깁니다.
+   status        "ready"(완성) · "draft"(제작 중) · "none"(미제작)
+   quiz          형성평가 문항 배열. 비우면([]) 형성평가 버튼이 잠깁니다.
+
+   [문항 두 가지 형식]
+   ① 객관식
+      { type:"choice",
+        q:"질문",
+        passage:"제시문(없으면 이 줄 삭제)",
+        options:["①로 표시됨","②","③","④"],
+        answer:2,                 ← 정답의 순번. 0부터 셉니다(0=①, 2=③)
+        explain:"해설" }
+   ② 단답형
+      { type:"short",
+        q:"질문",
+        answer:["정답","허용되는 다른 표기"],   ← 띄어쓰기·대소문자는 무시됩니다
+        explain:"해설" }
+
+   [소단원을 늘리는 법]
+   아래 1단원 블록을 통째로 복사해 2단원 자리에 붙이고 제목·코드만 바꾸면 됩니다.
+   2~6단원 자리에는 이미 빈 골격이 들어 있으니, "(제목 입력)" 부분만 채우세요.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const curriculumData = [
+
+  /* ───────────────────────────────────────────────────────────────
+     대단원 Ⅰ — 샘플로 완성된 단원 (4개 소단원 + 형성평가 12문항)
+     ─────────────────────────────────────────────────────────────── */
+  {
+    unitId: "1",
+    roman: "Ⅰ",
+    title: "성찰 대상으로서의 나",
+    blurb: "율곡 이이 『격몽요결』과 벤담·에피쿠로스를 통해 나를 들여다본다",
+    chapters: [
+      {
+        chapterId: "1-1",
+        title: "나의 몸과 마음을 어떻게 이해해야 할까?",
+        pages: "교과서 10~23쪽",
+        topics: [
+          {
+            topicId: "1-1-1",
+            title: "몸과 마음에 대한 관찰",
+            sub: "『격몽요결』 「지신」 — 구용·구사, 신독(處幽如顯), 극기(克己)",
+            pages: "14~15 · 20~21쪽",
+            worksheetUrl: "",   /* ← 학습지 주소를 넣고 status를 "ready"로 바꾸세요 */
+            status: "draft",
+            quiz: [
+              {
+                type: "choice",
+                q: "다음 구절에 대한 설명으로 옳은 것은?",
+                passage: "몸과 마음을 거두어들이는 데에는 구용(九容)보다 절실한 것이 없고, 배움에 나아가 지혜를 더하는 데에는 구사(九思)보다 절실한 것이 없다. — 이이, 『격몽요결』 「지신」",
+                options: [
+                  "구용은 지혜를 기르는 아홉 가지 생각이다.",
+                  "구사는 몸가짐을 단속하는 아홉 가지 모습이다.",
+                  "구용은 몸과 마음을 거두는 것이고, 구사는 배움과 지혜에 관한 것이다.",
+                  "구용과 구사는 모두 타인을 대하는 예법만을 규정한 것이다."
+                ],
+                answer: 2,
+                explain: "구용은 收斂身心(몸과 마음을 거둠), 구사는 進學益智(배움에 나아가 지혜를 더함)에 해당합니다. 둘을 서로 바꿔 서술하는 것이 가장 흔한 함정입니다."
+              },
+              {
+                type: "short",
+                q: "「지신」의 '處幽如顯 處獨如衆(처유여현 처독여중)'—어두운 곳에 있어도 드러난 곳에 있는 듯이, 혼자 있어도 여럿과 있는 듯이 한다—이 가리키는 유학의 수양 개념을 두 글자로 쓰시오.",
+                answer: ["신독", "愼獨", "신독(愼獨)"],
+                explain: "신독(愼獨)입니다. 남이 보지 않을 때 방심해도 된다는 뜻이 아니라, 보는 이가 없어도 나 자신이 나를 보고 있다는 취지입니다."
+              },
+              {
+                type: "choice",
+                q: "이이가 말한 극기(克己)의 '기(己)'에 대한 설명으로 가장 적절한 것은?",
+                passage: "자기를 이겨 내는[克己] 공부가 일상생활에서는 가장 절실하다. 이른바 자기[己]라는 것은 내 마음이 좋아하는 바가 하늘의 이치[天理]에 들어맞지 않는 것을 말한다. — 『격몽요결』 「지신」",
+                options: [
+                  "나라는 존재 전체이므로, 극기란 곧 자기 부정이다.",
+                  "내 마음이 좋아하는 것 가운데 천리에 맞지 않는 것을 가리킨다.",
+                  "타고난 기질 자체를 뜻하므로 바꿀 수 없는 것이다.",
+                  "남이 나에게 강요하는 욕망만을 가리킨다."
+                ],
+                answer: 1,
+                explain: "'기(己)'는 자기 전체가 아니라 '내 마음이 좋아하되 천리에 맞지 않는 것'입니다. 따라서 극기는 자기를 부정하는 일이 아니라 이치에 어긋난 좋아함을 끊는 일입니다."
+              }
+            ]
+          },
+          {
+            topicId: "1-1-2",
+            title: "몸과 마음의 통합성",
+            sub: "도덕적 주체로서의 나, 입지(立志)와 성인자기, 매일의 자기 점검",
+            pages: "20~21쪽",
+            worksheetUrl: "",   /* ← 학습지 주소를 넣고 status를 "ready"로 바꾸세요 */
+            status: "draft",
+            quiz: [
+              {
+                type: "choice",
+                q: "교과서가 말하는 '도덕적 주체'로서의 인간에 대한 설명으로 옳지 <b>않은</b> 것은?",
+                options: [
+                  "몸과 마음이 유기적으로 통합된 존재이다.",
+                  "주어진 조건에 단순히 반응하는 것이 아니라 적극적으로 적응하며 살아간다.",
+                  "자신의 본성을 찾아 의지를 세우고, 배운 것을 실천할 수 있는 존재이다.",
+                  "타고난 기질이 이미 정해져 있으므로 성찰로 달라질 수 있는 부분은 없다."
+                ],
+                answer: 3,
+                explain: "이이는 결정론자가 아닙니다. 용모·체력처럼 바꿀 수 없는 것과 달리 심지(心志)는 '어리석음을 지혜로, 불초함을 어짊으로' 바꿀 수 있다고 보았습니다."
+              },
+              {
+                type: "short",
+                q: "『격몽요결』 「지신」은 '매일 자주 자기 자신을 점검하라(每日頻自點檢)'며 세 가지를 묻는다. 그 세 가지 물음 중 <b>배움</b>에 관한 것을 우리말로 쓰시오.",
+                answer: ["학문이 제자리걸음을 하고 있지 않은가", "학불진호", "學不進乎", "학문이 나아가지 않는가", "배움이 나아가지 않는가", "학문이 제자리걸음 하고 있지 않은가"],
+                explain: "心不存乎(마음이 올바르지 않은 데 있지 않은가) · 學不進乎(학문이 제자리걸음을 하고 있지 않은가) · 行不力乎(행실에 힘쓰지 않고 있지 않은가) 세 가지입니다."
+              },
+              {
+                type: "choice",
+                q: "「입지」의 다음 구절에서 이이가 말하고자 한 바로 가장 적절한 것은?",
+                passage: "대개 보통 사람과 성인은 그 본성이 하나이다. …… 보통 사람이 어찌 성인이 되기를 스스로 기약하지 않을 수 있겠는가.",
+                options: [
+                  "성인과 보통 사람은 본성부터 다르게 타고난다.",
+                  "본성은 같으나 기질과 옛 습관이 본성을 가리고 있을 뿐이다.",
+                  "배움이란 없던 것을 새로 만들어 더하는 일이다.",
+                  "뜻을 세우는 일보다 타고난 재능이 더 결정적이다."
+                ],
+                answer: 1,
+                explain: "본성은 하나이고, 차이는 기질의 청탁수박과 뒤에 물든 구습(舊染)에서 옵니다. 그래서 배움은 없던 것을 더하는 일이 아니라 가려진 본성을 회복하는 일입니다."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        chapterId: "1-2",
+        title: "고통과 쾌락은 어디에서 비롯될까?",
+        pages: "교과서 24~41쪽",
+        topics: [
+          {
+            topicId: "1-2-1",
+            title: "삶의 주체로서의 나",
+            sub: "벤담의 두 군주, 쾌락과 고통의 근원 — 안인가 밖인가",
+            pages: "24~27쪽",
+            worksheetUrl: "",   /* ← 학습지 주소를 넣고 status를 "ready"로 바꾸세요 */
+            status: "draft",
+            quiz: [
+              {
+                type: "choice",
+                q: "다음 글의 주장으로 가장 적절한 것은?",
+                passage: "자연은 인류를 고통과 쾌락이라는 두 군주의 통치하에 두었다. 우리가 무엇을 할 것인가를 결정하는 것뿐만 아니라 우리가 무엇을 해야만 하는가를 제시하는 것에 있어서도 오직 주인은 고통과 쾌락뿐이다. — 벤담, 『도덕과 입법의 원칙에 대한 서론』",
+                options: [
+                  "고통과 쾌락은 사실의 문제일 뿐 옳고 그름과는 무관하다.",
+                  "고통과 쾌락은 우리가 무엇을 하는지와 무엇을 해야 하는지를 모두 지배한다.",
+                  "쾌락에서 벗어나려는 노력만이 종속을 끊을 수 있다.",
+                  "쾌락의 양은 계산될 수 없으므로 도덕의 기준이 될 수 없다."
+                ],
+                answer: 1,
+                explain: "벤담은 고통과 쾌락에 '옳고 그름의 기준'과 '원인과 결과의 연쇄'가 함께 묶여 있다고 보았습니다. 사실의 문제이자 동시에 당위의 기준이라는 점이 핵심입니다."
+              },
+              {
+                type: "choice",
+                q: "다음 두 사례에 대한 교과서의 설명으로 가장 적절한 것은?",
+                passage: "㉮ 예를 갖추어 대했는데도 상대가 무례해 기분이 상했다.\n㉯ 공부를 열심히 하지 않아 좋지 않은 성적을 받고 기분이 상했다.",
+                options: [
+                  "㉮·㉯ 모두 내가 통제할 수 없으므로 연연할 필요가 없다.",
+                  "㉮는 원인이 나에게 있고, ㉯는 원인이 외부에 있다.",
+                  "㉮는 내가 어찌할 수 없는 외부의 작용이고, ㉯는 원인이 나에게 있어 성찰하고 개선할 수 있다.",
+                  "㉮·㉯ 모두 나의 책임이므로 똑같이 반성해야 한다."
+                ],
+                answer: 2,
+                explain: "쾌락과 고통의 근원을 외부 요인과 내부 요인으로 나누는 것이 이 소단원의 뼈대입니다. 통제할 수 없는 외부에는 연연하지 않고, 나에게서 비롯된 것은 성찰해 고쳐 나갑니다."
+              },
+              {
+                type: "short",
+                q: "'누군가 시켜서 하는 것이 아니라 스스로 결정하고 행위할 때 느끼게 되는 것'—교과서가 말하는 이 소단원의 핵심어를 다섯 글자로 쓰시오. (○○○○○로서의 나)",
+                answer: ["삶의 주체", "삶의주체", "삶의 주체로서의 나"],
+                explain: "'삶의 주체'입니다. 자신의 의지대로 행위할 때 의욕이 생기고, 스스로 결정하고 행위할 때 삶의 주인이 자신임을 느끼게 됩니다."
+              }
+            ]
+          },
+          {
+            topicId: "1-2-2",
+            title: "고통과 쾌락을 대하는 자세",
+            sub: "에피쿠로스 — 아타락시아, 욕구의 세 갈래, 죽음은 우리에게 아무것도 아니다",
+            pages: "28~41쪽",
+            worksheetUrl: "./epicurus.html",
+            status: "ready",
+            quiz: [
+              {
+                type: "choice",
+                q: "에피쿠로스가 말하는 쾌락에 대한 설명으로 가장 적절한 것은?",
+                options: [
+                  "감각적 쾌락을 끊임없이 늘려 가는 것이다.",
+                  "몸에 고통이 없고(아포니아) 마음에 불안이 없는(아타락시아) 상태이다.",
+                  "쾌락의 총량을 계산해 사회 전체의 행복을 극대화하는 것이다.",
+                  "쾌락을 완전히 끊고 금욕하는 데에서 얻어지는 것이다."
+                ],
+                answer: 1,
+                explain: "에피쿠로스의 쾌락은 '더 많이'가 아니라 '결핍과 불안의 제거'입니다. 아포니아(몸의 무고통)와 아타락시아(마음의 평정)가 그 내용입니다."
+              },
+              {
+                type: "short",
+                q: "에피쿠로스가 욕구를 나눈 세 갈래 중, 충족되지 않아도 고통을 낳지 않아 가장 먼저 덜어 내야 할 욕구는 무엇인가? (예: 명예욕·권력욕·부에 대한 욕구)",
+                answer: ["헛된 욕구", "공허한 욕구", "자연적이지도 필수적이지도 않은 욕구", "헛되고 공허한 욕구"],
+                explain: "① 자연적이며 필수적인 욕구(먹을 것·잠자리), ② 자연적이나 필수적이지 않은 욕구(진수성찬), ③ 자연적이지도 필수적이지도 않은 헛된 욕구(명예·권력·부) 중 ③입니다."
+              },
+              {
+                type: "choice",
+                q: "'죽음은 우리에게 아무것도 아니다'라는 에피쿠로스의 논증이 기대고 있는 전제로 가장 적절한 것은?",
+                passage: "우리가 존재하는 한 죽음은 우리와 함께 있지 않으며, 죽음이 왔을 때 우리는 이미 존재하지 않는다. — 「메노이케우스에게 보내는 편지」",
+                options: [
+                  "영혼은 불멸하므로 죽음 뒤에도 감각이 이어진다.",
+                  "죽음은 원자의 흩어짐이며, 감각하는 주체가 사라지면 좋고 나쁨도 없다.",
+                  "죽음은 신이 내리는 벌이므로 두려워해야 마땅하다.",
+                  "죽음은 고통의 총량이 가장 큰 사건이므로 피해야 한다."
+                ],
+                answer: 1,
+                explain: "원자론이 전제입니다. 모든 좋고 나쁨은 감각에 있는데 죽음은 감각의 결여이므로, 죽음은 우리에게 좋지도 나쁘지도 않습니다."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  /* ───────────────────────────────────────────────────────────────
+     대단원 Ⅱ~Ⅵ — 내용 체계의 제목은 모두 들어가 있습니다.
+     한 소단원을 완성하려면: sub·pages 채우기 → worksheetUrl 입력
+     → status를 "ready"로 → quiz 배열에 위 형식대로 3문항 추가.
+     ─────────────────────────────────────────────────────────────── */
+  {
+    unitId: "2", roman: "Ⅱ", title: "타인과 관계 맺기",
+    blurb: "아리스토텔레스의 우정론으로 관계 속의 나를 읽는다",
+    chapters: [
+      { chapterId:"2-1", title:"‘관계 속의 나’로 살아간다는 말의 의미는 무엇일까?", pages:"", topics:[
+        { topicId:"2-1-1", title:"관계 맺기의 어려움", sub:"경쟁 구조, 관계적 공격성, 자기 자신과의 불화", pages:"", worksheetUrl:"", status:"draft", quiz:[] },
+        { topicId:"2-1-2", title:"상호성을 만끽하는 삶", sub:"주고받음의 저울 — 친애의 세 계기와 상호성", pages:"교과서 58~73쪽", worksheetUrl:"./aristotle.html", status:"ready", quiz:[] }
+      ]},
+      { chapterId:"2-2", title:"진정한 우정과 참된 사랑에는 어떤 노력이 필요할까?", pages:"교과서 58~73쪽", topics:[
+        { topicId:"2-2-1", title:"의미 있는 타자로서의 친구", sub:"친애(philia), ‘또 다른 자신’, 세 가지 친애", pages:"58~71쪽", worksheetUrl:"./aristotle.html", status:"ready", quiz:[] },
+        { topicId:"2-2-2", title:"사랑과 배려의 삶", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]}
+    ]
+  },
+  {
+    unitId: "3", roman: "Ⅲ", title: "자유와 평등",
+    blurb: "롤스와 노직으로 분배와 정의를 따져 본다",
+    chapters: [
+      { chapterId:"3-1", title:"우리는 자유롭고 평등한 존재일까?", pages:"", topics:[
+        { topicId:"3-1-1", title:"자유와 평등의 의미와 근거", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"3-1-2", title:"책임 있는 삶의 자세", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]},
+      { chapterId:"3-2", title:"능력에 따른 불평등은 정당한 것일까?", pages:"교과서 92쪽~", topics:[
+        { topicId:"3-2-1", title:"능력에 따른 분배와 한계", sub:"노직 — 소유 권리론(취득·이전·교정), 최소 국가", pages:"", worksheetUrl:"./nozick.html", status:"ready", quiz:[] },
+        { topicId:"3-2-2", title:"자유롭고 평등한 삶을 위한 정의의 원칙", sub:"롤스 — 원초적 입장, 무지의 베일, 정의의 두 원칙", pages:"", worksheetUrl:"./rawls.html", status:"ready", quiz:[] }
+      ]}
+    ]
+  },
+  {
+    unitId: "4", roman: "Ⅳ", title: "다양성과 포용성",
+    blurb: "서로 다른 의견, 그리고 가상과 현실 사이에서",
+    chapters: [
+      { chapterId:"4-1", title:"서로 다른 의견을 어떻게 포용할 수 있을까?", pages:"", topics:[
+        { topicId:"4-1-1", title:"다양한 의견의 발생 원인", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"4-1-2", title:"민주주의 사회와 포용성", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]},
+      { chapterId:"4-2", title:"가상 세계와 현실 세계의 구분은 가능할까?", pages:"", topics:[
+        { topicId:"4-2-1", title:"가상 세계와 현실 세계의 상호성", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"4-2-2", title:"가상 세계에서의 태도", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]}
+    ]
+  },
+  {
+    unitId: "5", roman: "Ⅴ", title: "공존과 지속가능성",
+    blurb: "소유와 존재, 그리고 인간과 자연의 상생",
+    chapters: [
+      { chapterId:"5-1", title:"삶의 방식으로서 소유와 존재란 무엇일까?", pages:"", topics:[
+        { topicId:"5-1-1", title:"자아실현과 직업 생활", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"5-1-2", title:"나와 타인의 조화로운 이익 추구", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]},
+      { chapterId:"5-2", title:"인간과 자연이 어떻게 상생할 수 있을까?", pages:"", topics:[
+        { topicId:"5-2-1", title:"기후 위기와 지속 가능한 삶", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"5-2-2", title:"상생을 위한 실천 원칙", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]}
+    ]
+  },
+  {
+    unitId: "6", roman: "Ⅵ", title: "삶의 의미에 대한 물음",
+    blurb: "종교와 윤리, 그리고 유한한 인생에서 찾는 의미",
+    chapters: [
+      { chapterId:"6-1", title:"종교는 우리 삶에 윤리적 기준을 제시할 수 있을까?", pages:"", topics:[
+        { topicId:"6-1-1", title:"불안한 현대 사회와 불완전한 인간", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"6-1-2", title:"종교와 윤리적 기준의 관계", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]},
+      { chapterId:"6-2", title:"유한한 인생에서 나는 어떤 삶을 살 수 있을까?", pages:"", topics:[
+        { topicId:"6-2-1", title:"인생의 유한성 자각", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] },
+        { topicId:"6-2-2", title:"삶의 의미를 찾는 과정과 방법", sub:"", pages:"", worksheetUrl:"", status:"none", quiz:[] }
+      ]}
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   여기서부터는 화면을 그리는 코드입니다. 보통은 손대지 않으셔도 됩니다.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const STATUS = { ready:["완성","ready"], draft:["제작 중","draft"], none:["미제작","none"] };
+const STORE = "iywy-scores-v1";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/* 문항 본문은 <b> 강조를 허용하므로 esc를 거치지 않습니다 — 선생님이 직접 쓰시는 내용입니다. */
+const norm = s => String(s ?? "").toLowerCase().replace(/\s+/g,"").replace(/[.,·'"()（）]/g,"");
+
+let scores = {};
+try { scores = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { scores = {}; }
+function saveScore(id, got, total){
+  scores[id] = { got, total };
+  try { localStorage.setItem(STORE, JSON.stringify(scores)); } catch (e) {}
+}
+
+const allTopics = curriculumData.flatMap(u => u.chapters.flatMap(c =>
+  c.topics.map(t => ({ ...t, unit:u, chapter:c }))
+));
+const byId = Object.fromEntries(allTopics.map(t => [t.topicId, t]));
+
+/* ── 상단 요약 ─────────────────────────────────────────── */
+function renderStats(){
+  const ready = allTopics.filter(t => t.status === "ready").length;
+  const quizzed = allTopics.filter(t => t.quiz && t.quiz.length).length;
+  const done = allTopics.filter(t => scores[t.topicId]).length;
+  document.getElementById("stats").innerHTML = `
+    <span class="stat">소단원 <b>${allTopics.length}</b></span>
+    <span class="stat">학습지 완성 <b>${ready}</b> / ${allTopics.length}</span>
+    <span class="stat">형성평가 준비 <b>${quizzed}</b></span>
+    <span class="stat">내가 푼 평가 <b>${done}</b></span>`;
+}
+
+/* ── 본문 ──────────────────────────────────────────────── */
+function topicCard(t){
+  const [label, cls] = STATUS[t.status] || STATUS.none;
+  const hasSheet = !!t.worksheetUrl;
+  const hasQuiz = !!(t.quiz && t.quiz.length);
+  const s = scores[t.topicId];
+  return `
+  <article class="topic" data-topic="${esc(t.topicId)}" data-search="${esc((t.topicId+" "+t.title+" "+(t.sub||"")+" "+t.chapter.title+" "+t.unit.title).toLowerCase())}">
+    <div class="tline">
+      <span class="tcode">${esc(t.topicId)}</span>
+      <div style="flex:1;min-width:0">
+        <h4 class="ttitle">${esc(t.title)}</h4>
+        ${t.sub ? `<p class="tsub">${esc(t.sub)}</p>` : ""}
+        ${t.pages ? `<p class="tsub" style="font-family:var(--mono);font-size:11.5px">${esc(t.pages)}</p>` : ""}
+      </div>
+      <span class="chip ${cls}">${label}</span>
+    </div>
+    <div class="tbar">
+      <a class="btn primary" ${hasSheet ? `href="${esc(t.worksheetUrl)}" target="_blank" rel="noopener"` : `aria-disabled="true" style="opacity:.45;pointer-events:none"`}>
+        학습지 열기${hasSheet ? " ↗" : " (준비 중)"}
+      </a>
+      <button class="btn" type="button" data-act="copy" data-topic="${esc(t.topicId)}" ${hasSheet ? "" : "disabled"} title="학습지 주소를 복사합니다">주소 복사</button>
+      <button class="btn quiz" type="button" data-act="quiz" data-topic="${esc(t.topicId)}" ${hasQuiz ? "" : "disabled"}>
+        형성평가 풀어보기${hasQuiz ? ` (${t.quiz.length})` : ""}
+      </button>
+      ${s ? `<span class="score">${s.got}/${s.total}</span>` : ""}
+    </div>
+  </article>`;
+}
+
+function render(){
+  document.getElementById("units").innerHTML = curriculumData.map((u, i) => `
+    <details class="unit" data-unit="${esc(u.unitId)}" ${i === 0 ? "open" : ""}>
+      <summary>
+        <span class="unum">${esc(u.roman)}</span>
+        <div class="uhead">
+          <h2>${esc(u.title)}</h2>
+          <p class="umeta">${u.blurb ? esc(u.blurb) + " · " : ""}중단원 ${u.chapters.length} · 소단원 ${u.chapters.reduce((n,c)=>n+c.topics.length,0)}</p>
+        </div>
+        <svg class="uchev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+      </summary>
+      <div class="ubody">
+        ${u.chapters.map(c => `
+          <section class="chapter">
+            <div class="chead">
+              <span class="cnum">${esc(c.chapterId)}</span>
+              <h3>${esc(c.title)}</h3>
+              ${c.pages ? `<span class="cpages">${esc(c.pages)}</span>` : ""}
+            </div>
+            <div class="topics">${c.topics.map(t => topicCard(byId[t.topicId])).join("")}</div>
+          </section>`).join("")}
+      </div>
+    </details>`).join("");
+  renderStats();
+}
+
+/* ── 검색 ──────────────────────────────────────────────── */
+document.getElementById("q").addEventListener("input", e => {
+  const term = e.target.value.trim().toLowerCase();
+  let hits = 0;
+  document.querySelectorAll(".unit").forEach(unit => {
+    let unitHits = 0;
+    unit.querySelectorAll(".topic").forEach(card => {
+      const match = !term || card.dataset.search.includes(term);
+      card.hidden = !match;
+      card.classList.toggle("hit", !!term && match);
+      if (match) unitHits++;
+    });
+    unit.querySelectorAll(".chapter").forEach(ch => {
+      ch.hidden = ![...ch.querySelectorAll(".topic")].some(c => !c.hidden);
+    });
+    unit.hidden = term ? unitHits === 0 : false;
+    if (term && unitHits) unit.open = true;
+    hits += unitHits;
+  });
+  document.getElementById("empty").hidden = !(term && hits === 0);
+});
+
+document.getElementById("expandAll").onclick = () =>
+  document.querySelectorAll(".unit").forEach(d => d.open = true);
+document.getElementById("collapseAll").onclick = () =>
+  document.querySelectorAll(".unit").forEach(d => d.open = false);
+
+/* ── 모달 ──────────────────────────────────────────────── */
+const modal = document.getElementById("modal");
+const sheet = document.getElementById("sheet");
+const mBody = document.getElementById("modalBody");
+const mFoot = document.getElementById("modalFoot");
+let lastFocus = null;
+
+function openModal({ code, title, bodyHTML, footHTML, wide = false, flush = false }){
+  lastFocus = document.activeElement;
+  document.getElementById("modalCode").textContent = code;
+  document.getElementById("modalTitle").textContent = title;
+  mBody.innerHTML = bodyHTML;
+  mBody.classList.toggle("flush", flush);
+  mFoot.innerHTML = footHTML;
+  mFoot.hidden = !footHTML;
+  sheet.classList.toggle("wide", wide);
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  document.getElementById("modalClose").focus();
+}
+function closeModal(){
+  modal.hidden = true;
+  mBody.innerHTML = "";
+  mFoot.innerHTML = "";
+  document.body.style.overflow = "";
+  if (lastFocus) lastFocus.focus();
+}
+document.getElementById("modalClose").onclick = closeModal;
+modal.addEventListener("mousedown", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+
+/* ── 형성평가 ──────────────────────────────────────────── */
+let current = null;
+
+function quizHTML(t){
+  return t.quiz.map((item, i) => {
+    const head = `
+      <div class="qhead">
+        <span class="qnum">${i + 1}</span>
+        <span class="qtype">${item.type === "short" ? "단답형" : "객관식"}</span>
+      </div>
+      <p class="qtext">${item.q}</p>
+      ${item.passage ? `<div class="qpassage">${esc(item.passage).replace(/\n/g, "<br>")}</div>` : ""}`;
+    const body = item.type === "short"
+      ? `<input class="shortin" type="text" id="q${i}" name="q${i}" autocomplete="off" placeholder="답을 입력하세요">`
+      : `<div class="opts">${item.options.map((o, k) => `
+          <label class="opt" data-opt="${k}">
+            <input type="radio" name="q${i}" value="${k}" id="q${i}o${k}">
+            <span class="okey">${"①②③④⑤"[k] || (k + 1)}</span>
+            <span>${o}</span>
+          </label>`).join("")}</div>`;
+    return `<div class="q" data-q="${i}">${head}${body}<div class="feedback" hidden></div></div>`;
+  }).join("");
+}
+
+function openQuiz(id){
+  const t = byId[id];
+  if (!t || !t.quiz.length) return;
+  current = t;
+  openModal({
+    code: `${t.topicId} · ${t.chapter.title}`,
+    title: `형성평가 — ${t.title}`,
+    bodyHTML: `<form id="quizForm" novalidate>${quizHTML(t)}</form>`,
+    footHTML: `<span class="hint">${t.quiz.length}문항 · 제출하면 바로 채점됩니다</span>
+               <button class="btn primary" type="button" id="grade">제출하고 채점</button>`
+  });
+
+  document.getElementById("grade").onclick = grade;
+}
+
+/* 보기를 고르면 그 보기만 강조 (모달 본문에 한 번만 걸어 둡니다) */
+mBody.addEventListener("change", e => {
+  const label = e.target.closest(".opt");
+  if (!label) return;
+  label.closest(".opts").querySelectorAll(".opt").forEach(o => o.classList.remove("picked"));
+  label.classList.add("picked");
+});
+
+function grade(){
+  const t = current;
+  let got = 0;
+  t.quiz.forEach((item, i) => {
+    const q = mBody.querySelector(`.q[data-q="${i}"]`);
+    const fb = q.querySelector(".feedback");
+    let ok = false, shown = "";
+
+    if (item.type === "short") {
+      const input = q.querySelector(".shortin");
+      input.readOnly = true;
+      const accepted = Array.isArray(item.answer) ? item.answer : [item.answer];
+      ok = accepted.some(a => norm(a) && norm(a) === norm(input.value));
+      input.classList.add(ok ? "correct" : "wrong");
+      shown = accepted[0];
+    } else {
+      const picked = q.querySelector("input[type=radio]:checked");
+      ok = picked && Number(picked.value) === item.answer;
+      q.querySelectorAll(".opt").forEach(label => {
+        const k = Number(label.dataset.opt);
+        label.querySelector("input").disabled = true;
+        label.classList.remove("picked");
+        if (k === item.answer) label.classList.add("correct");
+        else if (picked && k === Number(picked.value)) label.classList.add("wrong");
+      });
+      shown = `${"①②③④⑤"[item.answer] || item.answer + 1} ${item.options[item.answer].replace(/<[^>]+>/g, "")}`;
+    }
+
+    if (ok) got++;
+    fb.hidden = false;
+    fb.className = "feedback " + (ok ? "correct" : "wrong");
+    fb.innerHTML = `<b>${ok ? "정답입니다" : "정답: " + esc(shown)}</b>${item.explain ? `<span class="exp">${esc(item.explain)}</span>` : ""}`;
+  });
+
+  saveScore(t.topicId, got, t.quiz.length);
+  const msg = got === t.quiz.length ? "모두 맞혔습니다."
+            : got === 0 ? "해설을 읽고 다시 풀어 보세요."
+            : "틀린 문항의 해설을 확인해 보세요.";
+  mFoot.innerHTML = `
+    <span class="result"><span class="big">${got} / ${t.quiz.length}</span><span class="msg">${msg}</span></span>
+    <button class="btn" type="button" id="reset">다시 풀기</button>
+    <button class="btn primary" type="button" id="done">닫기</button>`;
+  document.getElementById("reset").onclick = () => openQuiz(t.topicId);
+  document.getElementById("done").onclick = () => { closeModal(); render(); };
+  mBody.scrollTop = 0;
+  render();
+  /* render()가 카드를 다시 그리므로 모달은 그대로 두고 점수 칩만 갱신됩니다 */
+}
+
+/* ── 학습지 주소 복사 ───────────────────────────────────
+   이 페이지는 보안 상자(iframe) 안에서 돌기 때문에, 브라우저가
+   '새 탭 열기'를 막아 버튼이 안 먹는 것처럼 보일 때가 있습니다.
+   그럴 때 쓰시라고 주소를 복사해 주는 버튼을 함께 두었습니다.   */
+function copyUrl(id, btn){
+  const t = byId[id];
+  if (!t || !t.worksheetUrl) return;
+  const done = ok => {
+    const old = btn.textContent;
+    btn.textContent = ok ? "복사됨 ✓" : "복사 실패";
+    setTimeout(() => { btn.textContent = old; }, 1600);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t.worksheetUrl).then(() => done(true), () => fallback());
+  } else fallback();
+
+  function fallback(){
+    /* 클립보드가 막혀 있으면 주소를 띄워 직접 복사하시게 합니다 */
+    openModal({
+      code: `${t.topicId} · ${t.chapter.title}`,
+      title: `${t.title} — 학습지 주소`,
+      bodyHTML: `<p style="margin:0 0 12px;font-size:13.5px;color:var(--ink-2)">
+                   아래 주소를 길게 눌러 복사한 뒤 주소창에 붙여 넣으세요.</p>
+                 <input class="shortin" id="urlBox" type="text" readonly value="${esc(t.worksheetUrl)}" style="margin-top:0">`,
+      footHTML: `<a class="btn primary" href="${esc(t.worksheetUrl)}" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>`
+    });
+    const box = document.getElementById("urlBox");
+    if (box) { box.focus(); box.select(); }
+    done(false);
+  }
+}
+
+/* ── 이벤트 위임 ───────────────────────────────────────── */
+document.getElementById("units").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-act]");
+  if (!btn) return;
+  if (btn.dataset.act === "quiz") openQuiz(btn.dataset.topic);
+  if (btn.dataset.act === "copy") copyUrl(btn.dataset.topic, btn);
+});
+
+render();
+</script>
+
+</body>
+</html>
