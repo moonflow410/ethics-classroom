@@ -185,6 +185,13 @@ main{padding-block:26px 64px}
 }
 .chead h3{margin:0;font-family:var(--sans);font-size:15.5px;font-weight:600;line-height:1.45}
 .cpages{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.cquiz{
+  margin-left:auto;border:1px solid transparent;background:var(--quiz-soft);color:var(--quiz);
+  border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:600;white-space:nowrap;
+  display:inline-flex;gap:6px;align-items:center;transition:border-color .15s;
+}
+.cquiz:hover{border-color:var(--quiz)}
+.cquiz .cscore{font-family:var(--mono);font-weight:600;opacity:.75;font-variant-numeric:tabular-nums}
 
 /* ── 소단원 카드 ────────────────────────────────────────── */
 .topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(296px,1fr));gap:10px}
@@ -397,6 +404,13 @@ main{padding-block:26px 64px}
         answer:["정답","허용되는 다른 표기"],   ← 띄어쓰기·대소문자는 무시됩니다
         explain:"해설" }
 
+   [중단원 형성평가 — chapterQuiz]
+   중단원(chapters)에 chapterQuiz 배열을 넣으면 중단원 제목 오른쪽에
+   「중단원 형성평가」 버튼이 생깁니다. 문항 형식은 소단원 quiz와 똑같습니다.
+   OX 문항은 객관식으로 쓰시면 됩니다:
+     { type:"choice", options:["O","X"], q:"...", answer:0, explain:"..." }
+     → answer:0 이 O, answer:1 이 X 입니다.
+
    [소단원을 늘리는 법]
    아래 1단원 블록을 통째로 복사해 2단원 자리에 붙이고 제목·코드만 바꾸면 됩니다.
    2~6단원 자리에는 이미 빈 골격이 들어 있으니, "(제목 입력)" 부분만 채우세요.
@@ -417,6 +431,35 @@ const curriculumData = [
         chapterId: "1-1",
         title: "나의 몸과 마음을 어떻게 이해해야 할까?",
         pages: "교과서 10~23쪽",
+        chapterQuiz: [
+          /* 『큰그릇 교재』 Ⅰ-1 «2.5단계: 개념 점검» — 빈칸 5 + OX 5
+             ※ 이 중단원은 교재에 정답란이 없어 2단계 핵심 정리를 근거로 채웠습니다. 검토 부탁드립니다. */
+          { type:"short", q:"이이는 『격몽요결』에서 도덕적 배움의 첫 단계로 성인이 되겠다는 굳건한 결심을 세우는 (　　)의 중요성을 강조하였다.",
+            answer:["입지","立志","입지(立志)"],
+            explain:"입지(立志). 배움을 시작할 때 가장 먼저 성인이 되겠다는 뜻을 굳건히 세워 흔들리지 않는 삶의 나침반을 마련합니다. (리베르스쿨, 16쪽)" },
+          { type:"short", q:"이이가 제시한, 뜻 세움을 방해하고 마음을 어둡게 만드는 여덟 가지 나쁜 옛 습관을 깨뜨려 나가는 과정을 (　　)이라 부른다.",
+            answer:["혁구습","革舊習","혁구습(革舊習)"],
+            explain:"혁구습(革舊習). 여덟 가지 나쁜 옛 습관(게으름·욕심·명예욕 등)을 칼로 베어내듯 과감히 고쳐야 합니다. (리베르스쿨, 17쪽)" },
+          { type:"short", q:"몸가짐을 바르게 다스려 내면의 단정을 이끌어내는 아홉 가지 행동 지침을 (　　)이라 하고, 학문에 나아가 지혜를 더하는 아홉 가지 도덕적 생각을 구사(九思)라 한다.",
+            answer:["구용","九容","구용(九容)"],
+            explain:"구용(九容). 걸음걸이는 무겁게(족용중), 눈빛은 단정하게(목용단) 등 몸가짐을 바르게 하는 것이 곧 마음을 바르게 다스리는 길입니다. (리베르스쿨, 18쪽)" },
+          { type:"short", q:"칼 세이건은 우주를 의미하는 단어이자 질서와 조화를 이루는 세계를 일컫는 말로 (　　)를 제시하며, 인간이 우주의 일부이자 별의 후손임을 밝혔다.",
+            answer:["코스모스","cosmos","코스모스(Cosmos)"],
+            explain:"코스모스(Cosmos). 인간의 몸을 이루는 원소들은 별의 중심부에서 합성된 물질이므로 인간은 우주와 하나로 연결되어 있습니다. (리베르스쿨, 11쪽)" },
+          { type:"short", q:"보이지 않을 정도로 작고 외로운 우주 속 지구의 가치를 성찰하게 만드는, 칼 세이건이 제시한 시각적 상징물은 (　　)이다.",
+            answer:["창백한 푸른 점","창백한푸른점","pale blue dot","창백한 푸른 점(Pale Blue Dot)"],
+            explain:"창백한 푸른 점(Pale Blue Dot). 티끌처럼 작고 가냘픈 지구를 보호하고 생명을 사랑할 윤리적 의무를 일깨웁니다. (리베르스쿨, 12쪽)" },
+          { type:"choice", options:["O","X"], q:"데카르트는 물리적인 몸과 비물질적인 마음을 엄격하게 구분하며, 이 둘은 서로에게 의존하지 않고 독립적으로 존재할 수 있다고 보는 심신 이원론을 주장하였다.",
+            answer:0, explain:"O. 데카르트의 심신 이원론입니다. 이이의 심신 통합적 관점과 대비되는 입장입니다. (리베르스쿨, 53쪽)" },
+          { type:"choice", options:["O","X"], q:"프랑스의 현상학자 메를로퐁티는 정신과 마음만이 세계를 지각하는 근본적 토대이며, 신체는 단순히 수동적인 도구에 불과하다고 보았다.",
+            answer:1, explain:"X. 정반대입니다. 메를로퐁티는 <b>신체</b>야말로 내가 세계를 경험하고 주체적으로 인식하는 근본 토대라고 보았습니다. (해냄에듀, 14쪽)" },
+          { type:"choice", options:["O","X"], q:"이황은 『숙흥야매잠』에서 새벽에 일어나 밤에 잘 때까지 매 순간 경(敬)의 수양 자세를 지니는 신체적·정신적 정돈을 중시하였다.",
+            answer:0, explain:"O. 이황은 몸과 마음을 흐트러짐 없이 유지하는 근본 태도로 경(敬 — 경건함과 집중)을 최우선으로 내세웠습니다. (천재, 22쪽)" },
+          { type:"choice", options:["O","X"], q:"과학자 리처드 도킨스에 따르면 인간은 철저히 유전자의 생존 기계일 뿐이므로, 유전자의 이기적 명령을 거부하거나 이타적인 도덕적 행동을 하는 것은 원천적으로 불가능하다.",
+            answer:1, explain:"X. 도킨스는 생존 기계로 규정했지만, 도덕 윤리학적 관점에서 인간은 마음과 자유의지를 바탕으로 이기적 명령을 거부하고 이타적 행동과 도덕적 결단을 내릴 수 있는 존재입니다. (해냄에듀, 11쪽)" },
+          { type:"choice", options:["O","X"], q:"이이는 『격몽요결』에서 바른 몸가짐(구용)을 기르는 수양 활동은 오직 신체 단련일 뿐이며, 내면의 마음이나 도덕적 가치와는 연계되지 않는다고 보았다.",
+            answer:1, explain:"X. 이이는 몸가짐을 바르게 하는 것이 곧 마음을 바르게 다스리는 길이라 보았습니다(심신일여 心身一如). (리베르스쿨, 18쪽)" }
+        ],
         topics: [
           {
             topicId: "1-1-1",
@@ -507,6 +550,34 @@ const curriculumData = [
         chapterId: "1-2",
         title: "고통과 쾌락은 어디에서 비롯될까?",
         pages: "교과서 24~41쪽",
+        chapterQuiz: [
+          /* 『큰그릇 교재』 Ⅰ-2 «2.5단계: 개념 점검» — 빈칸 5 + OX 5 (교재의 정답·해설 그대로) */
+          { type:"short", q:"에피쿠로스 학파가 지향하는 이상적인 정신 상태로, 외부 자극에 흔들리지 않는 마음의 평온을 뜻하는 용어는 (　　)이다.",
+            answer:["아타락시아","ataraxia"],
+            explain:"아타락시아. 몸에 고통이 없는 상태(아포니아)와 함께 에피쿠로스가 말한 참된 쾌락을 이룹니다. (리베르스쿨, 30쪽)" },
+          { type:"short", q:"석가모니가 『숫타니파타』에서 소리에 놀라지 않는 사자처럼, 그물에 걸리지 않는 바람처럼 가라고 비유하며 제시한 동물은 (　　)이다.",
+            answer:["무소","무소의 뿔","무소(무소의 뿔)"],
+            explain:"무소(무소의 뿔). 편견과 독단을 이겨내고 주체적으로 나아가야 함을 뜻합니다. (리베르스쿨, 24쪽 / 길벗, 26쪽)" },
+          { type:"short", q:"에피쿠로스는 쾌락과 고통을 분별하여 진정으로 유익한 것을 이성적으로 선택하게 돕는 실천적 지혜를 (　　)(이)라고 불렀다.",
+            answer:["사려 깊음","사려깊음","프로네시스","phronesis","사려 깊음(프로네시스)"],
+            explain:"사려 깊음(프로네시스). 사려 깊고 아름다우며 정의로운 삶 없이는 즐거운 삶이 있을 수 없다고 보았습니다. (리베르스쿨, 30쪽)" },
+          { type:"short", q:"스토아 학파의 사상가 에픽테토스는 격정이 억제되고 내면의 동요가 사라진 이상적 부동심인 (　　)의 경지를 추구했다.",
+            answer:["아파테이아","apatheia"],
+            explain:"아파테이아. 에피쿠로스 학파의 아타락시아와 짝을 이루는 개념으로 함께 묻는 경우가 많습니다." },
+          { type:"short", q:"불교에서 고통을 직시하고 그 원인을 파악하여 소멸에 이르는 길을 설명하는 네 가지 성스러운 진리를 (　　)(이)라 한다.",
+            answer:["사성제","四聖諦","사성제(四聖諦)"],
+            explain:"사성제(四聖諦). 고통의 현실을 직시하고 집착(갈애)이라는 원인을 파악해 소멸에 이르는 길을 제시합니다." },
+          { type:"choice", options:["O","X"], q:"에피쿠로스는 쾌락을 최고선으로 보았으므로, 순간적이고 강렬한 육체적 쾌락을 최대한 많이 경험하는 것이 바람직하다고 보았다.",
+            answer:1, explain:"X. 몸의 고통과 마음의 혼란이 없는 <b>정적 쾌락</b>을 참된 쾌락으로 보았습니다." },
+          { type:"choice", options:["O","X"], q:"초기 불교에서는 인간이 겪는 괴로움의 근원적 원인이 물질이나 젊음 등에 대한 끝없는 집착(갈애)에 있다고 설명한다.",
+            answer:0, explain:"O. 집착(갈애)과 무명(無明)이 고통의 근원입니다. (리베르스쿨, 24쪽)" },
+          { type:"choice", options:["O","X"], q:"에피쿠로스에 따르면 죽음은 인간에게 최악의 고통이므로, 살아 있는 동안 죽음을 피하기 위해 온 힘을 쏟아야 한다.",
+            answer:1, explain:"X. 죽음은 우리에게 아무것도 아니라고 보았습니다. 살아 있는 동안에는 죽음이 오지 않았고, 죽고 나면 감각이 없어 어떤 고통도 느낄 수 없기 때문입니다. (리베르스쿨, 27~28쪽)" },
+          { type:"choice", options:["O","X"], q:"‘두 번째 화살을 피하라’는 가르침은, 피할 수 없는 신체적 고통이 발생했을 때 그것에 집착하여 심리적 괴로움을 스스로 더하지 않는 자세를 뜻한다.",
+            answer:0, explain:"O. 첫 번째 화살(신체적 고통)은 피할 수 없지만, 원망하고 슬퍼하며 스스로 괴로움을 더하는 두 번째 화살은 거부할 수 있습니다. (리베르스쿨, 30쪽)" },
+          { type:"choice", options:["O","X"], q:"쇼펜하우어는 욕망이 완전히 충족되어 결핍이 해소되면 인간은 영구적이고 지속적인 궁극의 행복에 안착하게 된다고 보았다.",
+            answer:1, explain:"X. 욕망이 채워지면 곧 권태가 찾아온다고 보았습니다." }
+        ],
         topics: [
           {
             topicId: "1-2-1",
@@ -695,6 +766,10 @@ const allTopics = curriculumData.flatMap(u => u.chapters.flatMap(c =>
 ));
 const byId = Object.fromEntries(allTopics.map(t => [t.topicId, t]));
 
+const allChapters = curriculumData.flatMap(u => u.chapters.map(c => ({ ...c, unit:u })));
+const byChapter = Object.fromEntries(allChapters.map(c => [c.chapterId, c]));
+const hasChapterQuiz = c => !!(c.chapterQuiz && c.chapterQuiz.length);
+
 /* ── 상단 요약 ─────────────────────────────────────────── */
 function renderStats(){
   const ready = allTopics.filter(t => t.status === "ready").length;
@@ -703,7 +778,8 @@ function renderStats(){
   document.getElementById("stats").innerHTML = `
     <span class="stat">소단원 <b>${allTopics.length}</b></span>
     <span class="stat">학습지 완성 <b>${ready}</b> / ${allTopics.length}</span>
-    <span class="stat">형성평가 준비 <b>${quizzed}</b></span>
+    <span class="stat">소단원 평가 <b>${quizzed}</b></span>
+    <span class="stat">중단원 평가 <b>${allChapters.filter(hasChapterQuiz).length}</b> / ${allChapters.length}</span>
     <span class="stat">내가 푼 평가 <b>${done}</b></span>`;
 }
 
@@ -755,6 +831,10 @@ function render(){
               <span class="cnum">${esc(c.chapterId)}</span>
               <h3>${esc(c.title)}</h3>
               ${c.pages ? `<span class="cpages">${esc(c.pages)}</span>` : ""}
+              ${hasChapterQuiz(c) ? `<button class="cquiz" type="button" data-act="chapquiz" data-chapter="${esc(c.chapterId)}">
+                   중단원 형성평가 (${c.chapterQuiz.length})
+                   ${scores["ch-"+c.chapterId] ? `<span class="cscore">${scores["ch-"+c.chapterId].got}/${scores["ch-"+c.chapterId].total}</span>` : ""}
+                 </button>` : ""}
             </div>
             <div class="topics">${c.topics.map(t => topicCard(byId[t.topicId])).join("")}</div>
           </section>`).join("")}
@@ -824,8 +904,8 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hid
 /* ── 형성평가 ──────────────────────────────────────────── */
 let current = null;
 
-function quizHTML(t){
-  return t.quiz.map((item, i) => {
+function quizHTML(subj){
+  return subj.quiz.map((item, i) => {
     const head = `
       <div class="qhead">
         <span class="qnum">${i + 1}</span>
@@ -845,18 +925,35 @@ function quizHTML(t){
   }).join("");
 }
 
-function openQuiz(id){
-  const t = byId[id];
-  if (!t || !t.quiz.length) return;
-  current = t;
+/* 소단원 형성평가(3문항)와 중단원 형성평가(빈칸·OX 10문항)를 같은 틀로 실행합니다 */
+function subject(kind, id){
+  if (kind === "topic") {
+    const t = byId[id];
+    if (!t || !t.quiz.length) return null;
+    return { kind, id, key:t.topicId, quiz:t.quiz,
+             code:`${t.topicId} · ${t.chapter.title}`,
+             title:`형성평가 — ${t.title}`,
+             hint:`${t.quiz.length}문항 · 제출하면 바로 채점됩니다` };
+  }
+  const c = byChapter[id];
+  if (!hasChapterQuiz(c)) return null;
+  return { kind, id, key:`ch-${c.chapterId}`, quiz:c.chapterQuiz,
+           code:`${c.unit.roman}. ${c.unit.title}`,
+           title:`중단원 형성평가 — ${c.title}`,
+           hint:`빈칸·OX ${c.chapterQuiz.length}문항 · 단원 마무리용` };
+}
+
+function openQuiz(kind, id){
+  const s = subject(kind, id);
+  if (!s) return;
+  current = s;
   openModal({
-    code: `${t.topicId} · ${t.chapter.title}`,
-    title: `형성평가 — ${t.title}`,
-    bodyHTML: `<form id="quizForm" novalidate>${quizHTML(t)}</form>`,
-    footHTML: `<span class="hint">${t.quiz.length}문항 · 제출하면 바로 채점됩니다</span>
+    code: s.code,
+    title: s.title,
+    bodyHTML: `<form id="quizForm" novalidate>${quizHTML(s)}</form>`,
+    footHTML: `<span class="hint">${s.hint}</span>
                <button class="btn primary" type="button" id="grade">제출하고 채점</button>`
   });
-
   document.getElementById("grade").onclick = grade;
 }
 
@@ -902,7 +999,7 @@ function grade(){
     fb.innerHTML = `<b>${ok ? "정답입니다" : "정답: " + esc(shown)}</b>${item.explain ? `<span class="exp">${esc(item.explain)}</span>` : ""}`;
   });
 
-  saveScore(t.topicId, got, t.quiz.length);
+  saveScore(t.key, got, t.quiz.length);
   const msg = got === t.quiz.length ? "모두 맞혔습니다."
             : got === 0 ? "해설을 읽고 다시 풀어 보세요."
             : "틀린 문항의 해설을 확인해 보세요.";
@@ -910,7 +1007,7 @@ function grade(){
     <span class="result"><span class="big">${got} / ${t.quiz.length}</span><span class="msg">${msg}</span></span>
     <button class="btn" type="button" id="reset">다시 풀기</button>
     <button class="btn primary" type="button" id="done">닫기</button>`;
-  document.getElementById("reset").onclick = () => openQuiz(t.topicId);
+  document.getElementById("reset").onclick = () => openQuiz(t.kind, t.id);
   document.getElementById("done").onclick = () => { closeModal(); render(); };
   mBody.scrollTop = 0;
   render();
@@ -953,7 +1050,8 @@ function copyUrl(id, btn){
 document.getElementById("units").addEventListener("click", e => {
   const btn = e.target.closest("button[data-act]");
   if (!btn) return;
-  if (btn.dataset.act === "quiz") openQuiz(btn.dataset.topic);
+  if (btn.dataset.act === "quiz") openQuiz("topic", btn.dataset.topic);
+  if (btn.dataset.act === "chapquiz") openQuiz("chapter", btn.dataset.chapter);
   if (btn.dataset.act === "copy") copyUrl(btn.dataset.topic, btn);
 });
 
