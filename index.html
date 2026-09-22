@@ -192,6 +192,39 @@ main{padding-block:26px 64px}
 }
 .cquiz:hover{border-color:var(--quiz)}
 .cquiz .cscore{font-family:var(--mono);font-weight:600;opacity:.75;font-variant-numeric:tabular-nums}
+.cread{
+  border:1px solid var(--line);background:#fff;color:var(--ink-2);
+  border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:600;white-space:nowrap;
+  display:inline-flex;gap:6px;align-items:center;transition:border-color .15s,color .15s;
+}
+.cread:hover{border-color:var(--quiz);color:var(--quiz)}
+.cquiz + .cread{margin-left:0}
+.cread:not(.cquiz + .cread){margin-left:auto}
+
+/* ── 원문 자료실 ────────────────────────────────────────── */
+.rnote{margin:0 0 14px;font-size:13px;color:var(--ink-3);line-height:1.6}
+.rgroup{margin-bottom:22px}
+.rgroup > h3{
+  margin:0 0 10px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink-2);
+  display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;
+}
+.rgroup > h3 .cnum{flex:none}
+.rcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.rcard{
+  text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;
+  cursor:pointer;display:flex;flex-direction:column;gap:7px;transition:border-color .15s,box-shadow .15s;font:inherit;
+}
+.rcard:hover{border-color:var(--quiz);box-shadow:0 2px 10px rgba(80,55,140,.08)}
+.rcard h4{margin:0;font-family:var(--sans);font-size:14.5px;font-weight:600;line-height:1.45;color:var(--ink)}
+.rcard .rsrc{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.rcard .rpeek{font-size:12.5px;color:var(--ink-2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.reading{font-size:15.5px;line-height:1.95;color:var(--ink)}
+.reading p{margin:0 0 15px;word-break:keep-all}
+.reading p:last-child{margin-bottom:0}
+.reading .rsrc{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:18px;padding-top:12px;border-top:1px solid var(--line);text-align:right}
+.reading.big{font-size:18px;line-height:2.05}
+.rzoom{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:8px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.rzoom[aria-pressed=true]{border-color:var(--quiz);color:var(--quiz)}
 
 /* ── 소단원 카드 ────────────────────────────────────────── */
 .topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(296px,1fr));gap:10px}
@@ -416,6 +449,7 @@ main{padding-block:26px 64px}
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-units" aria-selected="true" aria-controls="view-units" type="button">단원 학습</button>
       <button class="tab" role="tab" id="tab-practice" aria-selected="false" aria-controls="view-practice" type="button">연습문제 <span class="n" id="setCount">0</span></button>
+      <button class="tab" role="tab" id="tab-reading" aria-selected="false" aria-controls="view-reading" type="button">원문 자료실 <span class="n" id="readCount">0</span></button>
     </div>
   </div>
   <div class="wrap toolbar-in" id="bar-units">
@@ -431,6 +465,13 @@ main{padding-block:26px 64px}
     <span class="chipsep" aria-hidden="true"></span>
     <div class="chips" id="levelFilter" role="group" aria-label="난이도로 거르기"></div>
   </div>
+  <div class="wrap toolbar-in" id="bar-reading" hidden>
+    <label class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="rq" type="search" placeholder="원문 검색 (예: 격몽요결, 소유냐 존재냐, 사마리아인)" autocomplete="off">
+    </label>
+    <div class="chips" id="readFilter" role="group" aria-label="단원으로 거르기"></div>
+  </div>
 </div>
 
 <main class="wrap">
@@ -440,6 +481,11 @@ main{padding-block:26px 64px}
   </section>
   <section id="view-practice" role="tabpanel" aria-labelledby="tab-practice" hidden>
     <div id="sets"></div>
+  </section>
+  <section id="view-reading" role="tabpanel" aria-labelledby="tab-reading" hidden>
+    <p class="rnote">『큰그릇 교재』(김상권 선생님) 「깊이 읽는 인문학 자료」의 원문입니다. 중단원마다 3~4편씩, 읽고 싶은 자료를 눌러 보세요.</p>
+    <div id="readings"></div>
+    <p class="empty" id="remptyMsg" hidden>검색 결과가 없습니다.</p>
   </section>
 </main>
 
@@ -466,6 +512,8 @@ main{padding-block:26px 64px}
 
 <!-- 연습문제 기출 세트: practice 폴더의 data.js (없어도 페이지는 정상 동작) -->
 <script src="practice/data.js"></script>
+<!-- 원문 자료: readings 폴더의 data.js (없어도 페이지는 정상 동작) -->
+<script src="readings/data.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════════
    ▣ 선생님이 고치실 곳은 여기 하나뿐입니다 — curriculumData
@@ -1256,6 +1304,17 @@ const bySet = Object.fromEntries(visibleSets.map(x => [x.setId, x]));
 let unitFilter = "all";
 let levelFilter = "all";
 
+/* ── 원문 자료 (readings/data.js) ───────────────────────────
+   자료마다 id 를 붙이고(ch 번호 + 순번), 검색용 문자열을 미리 만들어 둡니다. */
+const readings = (window.READINGS || [])
+  .filter(r => r && r.ch && r.title && Array.isArray(r.body) && r.body.length)
+  .map((r, i) => ({ ...r, rid: `${r.ch}-${i}`,
+                    search: `${r.title} ${r.src || ""} ${r.body.join(" ")}`.toLowerCase() }));
+const byReading = Object.fromEntries(readings.map(r => [r.rid, r]));
+const readingsOf = ch => readings.filter(r => r.ch === ch);
+let readUnitFilter = "all";
+let readTerm = "";
+
 /* ── 상단 요약 ─────────────────────────────────────────── */
 function renderStats(){
   const ready = allTopics.filter(t => t.status === "ready").length;
@@ -1267,6 +1326,7 @@ function renderStats(){
     <span class="stat">소단원 평가 <b>${quizzed}</b></span>
     <span class="stat">중단원 평가 <b>${allChapters.filter(hasChapterQuiz).length}</b> / ${allChapters.length}</span>
     <span class="stat">연습문제 <b>${visibleSets.filter(x => !x.hidden).length}</b>세트</span>
+    ${readings.length ? `<span class="stat">원문 자료 <b>${readings.length}</b>편</span>` : ""}
     <span class="stat">내가 푼 평가 <b>${done + allChapters.filter(c => scores["ch-"+c.chapterId]).length + visibleSets.filter(x => scores["set-"+x.setId]).length}</b></span>`;
 }
 
@@ -1325,6 +1385,9 @@ function render(){
                    중단원 형성평가 (${c.chapterQuiz.length})
                    ${scores["ch-"+c.chapterId] ? `<span class="cscore">${scores["ch-"+c.chapterId].got}/${scores["ch-"+c.chapterId].total}</span>` : ""}
                  </button>` : ""}
+              ${readingsOf(c.chapterId).length ? `<button class="cread" type="button" data-act="reading" data-chapter="${esc(c.chapterId)}">
+                   원문 읽기 (${readingsOf(c.chapterId).length})
+                 </button>` : ""}
             </div>
             <div class="topics">${c.topics.map(t => topicCard(byId[t.topicId])).join("")}</div>
           </section>`).join("")}
@@ -1332,6 +1395,7 @@ function render(){
     </details>`).join("");
   renderStats();
   renderPractice();
+  renderReadings();
 }
 
 /* ── 연습문제 화면 ─────────────────────────────────────── */
@@ -1392,6 +1456,72 @@ function renderPractice(){
   }).join("")}</div>`;
 }
 
+/* ── 원문 자료실 화면 ───────────────────────────────────── */
+function renderReadings(){
+  document.getElementById("readCount").textContent = readings.length;
+
+  document.getElementById("readFilter").innerHTML =
+    [["all", "전체"], ...curriculumData.map(u => [String(u.unitId), `${u.roman}단원`])]
+      .map(([v, label]) => {
+        const n = v === "all" ? readings.length : readings.filter(r => r.ch.startsWith(v + "-")).length;
+        return `<button class="fchip" type="button" data-runit="${v}" aria-pressed="${readUnitFilter === v}"
+                  ${v !== "all" && !n ? "disabled style=\"opacity:.4\"" : ""}>${esc(label)}${v !== "all" && n ? ` · ${n}` : ""}</button>`;
+      }).join("");
+
+  const box = document.getElementById("readings");
+  const list = readings
+    .filter(r => readUnitFilter === "all" || r.ch.startsWith(readUnitFilter + "-"))
+    .filter(r => !readTerm || r.search.includes(readTerm));
+  document.getElementById("remptyMsg").hidden = !(readings.length && !list.length);
+
+  if (!readings.length) {
+    box.innerHTML = `<div class="pempty"><b>아직 등록된 원문 자료가 없습니다</b>
+      <p>readings 폴더의 data.js 를 올리면 이곳에 나타납니다.</p></div>`;
+    return;
+  }
+  const groups = allChapters
+    .map(c => ({ c, items: list.filter(r => r.ch === c.chapterId) }))
+    .filter(g => g.items.length);
+  box.innerHTML = groups.map(g => `
+    <section class="rgroup">
+      <h3><span class="cnum">${esc(g.c.chapterId)}</span> ${esc(g.c.title)}</h3>
+      <div class="rcards">${g.items.map(r => `
+        <button class="rcard" type="button" data-act="read1" data-rid="${esc(r.rid)}">
+          <h4>${esc(r.title)}</h4>
+          ${r.src ? `<span class="rsrc">${esc(r.src)}</span>` : ""}
+          <span class="rpeek">${esc(r.body[0])}</span>
+        </button>`).join("")}</div>
+    </section>`).join("");
+}
+
+/* 원문 한 편 / 중단원 전체를 모달로 보여 줍니다 */
+const readingHTML = (r, withTitle = true) => `<article class="reading">
+  ${withTitle ? `<h4 style="margin:0 0 12px;font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.5">${esc(r.title)}</h4>` : ""}
+  ${r.body.map(p => `<p>${esc(p)}</p>`).join("")}
+  ${r.src ? `<p class="rsrc">${esc(r.src)}</p>` : ""}
+</article>`;
+
+function openReading(kind, id){
+  const items = kind === "chapter" ? readingsOf(id) : [byReading[id]].filter(Boolean);
+  if (!items.length) return;
+  const c = byChapter[kind === "chapter" ? id : items[0].ch];
+  openModal({
+    code: `원문 자료 · ${c ? c.chapterId : ""}${kind === "chapter" ? ` · ${items.length}편` : ""}`,
+    title: kind === "chapter" ? (c ? c.title : "원문 읽기") : items[0].title,
+    bodyHTML: items.map(r => readingHTML(r, kind === "chapter")).join(`<hr style="border:0;border-top:1px solid var(--line);margin:26px 0">`),
+    footHTML: `<span style="flex:1;min-width:0;font-size:12.5px;color:var(--ink-3)">『큰그릇 교재』(김상권) 「깊이 읽는 인문학 자료」</span>
+               <button class="rzoom" type="button" id="rzoom" aria-pressed="false">글자 크게</button>`,
+    wide: true
+  });
+  const zoom = document.getElementById("rzoom");
+  if (zoom) zoom.onclick = () => {
+    const on = zoom.getAttribute("aria-pressed") !== "true";
+    zoom.setAttribute("aria-pressed", on);
+    mBody.querySelectorAll(".reading").forEach(el => el.classList.toggle("big", on));
+    zoom.textContent = on ? "글자 작게" : "글자 크게";
+  };
+}
+
 document.getElementById("unitFilter").addEventListener("click", e => {
   const b = e.target.closest(".fchip");
   if (!b || b.disabled) return;
@@ -1409,21 +1539,37 @@ document.getElementById("sets").addEventListener("click", e => {
   if (b) openQuiz("set", b.dataset.set);
 });
 
+/* ── 원문 자료실: 단원 칩 · 검색 · 카드 열기 ───────────── */
+document.getElementById("readFilter").addEventListener("click", e => {
+  const b = e.target.closest(".fchip");
+  if (!b) return;
+  readUnitFilter = b.dataset.runit;
+  renderReadings();
+});
+document.getElementById("rq").addEventListener("input", e => {
+  readTerm = e.target.value.trim().toLowerCase();
+  renderReadings();
+});
+document.getElementById("readings").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act='read1']");
+  if (b) openReading("one", b.dataset.rid);
+});
+
 /* ── 탭 전환 (주소 끝 #practice 로 바로 열 수 있습니다) ── */
+const TABS = ["units", "practice", "reading"];
 function showTab(name){
-  const practice = name === "practice";
-  document.getElementById("tab-units").setAttribute("aria-selected", !practice);
-  document.getElementById("tab-practice").setAttribute("aria-selected", practice);
-  document.getElementById("view-units").hidden = practice;
-  document.getElementById("view-practice").hidden = !practice;
-  document.getElementById("bar-units").hidden = practice;
-  document.getElementById("bar-practice").hidden = !practice;
-  const hash = practice ? "#practice" : "";
+  const cur = TABS.includes(name) ? name : "units";
+  TABS.forEach(t => {
+    document.getElementById("tab-" + t).setAttribute("aria-selected", t === cur);
+    document.getElementById("view-" + t).hidden = t !== cur;
+    document.getElementById("bar-" + t).hidden = t !== cur;
+  });
+  const hash = cur === "units" ? "" : "#" + cur;
   if (location.hash !== hash) history.replaceState(null, "", location.pathname + location.search + hash);
 }
-document.getElementById("tab-units").onclick = () => showTab("units");
-document.getElementById("tab-practice").onclick = () => showTab("practice");
-window.addEventListener("hashchange", () => showTab(location.hash === "#practice" ? "practice" : "units"));
+const tabFromHash = () => (TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "units");
+TABS.forEach(t => document.getElementById("tab-" + t).onclick = () => showTab(t));
+window.addEventListener("hashchange", () => showTab(tabFromHash()));
 
 /* ── 검색 ──────────────────────────────────────────────── */
 document.getElementById("q").addEventListener("input", e => {
@@ -1663,11 +1809,12 @@ document.getElementById("units").addEventListener("click", e => {
   if (!btn) return;
   if (btn.dataset.act === "quiz") openQuiz("topic", btn.dataset.topic);
   if (btn.dataset.act === "chapquiz") openQuiz("chapter", btn.dataset.chapter);
+  if (btn.dataset.act === "reading") openReading("chapter", btn.dataset.chapter);
   if (btn.dataset.act === "copy") copyUrl(btn.dataset.topic, btn);
 });
 
 render();
-showTab(location.hash === "#practice" ? "practice" : "units");
+showTab(tabFromHash());
 </script>
 
 </body>
