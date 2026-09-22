@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>문제 등록 도구</title>
+<style>
+:root{--p:#6b4fbb;--p2:#8b72d6;--pl:#f1ecfc;--pm:#e2d8f8;--ink:#2a2140;--mut:#6f6886;--line:#e4dfee;--bg:#faf8fe;--ok:#1f8a5b;--warn:#b5462f;--chg:#fff6d6}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+header{background:linear-gradient(135deg,#4b3591,#7a5fcf);color:#fff;padding:20px 16px}
+header .in,main{max-width:1100px;margin:0 auto}
+header h1{margin:0;font-size:22px}
+header p{margin:4px 0 0;opacity:.9;font-size:14px}
+main{padding:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.card h2{margin:0 0 12px;font-size:17px;color:var(--p)}
+.steps{margin:0;padding-left:20px;font-size:14px;color:var(--mut)}
+.steps b{color:var(--ink)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.drop{border:2px dashed var(--p2);border-radius:12px;min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mut);background:var(--pl);cursor:pointer;padding:10px;outline:none}
+.drop:focus{border-color:var(--p);box-shadow:0 0 0 3px var(--pm)}
+.drop.over{background:var(--pm)}
+.drop img{max-width:100%;max-height:520px;display:block;border:1px solid var(--line);background:#fff}
+.drop b{color:var(--p)}
+label.f{display:block;font-size:13px;font-weight:600;margin:12px 0 5px}
+label.f:first-child{margin-top:0}
+select,input[type=text],input[type=number],textarea{font:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;width:100%;background:#fff;color:var(--ink)}
+textarea{min-height:76px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+.chip small{color:var(--mut);font-size:12px}
+.chip[aria-pressed=true]{background:var(--p);border-color:var(--p);color:#fff}
+.chip[aria-pressed=true] small{color:#e8e0ff}
+.btn{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;background:var(--p);color:#fff}
+.btn.sub{background:var(--pl);color:var(--p)}
+.btn.big{font-size:16px;padding:12px 22px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.newexam{background:var(--pl);border-radius:10px;padding:10px;margin-top:8px}
+.newexam .row>*{flex:1 1 140px}
+.msg{font-size:13px;margin-top:8px;min-height:1em}
+.msg.err{color:var(--warn)} .msg.ok{color:var(--ok)}
+.bar{position:sticky;top:0;z-index:5;background:#fffffff2;border-bottom:1px solid var(--line);padding:10px 16px;backdrop-filter:blur(4px)}
+.bar .in{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar .stat{font-size:14px;color:var(--mut);flex:1 1 200px}
+.bar .stat b{color:var(--p)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.filters select{width:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:12px;color:var(--mut);text-align:left;font-weight:600;padding:6px;border-bottom:1px solid var(--line)}
+td{padding:6px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.chg td{background:var(--chg)}
+tr.new td{background:#e8f7ef}
+tr.hid td{opacity:.5}
+td.th img{width:120px;max-height:90px;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:6px;cursor:zoom-in;background:#fff}
+td select{width:auto}
+td textarea{min-height:40px;font-size:13px}
+.grp td{background:var(--pl);font-weight:700;color:var(--p)}
+.tag{display:inline-block;font-size:11px;border-radius:6px;padding:1px 6px;background:var(--pm);color:var(--p);margin-left:4px}
+.tag.n{background:#d5f0e3;color:var(--ok)}
+dialog{border:0;border-radius:14px;padding:0;max-width:min(900px,94vw)}
+dialog img{display:block;max-width:100%}
+dialog::backdrop{background:#0008}
+.done ol{margin:6px 0 0;padding-left:20px}
+.hint{font-size:12px;color:var(--mut)}
+@media (max-width:760px){td.th img{width:70px}.hide-m{display:none}}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1>문제 등록 도구 <span style="font-size:13px;opacity:.8">· 선생님용</span></h1>
+  <p>연습문제 탭에 문항을 추가하고, 문항의 단원·정답·해설을 바꿉니다. 이 화면에서 바꾼 내용은 <b>업로드 파일을 만들어 GitHub에 올려야</b> 사이트에 반영됩니다.</p>
+</div></header>
+
+<div class="bar"><div class="in">
+  <div class="stat" id="stat">불러오는 중…</div>
+  <button class="btn big" id="export" type="button" disabled>업로드 파일 만들기</button>
+</div></div>
+
+<main>
+  <div class="card" id="loadErr" hidden>
+    <h2>문항 목록을 불러오지 못했어요</h2>
+    <p class="hint">이 도구는 사이트 주소(…github.io/ethics-classroom/practice/editor.html)에서 열어야 합니다. 컴퓨터에 받은 data.js로 작업하려면 아래에서 파일을 고르세요.</p>
+    <input type="file" id="pickData" accept=".js">
+  </div>
+
+  <div class="card" id="draftBox" hidden>
+    <h2>작업하던 내용이 있어요</h2>
+    <p class="hint" id="draftInfo"></p>
+    <div class="row"><button class="btn" id="draftLoad" type="button">이어서 하기</button><button class="btn sub" id="draftDrop" type="button">버리고 새로 시작</button></div>
+  </div>
+
+  <section class="card" aria-labelledby="h-add">
+    <h2 id="h-add">① 새 문항 추가</h2>
+    <div class="grid">
+      <div>
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="문항 이미지 붙여넣기 또는 선택">
+          <div id="dropTxt">문항을 캡처해서 여기에 <b>붙여넣기(Ctrl+V)</b><br>또는 이미지 파일을 <b>끌어다 놓기 · 클릭해서 선택</b><br><span class="hint">캡처: 윈도우 <b>Win+Shift+S</b> / 맥 <b>Cmd+Shift+4</b><br>발문부터 ⑤번 선지까지 한 문항 전체를 담아 주세요.</span></div>
+          <img id="dropImg" alt="붙여넣은 문항 미리보기" hidden>
+        </div>
+        <input type="file" id="pickImg" accept="image/*" hidden>
+        <p class="hint" id="imgInfo"></p>
+      </div>
+      <div>
+        <label class="f" for="exam">시험</label>
+        <select id="exam"></select>
+        <div class="newexam" id="newExam" hidden>
+          <div class="row">
+            <input type="text" id="neName" placeholder="시험 이름 예) 2027학년도 수능">
+            <select id="neSubj"><option value="생활과 윤리">생활과 윤리</option><option value="윤리와 사상">윤리와 사상</option><option value="인문학과 윤리">인문학과 윤리</option><option value="기타">기타</option></select>
+            <select id="neLv"><option value="고3">고3 (어려움)</option><option value="고2">고2</option></select>
+          </div>
+          <p class="hint">시험 코드: <b id="neCode">-</b> (그림 파일 이름에 쓰여요)</p>
+        </div>
+        <label class="f" for="qno">문항 번호</label>
+        <input type="number" id="qno" min="1" max="99" placeholder="예) 7" style="width:120px">
+        <label class="f" id="unitLbl">단원</label>
+        <div class="chips" id="unitChips" role="group" aria-labelledby="unitLbl"></div>
+        <label class="f" id="ansLbl">정답</label>
+        <div class="chips" id="ansChips" role="group" aria-labelledby="ansLbl"></div>
+        <label class="f" for="exp">해설 <span class="hint">(한두 문장, 비워 둬도 됨)</span></label>
+        <textarea id="exp" placeholder="예) 갑은 롤스, 을은 노직입니다. …"></textarea>
+        <div class="row" style="margin-top:12px"><button class="btn" id="add" type="button">목록에 추가</button><button class="btn sub" id="reset" type="button">지우기</button></div>
+        <div class="msg" id="addMsg" role="status"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-list">
+    <h2 id="h-list">② 문항 목록 · 단원 바꾸기</h2>
+    <p class="hint">단원·정답을 고르거나 해설을 고치면 노란색으로 표시됩니다. 초록색은 새로 추가한 문항입니다. 「숨김」을 켜면 학생 화면에서 빠집니다.</p>
+    <div class="filters">
+      <select id="fUnit"><option value="">전체 단원</option></select>
+      <select id="fExam"><option value="">전체 시험</option></select>
+      <select id="fState"><option value="">전체</option><option value="chg">바뀐 문항만</option><option value="hid">숨긴 문항만</option></select>
+    </div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>그림</th><th>번호</th><th>단원</th><th>정답</th><th class="hide-m">해설</th><th>숨김</th></tr></thead>
+      <tbody id="list"></tbody>
+    </table></div>
+  </section>
+
+  <section class="card done" id="done" hidden aria-live="polite">
+    <h2>③ GitHub에 올리기</h2>
+    <p id="doneTxt"></p>
+    <ol>
+      <li>받은 zip 파일의 압축을 풉니다.</li>
+      <li>GitHub 저장소에서 <b>practice 폴더를 눌러 안으로 들어갑니다.</b></li>
+      <li><b>Add file → Upload files</b> 를 누르고, 압축을 푼 파일들을 <b>전부 선택해서</b> 끌어다 놓습니다.</li>
+      <li>맨 아래 <b>Commit changes</b> 를 누릅니다. 1~2분 뒤 사이트에 반영됩니다.</li>
+    </ol>
+  </section>
+</main>
+
+<dialog id="zoom"><img id="zoomImg" alt="문항 크게 보기"></dialog>
+
+<script>
+/* ────────────────────────────────────────────────────────────
+   문제 등록 도구
+   - practice/data.js 를 읽어 문항 목록을 보여 주고,
+   - 새 문항(캡처 이미지) 추가 · 단원/정답/해설/숨김 수정 후
+   - 새 data.js + 새 그림 파일을 zip 하나로 내려받게 한다.
+   (서버·로그인 없음. 실제 반영은 선생님이 GitHub에 업로드)
+   ──────────────────────────────────────────────────────────── */
+const UNITS = ["", "성찰 대상으로서의 나", "타인과 관계 맺기", "자유와 평등", "다양성과 포용성", "공존과 지속가능성", "삶의 의미에 대한 물음"];
+const RN = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ"];
+const CIRC = ["", "①", "②", "③", "④", "⑤"];
+const DRAFT_KEY = "practice-editor-draft-v1";
+
+let srcText = "";       // 원래 data.js 전체 텍스트
+let exams = {};         // code -> [name, subject, level]
+let examOrder = [];
+let items = [];         // {id, unit, ans, exp, hidden, orig:{...}|null, img?:dataURL}
+let pending = { img: null, unit: 0, ans: 0 };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const codeOf = id => id.slice(0, id.lastIndexOf("-"));
+const noOf = id => parseInt(id.slice(id.lastIndexOf("-") + 1), 10);
+
+/* ── data.js 읽기 (주석 처리된 // 줄 = 숨김 문항도 읽는다) ── */
+function parseData(text) {
+  const ex = {}, exo = [], its = [];
+  const exBlock = text.match(/const PRACTICE_EXAMS\s*=\s*\{([\s\S]*?)\n\};/);
+  const itBlock = text.match(/const PRACTICE_ITEMS\s*=\s*\[([\s\S]*?)\n\];/);
+  if (!exBlock || !itBlock) throw new Error("data.js 형식을 알아볼 수 없어요.");
+  exBlock[1].split("\n").forEach(line => {
+    const m = line.match(/^\s*(?:\/\/\s*)?"([\w.-]+)"\s*:\s*(\[.*\])\s*,?\s*$/);
+    if (m) { try { ex[m[1]] = JSON.parse(m[2]); exo.push(m[1]); } catch (e) {} }
+  });
+  itBlock[1].split("\n").forEach(line => {
+    const m = line.match(/^\s*(\/\/\s*)?(\[\s*".*\])\s*,?\s*$/);
+    if (!m) return;
+    try {
+      const a = JSON.parse(m[2]);
+      its.push({ id: a[0], unit: +a[1], ans: +a[2], exp: a[3] || "", hidden: !!m[1] });
+    } catch (e) { console.warn("읽지 못한 줄:", line); }
+  });
+  its.forEach(it => it.orig = { unit: it.unit, ans: it.ans, exp: it.exp, hidden: it.hidden });
+  return { ex, exo, its };
+}
+
+/* ── 새 data.js 만들기: 시험 목록·문항 목록 블록만 바꾸고 나머지(설명·자동 처리 코드)는 그대로 ── */
+function buildData() {
+  const exLines = examOrder.map(c => ` ${JSON.stringify(c)}: ${JSON.stringify(exams[c])},`);
+  const sorted = [...items].sort((a, b) => {
+    const ea = examOrder.indexOf(codeOf(a.id)), eb = examOrder.indexOf(codeOf(b.id));
+    return ea - eb || noOf(a.id) - noOf(b.id) || a.id.localeCompare(b.id);
+  });
+  const itLines = []; let cur = null;
+  sorted.forEach(it => {
+    const c = codeOf(it.id);
+    if (c !== cur) { cur = c; const e = exams[c] || ["", "", ""]; itLines.push(` /* ${e[0]} ${e[1]} */`); }
+    itLines.push(`${it.hidden ? "// " : " "}${JSON.stringify([it.id, it.unit, it.ans, it.exp])},`);
+  });
+  return srcText
+    .replace(/(const PRACTICE_EXAMS\s*=\s*\{)[\s\S]*?(\n\};)/, (_, a, b) => a + "\n" + exLines.join("\n") + b)
+    .replace(/(const PRACTICE_ITEMS\s*=\s*\[)[\s\S]*?(\n\];)/, (_, a, b) => a + "\n" + itLines.join("\n") + b);
+}
+
+function changed(it) { return !it.orig || !!it.img || it.orig.unit !== it.unit || it.orig.ans !== it.ans || it.orig.exp !== it.exp || it.orig.hidden !== it.hidden; }
+function newExamsList() { return examOrder.filter(c => !initialExams.has(c)); }
+let initialExams = new Set();
+
+/* ── 화면 ── */
+function start(text) {
+  srcText = text;
+  const d = parseData(text);
+  exams = d.ex; examOrder = d.exo; items = d.its;
+  initialExams = new Set(examOrder);
+  $("#loadErr").hidden = true;
+  fillExamSelects(); renderList(); updateStat(false); checkDraft();
+}
+
+function fillExamSelects() {
+  const opts = examOrder.map(c => `<option value="${esc(c)}">${esc(exams[c][0])} · ${esc(exams[c][1])} (${esc(exams[c][2])})</option>`).join("");
+  const keep = $("#exam").value;
+  $("#exam").innerHTML = `<option value="">— 시험을 고르세요 —</option>${opts}<option value="__new">＋ 새 시험 추가…</option>`;
+  if (keep && (exams[keep] || keep === "__new")) $("#exam").value = keep;
+  const fk = $("#fExam").value;
+  $("#fExam").innerHTML = `<option value="">전체 시험</option>` + examOrder.map(c => `<option value="${esc(c)}">${esc(exams[c][0])} ${esc(exams[c][1])}</option>`).join("");
+  $("#fExam").value = fk;
+}
+
+function renderList() {
+  const fu = +$("#fUnit").value || 0, fe = $("#fExam").value, fs = $("#fState").value;
+  let rows = [], cur = null;
+  const sorted = [...items].sort((a, b) => examOrder.indexOf(codeOf(a.id)) - examOrder.indexOf(codeOf(b.id)) || noOf(a.id) - noOf(b.id));
+  sorted.forEach(it => {
+    const c = codeOf(it.id);
+    if (fu && it.unit !== fu) return;
+    if (fe && c !== fe) return;
+    if (fs === "chg" && !changed(it)) return;
+    if (fs === "hid" && !it.hidden) return;
+    if (c !== cur) { cur = c; const e = exams[c] || [c, "", ""]; rows.push(`<tr class="grp"><td colspan="6">${esc(e[0])} ${esc(e[1])} <span class="tag">${esc(e[2])}</span></td></tr>`); }
+    const cls = !it.orig ? "new" : changed(it) ? "chg" : "";
+    const src = it.img || (encodeURIComponent(it.id) + ".png");
+    rows.push(`<tr class="${cls} ${it.hidden ? "hid" : ""}" data-id="${esc(it.id)}">
+      <td class="th"><img src="${src}" alt="${esc(it.id)}" loading="lazy" data-zoom></td>
+      <td>${noOf(it.id)}번${!it.orig ? '<span class="tag n">새 문항</span>' : ""}</td>
+      <td><select data-k="unit" aria-label="단원">${[1,2,3,4,5,6].map(u => `<option value="${u}" ${u === it.unit ? "selected" : ""}>${RN[u]} ${UNITS[u]}</option>`).join("")}</select></td>
+      <td><select data-k="ans" aria-label="정답">${[1,2,3,4,5].map(a => `<option value="${a}" ${a === it.ans ? "selected" : ""}>${CIRC[a]}</option>`).join("")}</select></td>
+      <td class="hide-m"><textarea data-k="exp" aria-label="해설">${esc(it.exp)}</textarea></td>
+      <td><input type="checkbox" data-k="hidden" aria-label="숨김" ${it.hidden ? "checked" : ""}>${!it.orig ? '<br><button class="chip" data-del type="button" style="margin-top:6px;font-size:12px">빼기</button>' : ""}</td>
+    </tr>`);
+  });
+  $("#list").innerHTML = rows.join("") || `<tr><td colspan="6" class="hint">조건에 맞는 문항이 없어요.</td></tr>`;
+}
+
+function updateStat(save = true) {
+  const n = items.filter(i => !i.hidden).length;
+  const nNew = items.filter(i => !i.orig).length;
+  const nChg = items.filter(i => i.orig && changed(i)).length;
+  const nEx = newExamsList().length;
+  const per = [1,2,3,4,5,6].map(u => `${RN[u]} ${items.filter(i => !i.hidden && i.unit === u).length}`).join(" · ");
+  $("#stat").innerHTML = `학생에게 보이는 문항 <b>${n}</b> (${per})` + (nNew || nChg || nEx ? ` — <b>새 문항 ${nNew} · 바뀐 문항 ${nChg}${nEx ? ` · 새 시험 ${nEx}` : ""}</b>` : " — 아직 바뀐 것 없음");
+  $("#export").disabled = !(nNew || nChg || nEx);
+  if (save) saveDraft();
+}
+
+/* 목록에서 고치기 */
+$("#list").addEventListener("change", e => {
+  const tr = e.target.closest("tr[data-id]"); if (!tr) return;
+  const it = items.find(i => i.id === tr.dataset.id); const k = e.target.dataset.k; if (!it || !k) return;
+  if (k === "hidden") it.hidden = e.target.checked;
+  else if (k === "exp") it.exp = e.target.value.trim();
+  else it[k] = +e.target.value;
+  tr.className = (!it.orig ? "new" : changed(it) ? "chg" : "") + (it.hidden ? " hid" : "");
+  updateStat();
+});
+$("#list").addEventListener("click", e => {
+  const z = e.target.closest("[data-zoom]");
+  if (z) { $("#zoomImg").src = z.src; $("#zoom").showModal(); return; }
+  if (e.target.closest("[data-del]")) {
+    const id = e.target.closest("tr").dataset.id;
+    items = items.filter(i => i.id !== id); renderList(); updateStat();
+  }
+});
+$("#zoom").addEventListener("click", () => $("#zoom").close());
+["#fUnit", "#fExam", "#fState"].forEach(s => $(s).addEventListener("change", renderList));
+$("#fUnit").innerHTML += [1,2,3,4,5,6].map(u => `<option value="${u}">${RN[u]} ${UNITS[u]}</option>`).join("");
+
+/* ── 새 문항: 칩 ── */
+$("#unitChips").innerHTML = [1,2,3,4,5,6].map(u => `<button class="chip" type="button" data-u="${u}" aria-pressed="false">${RN[u]} <small>${UNITS[u]}</small></button>`).join("");
+$("#ansChips").innerHTML = [1,2,3,4,5].map(a => `<button class="chip" type="button" data-a="${a}" aria-pressed="false">${CIRC[a]}</button>`).join("");
+$("#unitChips").addEventListener("click", e => { const b = e.target.closest("[data-u]"); if (!b) return; pending.unit = +b.dataset.u; paintChips(); });
+$("#ansChips").addEventListener("click", e => { const b = e.target.closest("[data-a]"); if (!b) return; pending.ans = +b.dataset.a; paintChips(); });
+function paintChips() {
+  document.querySelectorAll("[data-u]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.u === pending.unit));
+  document.querySelectorAll("[data-a]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.a === pending.ans));
+}
+
+/* 새 시험 */
+function suggestCode() {
+  const name = $("#neName").value, subj = $("#neSubj").value;
+  const pre = subj === "생활과 윤리" ? "se" : subj === "윤리와 사상" ? "ys" : subj === "인문학과 윤리" ? "hu" : "etc";
+  const y = name.match(/(\d{4})\s*학년도/) || name.match(/(\d{4})/);
+  const m = name.match(/(\d{1,2})\s*월/);
+  let tail = y ? y[1].slice(2) : "";
+  tail += /수능|수학능력/.test(name) ? "su" : m ? String(m[1]).padStart(2, "0") : "";
+  const base = pre + "_" + (tail || "x"); let code = base, k = 0;
+  while (exams[code]) code = base + "abcdefghijklmnopqrstuvwxyz"[k++];
+  return code;
+}
+$("#exam").addEventListener("change", () => { $("#newExam").hidden = $("#exam").value !== "__new"; $("#neCode").textContent = suggestCode(); });
+["#neName", "#neSubj"].forEach(s => $(s).addEventListener("input", () => $("#neCode").textContent = suggestCode()));
+
+/* 이미지 받기: 붙여넣기 · 끌어놓기 · 파일 선택 → 여백 자르기 → PNG */
+const drop = $("#drop");
+drop.addEventListener("click", () => $("#pickImg").click());
+drop.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("#pickImg").click(); } });
+$("#pickImg").addEventListener("change", e => e.target.files[0] && takeImage(e.target.files[0]));
+drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("over"); const f = [...e.dataTransfer.files].find(f => f.type.startsWith("image/")); f && takeImage(f); });
+document.addEventListener("paste", e => {
+  if (e.target.matches("textarea,input")) return;
+  const f = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith("image/"));
+  if (f) { e.preventDefault(); takeImage(f.getAsFile()); }
+});
+function takeImage(file) {
+  const url = URL.createObjectURL(file), img = new Image();
+  img.onload = () => {
+    const c = document.createElement("canvas"), x = c.getContext("2d");
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0);
+    // 흰 여백 자르기
+    const d = x.getImageData(0, 0, c.width, c.height).data;
+    let t = c.height, b = -1, l = c.width, r = -1;
+    for (let yy = 0; yy < c.height; yy++) for (let xx = 0; xx < c.width; xx++) {
+      const i = (yy * c.width + xx) * 4;
+      if (d[i] < 225 || d[i + 1] < 225 || d[i + 2] < 225) { if (yy < t) t = yy; if (yy > b) b = yy; if (xx < l) l = xx; if (xx > r) r = xx; }
+    }
+    if (b < 0) { t = 0; l = 0; b = c.height - 1; r = c.width - 1; }
+    const pad = 12; t = Math.max(0, t - pad); l = Math.max(0, l - pad); b = Math.min(c.height - 1, b + pad); r = Math.min(c.width - 1, r + pad);
+    let w = r - l + 1, h = b - t + 1, s = Math.min(1, 1100 / w);
+    const o = document.createElement("canvas"); o.width = Math.round(w * s); o.height = Math.round(h * s);
+    const ox = o.getContext("2d"); ox.fillStyle = "#fff"; ox.fillRect(0, 0, o.width, o.height);
+    ox.imageSmoothingQuality = "high"; ox.drawImage(c, l, t, w, h, 0, 0, o.width, o.height);
+    pending.img = o.toDataURL("image/png");
+    $("#dropImg").src = pending.img; $("#dropImg").hidden = false; $("#dropTxt").hidden = true;
+    $("#imgInfo").textContent = `그림 크기 ${o.width}×${o.height} · 약 ${Math.round(pending.img.length * 0.75 / 1024)}KB (여백은 자동으로 잘랐어요)`;
+    URL.revokeObjectURL(url);
+  };
+  img.onerror = () => msg("이미지를 읽지 못했어요. PNG나 JPG로 다시 시도해 주세요.", true);
+  img.src = url;
+}
+
+function msg(t, err) { const m = $("#addMsg"); m.textContent = t; m.className = "msg " + (err ? "err" : "ok"); }
+function resetForm(keepExam) {
+  pending = { img: null, unit: 0, ans: 0 }; paintChips();
+  $("#dropImg").hidden = true; $("#dropImg").removeAttribute("src"); $("#dropTxt").hidden = false; $("#imgInfo").textContent = "";
+  $("#exp").value = ""; $("#pickImg").value = "";
+  $("#qno").value = "";
+  if (!keepExam) { $("#exam").value = ""; $("#newExam").hidden = true; }
+}
+$("#reset").addEventListener("click", () => { resetForm(false); msg(""); });
+
+$("#add").addEventListener("click", () => {
+  let code = $("#exam").value;
+  if (!pending.img) return msg("문항 그림을 먼저 붙여넣어 주세요.", true);
+  if (!code) return msg("시험을 골라 주세요.", true);
+  if (code === "__new") {
+    const name = $("#neName").value.trim();
+    if (!name) return msg("새 시험 이름을 적어 주세요.", true);
+    code = suggestCode();
+    exams[code] = [name, $("#neSubj").value, $("#neLv").value]; examOrder.push(code);
+    fillExamSelects(); $("#exam").value = code; $("#newExam").hidden = true;
+  }
+  const no = parseInt($("#qno").value, 10);
+  if (!(no >= 1 && no <= 99)) return msg("문항 번호(1~99)를 적어 주세요.", true);
+  if (!pending.unit) return msg("단원을 골라 주세요.", true);
+  if (!pending.ans) return msg("정답을 골라 주세요.", true);
+  const id = `${code}-${String(no).padStart(2, "0")}`;
+  const ex = items.find(i => i.id === id);
+  if (ex && !confirm(`${exams[code][0]} ${exams[code][1]} ${no}번은 이미 있어요. 새 그림과 내용으로 바꿀까요?`)) return;
+  const it = ex || { id, orig: null, hidden: false };
+  if (ex && ex.orig && !ex.img) ex.orig.img = true;
+  Object.assign(it, { unit: pending.unit, ans: pending.ans, exp: $("#exp").value.trim(), img: pending.img, hidden: false });
+  if (!ex) items.push(it);
+  msg(`추가했어요: ${exams[code][0]} ${exams[code][1]} ${no}번 → ${RN[pending.unit]}단원, 정답 ${CIRC[pending.ans]}. 다음 문항을 붙여넣으세요.`);
+  resetForm(true); renderList(); updateStat();
+  $("#qno").focus();
+});
+
+/* ── 내보내기: data.js + 새 그림 → zip (압축 없음, 외부 라이브러리 없음) ── */
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function makeZip(files) {
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  const now = new Date(), dt = ((now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1)), dd = (((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate());
+  files.forEach(f => {
+    const name = enc.encode(f.name), data = f.data, crc = crc32(data);
+    const h = new DataView(new ArrayBuffer(30));
+    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0, true); h.setUint16(8, 0, true);
+    h.setUint16(10, dt, true); h.setUint16(12, dd, true); h.setUint32(14, crc, true); h.setUint32(18, data.length, true); h.setUint32(22, data.length, true);
+    h.setUint16(26, name.length, true); h.setUint16(28, 0, true);
+    parts.push(new Uint8Array(h.buffer), name, data);
+    const c = new DataView(new ArrayBuffer(46));
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0, true); c.setUint16(10, 0, true);
+    c.setUint16(12, dt, true); c.setUint16(14, dd, true); c.setUint32(16, crc, true); c.setUint32(20, data.length, true); c.setUint32(24, data.length, true);
+    c.setUint16(28, name.length, true); c.setUint32(42, off, true);
+    central.push(new Uint8Array(c.buffer), name);
+    off += 30 + name.length + data.length;
+  });
+  const csize = central.reduce((s, p) => s + p.length, 0);
+  const e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, csize, true); e.setUint32(16, off, true);
+  return new Blob([...parts, ...central, new Uint8Array(e.buffer)], { type: "application/zip" });
+}
+function dataURLtoU8(u) { const b = atob(u.split(",")[1]); const a = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+
+$("#export").addEventListener("click", () => {
+  const files = [{ name: "data.js", data: new TextEncoder().encode(buildData()) }];
+  items.filter(i => i.img).forEach(i => files.push({ name: i.id + ".png", data: dataURLtoU8(i.img) }));
+  const d = new Date(), stamp = `${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}-${String(d.getHours()).padStart(2, "0")}${String(d.getMinutes()).padStart(2, "0")}`;
+  const a = document.createElement("a"); a.href = URL.createObjectURL(makeZip(files)); a.download = `practice-upload-${stamp}.zip`;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  $("#done").hidden = false;
+  $("#doneTxt").innerHTML = `<b>${a.download}</b> 을(를) 내려받았어요. 안에 <b>파일 ${files.length}개</b>(data.js${files.length > 1 ? ` + 그림 ${files.length - 1}장` : ""})가 들어 있어요.` + (files.length > 100 ? " <b>파일이 100개가 넘으니 두 번에 나눠 올려 주세요.</b>" : "");
+  $("#done").scrollIntoView({ behavior: "smooth" });
+});
+
+/* ── 작업 임시 저장 (이 컴퓨터 브라우저에만) ── */
+function snapshot() {
+  return { at: Date.now(), newExams: newExamsList().map(c => [c, exams[c]]),
+    items: items.filter(i => !i.orig || changed(i) || i.img).map(i => ({ id: i.id, unit: i.unit, ans: i.ans, exp: i.exp, hidden: i.hidden, img: i.img || null, isNew: !i.orig })) };
+}
+function saveDraft() {
+  try {
+    const s = snapshot();
+    if (!s.items.length && !s.newExams.length) localStorage.removeItem(DRAFT_KEY);
+    else localStorage.setItem(DRAFT_KEY, JSON.stringify(s));
+  } catch (e) { /* 저장 공간이 없으면 조용히 넘어감 */ }
+}
+let draft = null;
+function checkDraft() {
+  try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (e) { draft = null; }
+  if (!draft || !draft.items) return;
+  $("#draftBox").hidden = false;
+  $("#draftInfo").textContent = `${new Date(draft.at).toLocaleString("ko-KR")}에 작업하던 내용 — 새 문항 ${draft.items.filter(i => i.isNew).length}개, 바꾼 문항 ${draft.items.filter(i => !i.isNew).length}개. 이미 GitHub에 올렸다면 「버리고 새로 시작」을 누르세요.`;
+}
+$("#draftLoad").addEventListener("click", () => {
+  draft.newExams.forEach(([c, e]) => { if (!exams[c]) { exams[c] = e; examOrder.push(c); } });
+  draft.items.forEach(d => {
+    const it = items.find(i => i.id === d.id);
+    if (it) Object.assign(it, { unit: d.unit, ans: d.ans, exp: d.exp, hidden: d.hidden, img: d.img || it.img });
+    else items.push({ id: d.id, unit: d.unit, ans: d.ans, exp: d.exp, hidden: d.hidden, img: d.img, orig: null });
+  });
+  $("#draftBox").hidden = true; fillExamSelects(); renderList(); updateStat();
+});
+$("#draftDrop").addEventListener("click", () => { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} $("#draftBox").hidden = true; });
+
+/* ── 시작: 사이트의 최신 data.js 를 읽는다 ── */
+fetch("data.js?v=" + Date.now(), { cache: "no-store" })
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+  .then(start)
+  .catch(() => { $("#loadErr").hidden = false; $("#stat").textContent = "문항 목록을 불러오지 못했어요."; });
+$("#pickData").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t => { try { start(t); } catch (err) { alert(err.message); } });
+});
+</script>
+</body>
+</html>

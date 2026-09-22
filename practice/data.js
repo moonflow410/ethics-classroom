@@ -15,6 +15,9 @@
      3) 「문항 목록」에 한 줄 추가:  ["그림 이름(.png 빼고)", 단원, 정답(1~5), "해설"],
 
    ※ 줄 끝의 쉼표(,)와 따옴표("")를 지워지지 않게 주의하세요.
+
+   ★ 더 쉬운 방법: 「문제 등록 도구」(practice/editor.html)에서 캡처를 붙여넣고
+     단원·정답을 고른 뒤 [업로드 파일 만들기] → 받은 파일을 practice 폴더에 올리면 됩니다.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── 시험 목록 : "시험코드": ["시험 이름", "과목", "고2" 또는 "고3"] ── */
@@ -172,7 +175,7 @@ const PRACTICE_ITEMS = [
 window.PRACTICE_SETS = (function () {
   var UNIT = ["", "성찰 대상으로서의 나", "타인과 관계 맺기", "자유와 평등", "다양성과 포용성", "공존과 지속가능성", "삶의 의미에 대한 물음"];
   var RN = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ"];
-  var KIND = { "고2": "학력평가", "고3": "평가원" };
+  function kindOf(name) { return /모의평가|수학능력|수능/.test(name) ? "평가원" : /학력평가|학평/.test(name) ? "학력평가" : ""; }
   var sets = {}, order = [];
   PRACTICE_ITEMS.forEach(function (it) {
     var id = it[0], unit = +it[1], ans = +it[2], code = id.split("-")[0], no = parseInt(id.split("-")[1], 10);
@@ -181,7 +184,7 @@ window.PRACTICE_SETS = (function () {
     var lv = ex[2], key = lv + "-" + unit;
     if (!sets[key]) {
       sets[key] = { setId: "gichul-" + (lv === "고2" ? "g2" : "g3") + "-u" + unit,
-        title: RN[unit] + "단원 · " + lv + " " + (KIND[lv] || "") + " 기출",
+        title: "",
         desc: "생활과 윤리·윤리와 사상 기출 가운데 「" + UNIT[unit] + "」 단원과 겹치는 문항",
         units: [unit], level: lv, source: "", hidden: false, questions: [], _src: [] };
       order.push(key);
@@ -192,5 +195,9 @@ window.PRACTICE_SETS = (function () {
       level: lv, options: ["①", "②", "③", "④", "⑤"], answer: ans - 1, explain: it[3] });
   });
   order.sort(function (a, b) { return a < b ? -1 : a > b ? 1 : 0; });
-  return order.map(function (k) { var s = sets[k]; s.source = s._src.join(" · "); delete s._src; return s; });
+  return order.map(function (k) {
+    var s = sets[k], kinds = s._src.map(kindOf), same = kinds.every(function (x) { return x && x === kinds[0]; });
+    s.title = RN[s.units[0]] + "단원 · " + s.level + " " + (same ? kinds[0] + " " : "") + "기출";
+    s.source = s._src.join(" · "); delete s._src; return s;
+  });
 })();
