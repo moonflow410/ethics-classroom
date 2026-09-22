@@ -270,6 +270,18 @@ main{padding-block:26px 64px}
   background:var(--accent-soft);color:var(--accent);
 }
 .ktag{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.lvtag{font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;letter-spacing:.02em}
+.lvtag.g2{background:var(--ok-soft);color:var(--ok)}
+.lvtag.g3{background:var(--quiz-soft);color:var(--quiz)}
+.set .lvtag.g3::after{content:" ★ 난이도 높음";font-weight:600}
+.chipsep{width:1px;align-self:stretch;background:var(--line);margin:2px 4px}
+.qsrc{font-size:11.5px;color:var(--ink-3);margin-left:6px;line-height:1.4}
+.qimg{display:block;width:100%;max-width:560px;height:auto;margin:6px auto 4px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.opts.compact{flex-direction:row;flex-wrap:wrap;gap:6px;justify-content:center}
+.opts.compact .opt{position:relative;padding:9px 0;min-width:52px;justify-content:center;font-size:16px}
+.opts.compact .opt input{position:absolute;opacity:0;pointer-events:none}
+.opts.compact .opt .okey{display:none}
+.lvwarn{background:var(--quiz-soft);color:var(--quiz);border-radius:9px;padding:9px 12px;font-size:13px;margin:0 0 16px;line-height:1.6}
 .pvtag{font-size:10.5px;font-weight:700;letter-spacing:.04em;background:var(--quiz-soft);color:var(--quiz);border-radius:5px;padding:2px 7px}
 .setfoot{display:flex;gap:8px;align-items:center;margin-top:auto}
 .pempty{
@@ -416,6 +428,8 @@ main{padding-block:26px 64px}
   </div>
   <div class="wrap toolbar-in" id="bar-practice" hidden>
     <div class="chips" id="unitFilter" role="group" aria-label="단원으로 거르기"></div>
+    <span class="chipsep" aria-hidden="true"></span>
+    <div class="chips" id="levelFilter" role="group" aria-label="난이도로 거르기"></div>
   </div>
 </div>
 
@@ -450,6 +464,8 @@ main{padding-block:26px 64px}
   </div>
 </div>
 
+<!-- 연습문제 기출 세트: practice 폴더의 data.js (없어도 페이지는 정상 동작) -->
+<script src="practice/data.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════════
    ▣ 선생님이 고치실 곳은 여기 하나뿐입니다 — curriculumData
@@ -1230,9 +1246,15 @@ const hasChapterQuiz = c => !!(c.chapterQuiz && c.chapterQuiz.length);
 
 /* 연습문제: ?preview 로 열면 hidden 세트도 보입니다 (선생님 검토용) */
 const PREVIEW = new URLSearchParams(location.search).has("preview");
-const visibleSets = practiceSets.filter(x => x && x.setId && (PREVIEW || !x.hidden));
+/* practice/data.js 의 기출 세트 + 아래 practiceSets 를 합칩니다. 단원 → 난이도(고2 → 고3) 순으로 정렬 */
+const LV_ORDER = { "고1":1, "고2":2, "고3":3 };
+const visibleSets = [...(window.PRACTICE_SETS || []), ...practiceSets]
+  .filter(x => x && x.setId && (PREVIEW || !x.hidden))
+  .sort((a, b) => (Math.min(...(a.units||[9])) - Math.min(...(b.units||[9])))
+                 || ((LV_ORDER[a.level]||9) - (LV_ORDER[b.level]||9)));
 const bySet = Object.fromEntries(visibleSets.map(x => [x.setId, x]));
 let unitFilter = "all";
+let levelFilter = "all";
 
 /* ── 상단 요약 ─────────────────────────────────────────── */
 function renderStats(){
@@ -1325,8 +1347,15 @@ function renderPractice(){
                   ${v !== "all" && !n ? "disabled style=\"opacity:.4\"" : ""}>${esc(label)}${v !== "all" && n ? ` · ${n}` : ""}</button>`;
       }).join("");
 
-  const list = unitFilter === "all" ? visibleSets
-             : visibleSets.filter(x => (x.units || []).map(String).includes(unitFilter));
+  const levels = [...new Set(visibleSets.map(x => x.level).filter(Boolean))].sort((a,b) => (LV_ORDER[a]||9)-(LV_ORDER[b]||9));
+  document.getElementById("levelFilter").innerHTML = levels.length < 2 ? "" :
+    [["all","전체 난이도"], ...levels.map(l => [l, l === "고3" ? "고3 (어려움)" : l])]
+      .map(([v, label]) => `<button class="fchip" type="button" data-level="${v}" aria-pressed="${levelFilter === v}">${esc(label)}</button>`).join("");
+  document.querySelector("#bar-practice .chipsep").hidden = levels.length < 2;
+
+  const list = visibleSets
+    .filter(x => unitFilter === "all" || (x.units || []).map(String).includes(unitFilter))
+    .filter(x => levelFilter === "all" || x.level === levelFilter);
   const box = document.getElementById("sets");
 
   if (!visibleSets.length) {
@@ -1346,6 +1375,7 @@ function renderPractice(){
     return `<article class="set ${x.hidden ? "preview" : ""}">
       <div class="smeta">
         ${x.hidden ? `<span class="pvtag">미리보기 · 학생에게 숨김</span>` : ""}
+        ${x.level ? `<span class="lvtag ${x.level === "고3" ? "g3" : "g2"}">${esc(x.level)}</span>` : ""}
         ${(x.units || []).map(n => `<span class="utag">${esc(byUnit[String(n)] || n)}단원</span>`).join("")}
       </div>
       <h3>${esc(x.title)}</h3>
@@ -1366,6 +1396,12 @@ document.getElementById("unitFilter").addEventListener("click", e => {
   const b = e.target.closest(".fchip");
   if (!b || b.disabled) return;
   unitFilter = b.dataset.unit;
+  renderPractice();
+});
+document.getElementById("levelFilter").addEventListener("click", e => {
+  const b = e.target.closest(".fchip");
+  if (!b) return;
+  levelFilter = b.dataset.level;
   renderPractice();
 });
 document.getElementById("sets").addEventListener("click", e => {
@@ -1455,16 +1491,18 @@ function quizHTML(subj){
     const head = `
       <div class="qhead">
         <span class="qnum">${i + 1}</span>
-        <span class="qtype">${{short:"단답형", essay:"서술형"}[item.type] || "객관식"}${item.points ? ` <span class="qpts">[${item.points}점]</span>` : ""}</span>
+        ${item.src ? `<span class="qsrc">${esc(item.src)}</span>` : ""}
+        <span class="qtype">${item.level ? `<span class="lvtag ${item.level === "고3" ? "g3" : "g2"}" style="font-size:10px;padding:1px 6px">${esc(item.level)}</span> ` : ""}${{short:"단답형", essay:"서술형"}[item.type] || "객관식"}${item.points ? ` <span class="qpts">[${item.points}점]</span>` : ""}</span>
       </div>
-      <p class="qtext">${item.q}</p>
+      ${item.img ? `<img class="qimg" src="${esc(item.img)}" alt="${esc(item.src || "문항")} 문제" loading="lazy">` : ""}
+      ${item.q ? `<p class="qtext">${item.q}</p>` : ""}
       ${item.passage ? `<div class="qpassage">${esc(item.passage).replace(/\n/g, "<br>")}</div>` : ""}
       ${item.box ? `<div class="qbox">${esc(item.box).replace(/\n/g, "<br>")}</div>` : ""}`;
     const body = item.type === "short"
       ? `<input class="shortin" type="text" id="q${i}" name="q${i}" autocomplete="off" placeholder="답을 입력하세요">`
       : item.type === "essay"
       ? `<textarea class="essayin" id="q${i}" name="q${i}" placeholder="답을 써 보세요. 제출하면 예시 답안과 채점 기준이 펼쳐집니다."></textarea>`
-      : `<div class="opts">${item.options.map((o, k) => `
+      : `<div class="opts${item.img ? " compact" : ""}">${item.options.map((o, k) => `
           <label class="opt" data-opt="${k}">
             <input type="radio" name="q${i}" value="${k}" id="q${i}o${k}">
             <span class="okey">${"①②③④⑤"[k] || (k + 1)}</span>
@@ -1488,8 +1526,8 @@ function subject(kind, id){
     const x = bySet[id];
     if (!x || !(x.questions || []).length) return null;
     const nEssay = x.questions.filter(q => q.type === "essay").length;
-    return { kind, id, key:`set-${x.setId}`, quiz:x.questions,
-             code:`연습문제${x.source ? " · " + x.source : ""}`,
+    return { kind, id, key:`set-${x.setId}`, quiz:x.questions, level:x.level,
+             code:`연습문제${x.level ? " · " + x.level : ""}`,
              title:x.title,
              hint:`${x.questions.length}문항${nEssay ? ` · 서술형 ${nEssay}문항은 예시 답안으로 스스로 점검` : " · 제출하면 바로 채점됩니다"}` };
   }
@@ -1508,7 +1546,7 @@ function openQuiz(kind, id){
   openModal({
     code: s.code,
     title: s.title,
-    bodyHTML: `<form id="quizForm" novalidate>${quizHTML(s)}</form>`,
+    bodyHTML: `${s.level === "고3" ? `<p class="lvwarn"><b>고3 평가원(모의평가·수능) 문항</b>이라 난이도가 높습니다. 모르는 사상가가 나와도 괜찮아요. 풀고 나서 해설로 개념을 확인해 보세요.</p>` : ""}<form id="quizForm" novalidate>${quizHTML(s)}</form>`,
     footHTML: `<span class="hint">${s.hint}</span>
                <button class="btn primary" type="button" id="grade">제출하고 채점</button>`
   });
@@ -1560,7 +1598,8 @@ function grade(){
         if (k === item.answer) label.classList.add("correct");
         else if (picked && k === Number(picked.value)) label.classList.add("wrong");
       });
-      shown = `${"①②③④⑤"[item.answer] || item.answer + 1} ${item.options[item.answer].replace(/<[^>]+>/g, "")}`;
+      shown = item.img ? ("①②③④⑤"[item.answer] || String(item.answer + 1))
+            : `${"①②③④⑤"[item.answer] || item.answer + 1} ${item.options[item.answer].replace(/<[^>]+>/g, "")}`;
     }
 
     if (ok) got++;
