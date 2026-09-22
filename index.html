@@ -233,6 +233,73 @@ main{padding-block:26px 64px}
 
 .empty{text-align:center;color:var(--ink-2);padding:48px 0;font-size:14px}
 
+/* ── 탭 ─────────────────────────────────────────────────── */
+.tabs{display:flex;gap:4px;padding-top:10px;border-bottom:1px solid var(--line);margin-bottom:-1px}
+.tab{
+  border:none;background:none;padding:9px 14px 11px;font-size:14.5px;font-weight:600;
+  color:var(--ink-3);border-bottom:2.5px solid transparent;display:inline-flex;gap:7px;align-items:center;
+  transition:color .15s,border-color .15s;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .n{
+  font-family:var(--mono);font-size:11px;font-weight:600;background:var(--line-2);color:var(--ink-2);
+  border-radius:999px;padding:1px 7px;font-variant-numeric:tabular-nums;
+}
+.tab[aria-selected="true"] .n{background:var(--accent-soft);color:var(--accent)}
+
+/* ── 연습문제 ───────────────────────────────────────────── */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{
+  border:1px solid var(--line);background:var(--surface);border-radius:999px;
+  padding:6px 13px;font-size:13px;font-weight:500;color:var(--ink-2);transition:all .15s;
+}
+.fchip:hover{border-color:var(--accent);color:var(--accent)}
+.fchip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.sets{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.set{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:16px 17px;display:flex;flex-direction:column;gap:10px;
+}
+.set.preview{border-style:dashed;border-color:var(--quiz)}
+.set h3{margin:0;font-size:15.5px;font-weight:600;line-height:1.45}
+.set .sdesc{margin:0;font-size:13px;color:var(--ink-2);line-height:1.55}
+.set .smeta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.utag{
+  font-size:11px;font-weight:600;border-radius:5px;padding:2px 7px;
+  background:var(--accent-soft);color:var(--accent);
+}
+.ktag{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.pvtag{font-size:10.5px;font-weight:700;letter-spacing:.04em;background:var(--quiz-soft);color:var(--quiz);border-radius:5px;padding:2px 7px}
+.setfoot{display:flex;gap:8px;align-items:center;margin-top:auto}
+.pempty{
+  text-align:center;border:1.5px dashed var(--line);border-radius:var(--radius);
+  padding:44px 20px;color:var(--ink-2);background:var(--surface);
+}
+.pempty b{display:block;font-size:15.5px;color:var(--ink);margin-bottom:6px}
+.pempty p{margin:0;font-size:13.5px;line-height:1.7}
+
+/* ── 수능형 <보기> · 서술형 ─────────────────────────────── */
+.qbox{
+  border:1px solid var(--ink-3);border-radius:4px;padding:18px 14px 11px;margin:14px 0 4px;
+  position:relative;font-size:13.8px;line-height:1.85;
+}
+.qbox::before{
+  content:"< 보 기 >";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  background:var(--surface);padding:0 8px;font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:.1em;
+}
+.qpts{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.essayin{
+  width:100%;min-height:130px;margin-top:11px;padding:11px 12px;border:1px solid var(--line);
+  border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;line-height:1.7;resize:vertical;
+}
+.essayin[readonly]{background:var(--surface-2)}
+.feedback.essay{background:var(--accent-soft);color:var(--ink)}
+.feedback.essay b{color:var(--accent)}
+.feedback .model{display:block;margin-top:6px;color:var(--ink);font-weight:400;line-height:1.75}
+.feedback .rubric{margin:8px 0 0;padding-left:18px;color:var(--ink-2);font-weight:400}
+.feedback .rubric li{margin:2px 0}
+
 /* ── 모달 ───────────────────────────────────────────────── */
 .modal[hidden]{display:none!important}
 .modal{
@@ -333,7 +400,13 @@ main{padding-block:26px 64px}
 </header>
 
 <div class="toolbar">
-  <div class="wrap toolbar-in">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-units" aria-selected="true" aria-controls="view-units" type="button">단원 학습</button>
+      <button class="tab" role="tab" id="tab-practice" aria-selected="false" aria-controls="view-practice" type="button">연습문제 <span class="n" id="setCount">0</span></button>
+    </div>
+  </div>
+  <div class="wrap toolbar-in" id="bar-units">
     <label class="search">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
       <input id="q" type="search" placeholder="소단원·사상가·키워드 검색 (예: 격몽요결, 에피쿠로스)" autocomplete="off">
@@ -341,11 +414,19 @@ main{padding-block:26px 64px}
     <button class="tbtn" id="expandAll" type="button">전체 펼치기</button>
     <button class="tbtn" id="collapseAll" type="button">접기</button>
   </div>
+  <div class="wrap toolbar-in" id="bar-practice" hidden>
+    <div class="chips" id="unitFilter" role="group" aria-label="단원으로 거르기"></div>
+  </div>
 </div>
 
 <main class="wrap">
-  <div id="units"></div>
-  <p class="empty" id="empty" hidden>검색 결과가 없습니다.</p>
+  <section id="view-units" role="tabpanel" aria-labelledby="tab-units">
+    <div id="units"></div>
+    <p class="empty" id="empty" hidden>검색 결과가 없습니다.</p>
+  </section>
+  <section id="view-practice" role="tabpanel" aria-labelledby="tab-practice" hidden>
+    <div id="sets"></div>
+  </section>
 </main>
 
 <footer class="wrap foot">
@@ -1029,6 +1110,99 @@ const curriculumData = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   ▣ 연습문제 — practiceSets
+   ═══════════════════════════════════════════════════════════════════════════
+
+   「연습문제」 탭에 뜨는 문제 세트입니다. 세트 하나 = 카드 하나.
+   아래 [ ] 안에 { ... } 를 하나씩 추가하면 됩니다. 세트끼리는 쉼표(,)로 구분.
+
+   [세트 필드]
+   setId      겹치지 않는 영문·숫자 이름. 점수 저장에 씁니다. 예: "2025-09-mo"
+   title      카드 제목.                 예: "2025학년도 9월 모의평가 생활과 윤리"
+   desc       한 줄 설명 (비워도 됨 "")
+   units      단원 필터용 태그. 대단원 번호를 적습니다. 예: [3] 또는 [1, 3, 5]
+   source     출처 (비워도 됨 "")         예: "큰그릇 교재 80~83쪽"
+   hidden     true 로 두면 학생에게 안 보입니다. 미리 올려 두고 검토할 때 쓰세요.
+              → 주소 뒤에 ?preview 를 붙여 열면 숨긴 세트도 보입니다.
+                https://moonflow410.github.io/ethics-classroom/?preview#practice
+              검토가 끝나면 false 로 바꾸세요.
+   questions  문항 배열 (아래 형식)
+
+   [문항 형식 — 네 가지]
+   ① 수능형 5지선다
+      { type:"choice", points:3,                        ← 배점 (없어도 됨)
+        passage:"갑: ...\n을: ...",                     ← 제시문. 줄바꿈은 \n
+        q:"갑, 을 사상가의 입장으로 옳은 것만을 <보기>에서 고른 것은?",
+        box:"ㄱ. ...\nㄴ. ...\nㄷ. ...",               ← <보기> 상자 (없으면 이 줄 삭제)
+        options:["ㄱ, ㄴ","ㄱ, ㄷ","ㄴ, ㄷ","ㄴ, ㄹ","ㄷ, ㄹ"],
+        answer:0,                                      ← 0=①, 1=②, 2=③, 3=④, 4=⑤
+        explain:"해설" }
+   ② 서술형·논술형 (자동 채점하지 않고, 제출하면 예시 답안과 채점 기준이 펼쳐집니다)
+      { type:"essay", points:10,
+        passage:"제시문 (없으면 삭제)",
+        q:"질문",
+        model:"예시 답안",
+        rubric:["채점 기준 1 (4점)","채점 기준 2 (3점)","형식 — 200자 이상 (1점)"] }
+   ③ 단답형   { type:"short",  q:"...", answer:["정답","다른 표기"], explain:"..." }
+   ④ O/X      { type:"choice", options:["O","X"], q:"...", answer:0, explain:"..." }
+
+   ─────────────────────────────────────────────────────────────────────────── */
+
+const practiceSets = [
+
+  /* ↓ 형식 확인용 예시입니다. hidden:true 라 학생에게는 보이지 않습니다.
+       ?preview 로 열어 모양을 확인하신 뒤, 실제 문제를 올리실 때 통째로 지우셔도 됩니다. */
+  {
+    setId: "sample-00",
+    title: "예시 세트 — 형식 확인용",
+    desc: "수능형 5지선다 2문항 + 서술형 1문항. 실제 문제로 바꿔 주세요.",
+    units: [1, 3],
+    source: "",
+    hidden: true,
+    questions: [
+      { type:"choice", points:3,
+        passage:"갑: 사회적·경제적 불평등은 그것이 최소 수혜자에게 최대의 이익이 되도록 편성될 때에만 정당화된다.\n을: 정당하게 취득하고 자발적으로 이전받은 소유물이라면, 그 결과가 아무리 불평등하더라도 정의롭다.",
+        q:"갑, 을 사상가의 입장으로 옳은 것만을 <보기>에서 있는 대로 고른 것은?",
+        box:"ㄱ. 갑: 천부적 재능의 분포를 사회의 공동 자산으로 간주해야 한다.\nㄴ. 을: 재분배를 위한 과세는 개인의 권리를 침해할 수 있다.\nㄷ. 갑, 을: 분배의 정의는 결과의 형태가 아니라 취득 과정만으로 판단해야 한다.\nㄹ. 갑과 달리 을은 분배적 정의를 정형적 원리로 설명한다.",
+        options:["ㄱ, ㄴ","ㄱ, ㄷ","ㄴ, ㄷ","ㄴ, ㄹ","ㄷ, ㄹ"],
+        answer:0,
+        explain:"갑은 롤스, 을은 노직입니다. ㄷ은 을(노직)만의 입장이고, ㄹ은 거꾸로 — 정형적 원리는 갑(롤스)의 차등의 원칙입니다." },
+      { type:"choice", points:2,
+        passage:"우리가 쾌락이 목적이라고 할 때, 이 말은 방탕한 자들의 쾌락이나 육체적인 쾌락을 의미하는 것이 아니다. 내가 말하는 쾌락은 몸의 고통이나 마음의 혼란으로부터의 자유이다.",
+        q:"위 글을 쓴 사상가의 입장으로 가장 적절한 것은?",
+        options:["쾌락은 강도와 지속성을 계산해 그 총량을 극대화해야 한다.",
+                 "참된 쾌락은 욕구를 끝없이 채워 나가는 데서 얻어진다.",
+                 "헛된 욕구를 덜어 내고 마음의 평정에 이르러야 한다.",
+                 "죽음은 살아 있는 동안 가장 두려워해야 할 고통이다.",
+                 "쾌락은 선이 아니므로 모든 욕구를 끊어야 한다."],
+        answer:2,
+        explain:"에피쿠로스입니다. 참된 쾌락은 아포니아(몸의 무고통)와 아타락시아(마음의 평정)이며, 헛된 욕구를 덜어 내야 합니다. ①은 벤담, ⑤는 금욕주의에 가깝습니다." },
+      { type:"essay", points:10,
+        q:"노직의 ‘윌트 체임벌린 논변’을 활용하여 롤스의 차등의 원칙을 비판하시오. (200자 내외)",
+        model:"정의로운 분배 상태에서 출발하더라도 사람들이 자기 몫을 자발적으로 체임벌린에게 건네면 처음의 분배 정형은 깨진다. 차등의 원칙처럼 특정한 분배 상태를 정의의 기준으로 삼는 정형적 원리를 유지하려면, 국가가 자발적 거래를 막거나 주기적으로 재화를 다시 거두어야 한다. 이는 개인의 삶에 대한 지속적인 간섭이자 자유의 침해이므로, 노직은 ‘자유는 정형을 깨뜨린다’며 차등의 원칙을 비판한다.",
+        rubric:["체임벌린 논변의 내용 — 자발적 이전으로 분배 정형이 깨짐 (4점)",
+                "정형을 유지하려면 지속적 간섭·자유 침해가 필요함 (3점)",
+                "이것이 차등의 원칙(정형적 원리)에 대한 비판임을 연결 (2점)",
+                "형식 — 200자 내외, 완결된 문장 (1점)"] }
+    ]
+  }
+
+  /* ↓ 새 세트는 여기에 쉼표를 찍고 이어 붙이세요.
+  ,{
+    setId: "",
+    title: "",
+    desc: "",
+    units: [],
+    source: "",
+    hidden: false,
+    questions: [
+    ]
+  }
+  */
+];
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
    여기서부터는 화면을 그리는 코드입니다. 보통은 손대지 않으셔도 됩니다.
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -1054,6 +1228,12 @@ const allChapters = curriculumData.flatMap(u => u.chapters.map(c => ({ ...c, uni
 const byChapter = Object.fromEntries(allChapters.map(c => [c.chapterId, c]));
 const hasChapterQuiz = c => !!(c.chapterQuiz && c.chapterQuiz.length);
 
+/* 연습문제: ?preview 로 열면 hidden 세트도 보입니다 (선생님 검토용) */
+const PREVIEW = new URLSearchParams(location.search).has("preview");
+const visibleSets = practiceSets.filter(x => x && x.setId && (PREVIEW || !x.hidden));
+const bySet = Object.fromEntries(visibleSets.map(x => [x.setId, x]));
+let unitFilter = "all";
+
 /* ── 상단 요약 ─────────────────────────────────────────── */
 function renderStats(){
   const ready = allTopics.filter(t => t.status === "ready").length;
@@ -1064,7 +1244,8 @@ function renderStats(){
     <span class="stat">학습지 완성 <b>${ready}</b> / ${allTopics.length}</span>
     <span class="stat">소단원 평가 <b>${quizzed}</b></span>
     <span class="stat">중단원 평가 <b>${allChapters.filter(hasChapterQuiz).length}</b> / ${allChapters.length}</span>
-    <span class="stat">내가 푼 평가 <b>${done}</b></span>`;
+    <span class="stat">연습문제 <b>${visibleSets.filter(x => !x.hidden).length}</b>세트</span>
+    <span class="stat">내가 푼 평가 <b>${done + allChapters.filter(c => scores["ch-"+c.chapterId]).length + visibleSets.filter(x => scores["set-"+x.setId]).length}</b></span>`;
 }
 
 /* ── 본문 ──────────────────────────────────────────────── */
@@ -1098,8 +1279,11 @@ function topicCard(t){
 }
 
 function render(){
+  /* 채점 뒤 다시 그릴 때 펼쳐 두었던 단원이 접히지 않도록 기억해 둡니다 */
+  const wasOpen = new Set([...document.querySelectorAll(".unit[open]")].map(d => d.dataset.unit));
+  const first = wasOpen.size === 0 && !document.querySelector(".unit");
   document.getElementById("units").innerHTML = curriculumData.map((u, i) => `
-    <details class="unit" data-unit="${esc(u.unitId)}" ${i === 0 ? "open" : ""}>
+    <details class="unit" data-unit="${esc(u.unitId)}" ${(first ? i === 0 : wasOpen.has(String(u.unitId))) ? "open" : ""}>
       <summary>
         <span class="unum">${esc(u.roman)}</span>
         <div class="uhead">
@@ -1125,7 +1309,85 @@ function render(){
       </div>
     </details>`).join("");
   renderStats();
+  renderPractice();
 }
+
+/* ── 연습문제 화면 ─────────────────────────────────────── */
+function renderPractice(){
+  document.getElementById("setCount").textContent = visibleSets.length;
+
+  document.getElementById("unitFilter").innerHTML =
+    [["all","전체",""], ...curriculumData.map(u => [String(u.unitId), `${u.roman}단원`, `${u.roman}. ${u.title}`])]
+      .map(([v, label, full]) => {
+        const n = v === "all" ? visibleSets.length
+                              : visibleSets.filter(x => (x.units || []).map(String).includes(v)).length;
+        return `<button class="fchip" type="button" data-unit="${v}" aria-pressed="${unitFilter === v}" title="${esc(full)}"
+                  ${v !== "all" && !n ? "disabled style=\"opacity:.4\"" : ""}>${esc(label)}${v !== "all" && n ? ` · ${n}` : ""}</button>`;
+      }).join("");
+
+  const list = unitFilter === "all" ? visibleSets
+             : visibleSets.filter(x => (x.units || []).map(String).includes(unitFilter));
+  const box = document.getElementById("sets");
+
+  if (!visibleSets.length) {
+    box.innerHTML = `<div class="pempty"><b>아직 등록된 연습문제가 없습니다</b>
+      <p>단원별 문제 세트가 곧 올라올 예정입니다.<br>그동안 「단원 학습」 탭의 형성평가로 개념을 점검해 보세요.</p></div>`;
+    return;
+  }
+  if (!list.length) {
+    box.innerHTML = `<div class="pempty"><b>이 단원에는 아직 연습문제가 없습니다</b><p>다른 단원을 골라 보세요.</p></div>`;
+    return;
+  }
+  const byUnit = Object.fromEntries(curriculumData.map(u => [String(u.unitId), u.roman]));
+  box.innerHTML = `<div class="sets">${list.map(x => {
+    const qs = x.questions || [];
+    const nEssay = qs.filter(q => q.type === "essay").length;
+    const sc = scores["set-" + x.setId];
+    return `<article class="set ${x.hidden ? "preview" : ""}">
+      <div class="smeta">
+        ${x.hidden ? `<span class="pvtag">미리보기 · 학생에게 숨김</span>` : ""}
+        ${(x.units || []).map(n => `<span class="utag">${esc(byUnit[String(n)] || n)}단원</span>`).join("")}
+      </div>
+      <h3>${esc(x.title)}</h3>
+      ${x.desc ? `<p class="sdesc">${esc(x.desc)}</p>` : ""}
+      <div class="smeta">
+        <span class="ktag">${qs.length}문항${nEssay ? ` · 서술형 ${nEssay}` : ""}</span>
+        ${x.source ? `<span class="ktag">· ${esc(x.source)}</span>` : ""}
+      </div>
+      <div class="setfoot">
+        <button class="btn quiz" type="button" data-act="set" data-set="${esc(x.setId)}" ${qs.length ? "" : "disabled"}>문제 풀기</button>
+        ${sc ? `<span class="score">${sc.total ? `${sc.got}/${sc.total}` : "제출함"}</span>` : ""}
+      </div>
+    </article>`;
+  }).join("")}</div>`;
+}
+
+document.getElementById("unitFilter").addEventListener("click", e => {
+  const b = e.target.closest(".fchip");
+  if (!b || b.disabled) return;
+  unitFilter = b.dataset.unit;
+  renderPractice();
+});
+document.getElementById("sets").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act='set']");
+  if (b) openQuiz("set", b.dataset.set);
+});
+
+/* ── 탭 전환 (주소 끝 #practice 로 바로 열 수 있습니다) ── */
+function showTab(name){
+  const practice = name === "practice";
+  document.getElementById("tab-units").setAttribute("aria-selected", !practice);
+  document.getElementById("tab-practice").setAttribute("aria-selected", practice);
+  document.getElementById("view-units").hidden = practice;
+  document.getElementById("view-practice").hidden = !practice;
+  document.getElementById("bar-units").hidden = practice;
+  document.getElementById("bar-practice").hidden = !practice;
+  const hash = practice ? "#practice" : "";
+  if (location.hash !== hash) history.replaceState(null, "", location.pathname + location.search + hash);
+}
+document.getElementById("tab-units").onclick = () => showTab("units");
+document.getElementById("tab-practice").onclick = () => showTab("practice");
+window.addEventListener("hashchange", () => showTab(location.hash === "#practice" ? "practice" : "units"));
 
 /* ── 검색 ──────────────────────────────────────────────── */
 document.getElementById("q").addEventListener("input", e => {
@@ -1193,12 +1455,15 @@ function quizHTML(subj){
     const head = `
       <div class="qhead">
         <span class="qnum">${i + 1}</span>
-        <span class="qtype">${item.type === "short" ? "단답형" : "객관식"}</span>
+        <span class="qtype">${{short:"단답형", essay:"서술형"}[item.type] || "객관식"}${item.points ? ` <span class="qpts">[${item.points}점]</span>` : ""}</span>
       </div>
       <p class="qtext">${item.q}</p>
-      ${item.passage ? `<div class="qpassage">${esc(item.passage).replace(/\n/g, "<br>")}</div>` : ""}`;
+      ${item.passage ? `<div class="qpassage">${esc(item.passage).replace(/\n/g, "<br>")}</div>` : ""}
+      ${item.box ? `<div class="qbox">${esc(item.box).replace(/\n/g, "<br>")}</div>` : ""}`;
     const body = item.type === "short"
       ? `<input class="shortin" type="text" id="q${i}" name="q${i}" autocomplete="off" placeholder="답을 입력하세요">`
+      : item.type === "essay"
+      ? `<textarea class="essayin" id="q${i}" name="q${i}" placeholder="답을 써 보세요. 제출하면 예시 답안과 채점 기준이 펼쳐집니다."></textarea>`
       : `<div class="opts">${item.options.map((o, k) => `
           <label class="opt" data-opt="${k}">
             <input type="radio" name="q${i}" value="${k}" id="q${i}o${k}">
@@ -1218,6 +1483,15 @@ function subject(kind, id){
              code:`${t.topicId} · ${t.chapter.title}`,
              title:`형성평가 — ${t.title}`,
              hint:`${t.quiz.length}문항 · 제출하면 바로 채점됩니다` };
+  }
+  if (kind === "set") {
+    const x = bySet[id];
+    if (!x || !(x.questions || []).length) return null;
+    const nEssay = x.questions.filter(q => q.type === "essay").length;
+    return { kind, id, key:`set-${x.setId}`, quiz:x.questions,
+             code:`연습문제${x.source ? " · " + x.source : ""}`,
+             title:x.title,
+             hint:`${x.questions.length}문항${nEssay ? ` · 서술형 ${nEssay}문항은 예시 답안으로 스스로 점검` : " · 제출하면 바로 채점됩니다"}` };
   }
   const c = byChapter[id];
   if (!hasChapterQuiz(c)) return null;
@@ -1252,10 +1526,22 @@ mBody.addEventListener("change", e => {
 function grade(){
   const t = current;
   let got = 0;
+  const auto = t.quiz.filter(it => it.type !== "essay").length;
   t.quiz.forEach((item, i) => {
     const q = mBody.querySelector(`.q[data-q="${i}"]`);
     const fb = q.querySelector(".feedback");
     let ok = false, shown = "";
+
+    if (item.type === "essay") {
+      q.querySelector(".essayin").readOnly = true;
+      fb.hidden = false;
+      fb.className = "feedback essay";
+      fb.innerHTML = `<b>예시 답안</b>
+        <span class="model">${esc(item.model || "").replace(/\n/g, "<br>")}</span>
+        ${(item.rubric || []).length ? `<b style="display:block;margin-top:10px">채점 기준</b>
+          <ul class="rubric">${item.rubric.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}`;
+      return;
+    }
 
     if (item.type === "short") {
       const input = q.querySelector(".shortin");
@@ -1280,15 +1566,17 @@ function grade(){
     if (ok) got++;
     fb.hidden = false;
     fb.className = "feedback " + (ok ? "correct" : "wrong");
-    fb.innerHTML = `<b>${ok ? "정답입니다" : "정답: " + esc(shown)}</b>${item.explain ? `<span class="exp">${esc(item.explain)}</span>` : ""}`;
+    fb.innerHTML = `<b>${ok ? "정답입니다" : "정답: " + esc(shown)}</b>${item.explain ? `<span class="exp">${item.explain}</span>` : ""}`;
   });
 
-  saveScore(t.key, got, t.quiz.length);
-  const msg = got === t.quiz.length ? "모두 맞혔습니다."
+  saveScore(t.key, got, auto);
+  const essays = t.quiz.length - auto;
+  const msg = !auto ? "예시 답안과 채점 기준으로 스스로 점검해 보세요."
+            : got === auto ? (essays ? "객관식은 모두 맞혔습니다. 서술형은 예시 답안과 비교해 보세요." : "모두 맞혔습니다.")
             : got === 0 ? "해설을 읽고 다시 풀어 보세요."
             : "틀린 문항의 해설을 확인해 보세요.";
   mFoot.innerHTML = `
-    <span class="result"><span class="big">${got} / ${t.quiz.length}</span><span class="msg">${msg}</span></span>
+    <span class="result">${auto ? `<span class="big">${got} / ${auto}</span>` : ""}<span class="msg">${msg}</span></span>
     <button class="btn" type="button" id="reset">다시 풀기</button>
     <button class="btn primary" type="button" id="done">닫기</button>`;
   document.getElementById("reset").onclick = () => openQuiz(t.kind, t.id);
@@ -1340,6 +1628,7 @@ document.getElementById("units").addEventListener("click", e => {
 });
 
 render();
+showTab(location.hash === "#practice" ? "practice" : "units");
 </script>
 
 </body>
