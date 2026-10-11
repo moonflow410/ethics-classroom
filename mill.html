@@ -1,0 +1,642 @@
+<!doctype html><html lang="ko"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>밀의 자유론 다른 의견을 포용하기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F7F5FA; --card:#FFFFFF; --ink:#1F1D2B; --ink2:#494657; --dim:#7E7A8C;
+  --rule:#DDD8E7; --thead:#EFEAF7; --theadInk:#4A3374;
+  --acc:#5B3E86; --accFace:#F2EDF9; --ans:#B4262B;
+  --ask:#A2622A; --askFace:#FBF3E4; --askRule:#EDDCC0;
+  --tTrue:#2A6A50; --tFalse:#B4262B;
+  --shadow:0 1px 2px rgba(31,29,43,.04),0 8px 24px rgba(31,29,43,.06);
+  --fs:1rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+    --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+    --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+    --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+    --tTrue:#77D2AC; --tFalse:#FF8A87;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+  --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+  --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+  --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+  --tTrue:#77D2AC; --tFalse:#FF8A87;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:var(--fs); line-height:1.75; -webkit-text-size-adjust:100%;
+}
+.bar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid var(--rule)}
+.bar .in{max-width:980px; margin:0 auto; padding:8px 20px; display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.bar .sp{flex:1 1 auto; min-width:8px}
+.btn{font:inherit; font-size:.82rem; font-weight:500; letter-spacing:.01em; color:var(--ink2); background:var(--card);
+  border:1px solid var(--rule); border-radius:999px; padding:6px 14px; cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap}
+.btn:hover{border-color:var(--acc); color:var(--acc)}
+.btn.on{background:var(--acc); border-color:var(--acc); color:#fff}
+.btn:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.grp{display:inline-flex; border:1px solid var(--rule); border-radius:999px; overflow:hidden; background:var(--card)}
+.grp .btn{border:0; border-radius:0; padding:6px 11px}
+.grp .btn+.btn{border-left:1px solid var(--rule)}
+
+.wrap{max-width:980px; margin:0 auto; padding-block:26px 72px; padding-left:20px; padding-right:20px}
+.masthead{border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:6px;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; justify-content:space-between}
+.masthead .l{font-size:.8rem; letter-spacing:.02em; color:var(--ink2)}
+.masthead .r{font-size:.8rem; color:var(--dim)}
+.titlebox{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;
+  border:1px solid var(--rule); border-left:4px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:14px 18px; margin:14px 0 34px; box-shadow:var(--shadow)}
+.titlebox h1{font-family:"Noto Serif KR",serif; font-size:1.32rem; font-weight:600; margin:0; letter-spacing:-.01em; text-wrap:balance}
+.titlebox .who{font-size:.82rem; color:var(--dim); white-space:nowrap}
+
+h2.part{font-family:"Noto Serif KR",serif; font-size:1.16rem; font-weight:700; color:var(--acc);
+  margin:52px 0 18px; padding-bottom:8px; border-bottom:1.5px solid var(--acc); text-wrap:balance}
+h2.part:first-of-type{margin-top:8px}
+h3{font-family:"Noto Serif KR",serif; font-size:1.02rem; font-weight:600; margin:30px 0 10px;
+   padding-bottom:5px; border-bottom:1px solid var(--rule); text-wrap:balance}
+h3 .n{color:var(--acc); margin-right:.35em}
+p{margin:.55em 0}
+.lead{color:var(--ink2)}
+small.src{display:block; text-align:right; color:var(--dim); font-size:.76rem; margin-top:6px}
+
+.src-box{border:1px dashed var(--acc); background:var(--card); border-radius:3px; padding:13px 16px; margin:14px 0}
+.src-box .tag{font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--acc); display:block; margin-bottom:8px}
+.tr{margin:0; font-size:.97rem; line-height:1.9}
+.src-box cite{display:block; text-align:right; font-style:normal; font-size:.78rem; color:var(--dim); margin-top:8px}
+.easy{margin:10px 0 0; padding-top:8px; border-top:1px dotted var(--rule); font-size:.88rem; color:var(--ink2)}
+.easy b{color:var(--acc)}
+
+.tw{overflow-x:auto; margin:14px 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.9rem; background:var(--card)}
+th,td{border:1px solid var(--rule); padding:9px 11px; vertical-align:middle; text-align:left}
+thead th{background:var(--thead); color:var(--theadInk); font-weight:700; text-align:center; font-size:.86rem}
+td.c,th.c{text-align:center}
+tbody th{background:var(--thead); color:var(--theadInk); font-weight:600; text-align:center; width:1%; white-space:nowrap}
+tr.hi td,tr.hi th{background:var(--accFace)}
+td.fill{height:52px}
+.tbl-note{font-size:.83rem; color:var(--ink2); margin:6px 0 0; padding-left:1.1em; text-indent:-1.1em}
+
+.flow{display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; margin:16px 0 4px}
+.flow .f{flex:1 1 150px; border:1px solid var(--rule); border-top:3px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:10px 12px; text-align:center; box-shadow:var(--shadow)}
+.flow .f b{display:block; font-family:"Noto Serif KR",serif; color:var(--acc); font-size:1rem}
+.flow .f span{display:block; font-size:.82rem; color:var(--ink2); margin-top:3px}
+.flow .a{flex:0 0 auto; display:grid; place-items:center; color:var(--acc); font-weight:700}
+
+.ask{border:1px solid var(--askRule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:3px; padding:13px 16px; margin:18px 0}
+.ask .tag{font-size:.76rem; font-weight:700; letter-spacing:.03em; color:var(--ask); display:block; margin-bottom:6px}
+.ask ol{margin:0; padding-left:1.25em}
+.ask li{margin:.35em 0}
+.ask li::marker{color:var(--ask); font-weight:700}
+.lines{margin:10px 0 4px}
+.lines i{display:block; border-bottom:1px dotted var(--rule); height:30px}
+.sample{display:block; margin:10px 0 0; padding:11px 13px; border-left:3px solid var(--ans);
+  background:var(--card); border-radius:0 3px 3px 0; font-size:.88rem; color:var(--ink2); line-height:1.8}
+.sample b{color:var(--ans)}
+.video{border:1px solid var(--rule); background:var(--card); border-radius:4px; margin:16px 0; overflow:hidden; box-shadow:var(--shadow)}
+.video .vh{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--rule)}
+.video .vh b{font-size:.86rem; color:var(--acc)}
+.video .frame{position:relative; aspect-ratio:16/9; background:#000}
+.video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+.bl{display:inline-block; min-width:4.6em; padding:0 .35em; margin:0 .12em;
+  border-bottom:1.4px solid var(--ink2); text-align:center; cursor:pointer;
+  color:var(--dim); font-size:.82em; letter-spacing:.06em; vertical-align:baseline;
+  border-radius:2px 2px 0 0; transition:background .12s}
+.bl:hover{background:var(--accFace)}
+.bl:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.bl.show{color:var(--ans); font-weight:700; font-size:1em; letter-spacing:0; border-bottom-color:var(--ans)}
+.bl.w6{min-width:6.4em}
+.ch{cursor:pointer; border-radius:2px; padding:0 .15em}
+.ch:hover{background:var(--accFace)}
+.ch:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.ch .o{color:var(--ink)}
+.ch .o+.o::before{content:" / "; color:var(--dim)}
+.ch.show .o{color:var(--dim)}
+.ch.show .o.a{color:var(--ans); font-weight:700; text-decoration:underline; text-underline-offset:3px}
+
+.recall{border:1px solid var(--acc); background:var(--card); border-radius:4px; margin:26px 0; overflow:hidden; box-shadow:var(--shadow)}
+.recall > h4{margin:0; padding:12px 18px; background:var(--acc); color:#fff;
+  font-family:"Noto Serif KR",serif; font-size:1rem; font-weight:600}
+.recall > h4 span{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.76rem; opacity:.85; margin-top:2px}
+.recall .body{padding:16px 18px}
+.recall .body > :first-child{margin-top:0}
+.warn{border-left:3px solid var(--ans); background:var(--accFace); padding:11px 14px; margin:14px 0 0; border-radius:0 3px 3px 0; font-size:.92rem}
+.warn b{color:var(--ans)}
+
+.tf-item{border:1px solid var(--rule); background:var(--card); border-radius:3px; margin:9px 0; overflow:hidden}
+.tf-head{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; cursor:pointer}
+.tf-head:focus-visible{outline:2px solid var(--acc); outline-offset:-2px}
+.tf-no{flex:0 0 auto; width:1.8em; height:1.8em; border-radius:50%; background:var(--thead); color:var(--theadInk);
+  font-size:.78rem; font-weight:700; display:grid; place-items:center; margin-top:2px}
+.tf-q{flex:1 1 auto; font-size:.95rem}
+.tf-a{flex:0 0 auto; font-weight:700; font-size:.9rem; letter-spacing:.08em; color:var(--dim); white-space:nowrap; margin-top:1px}
+.tf-item.show .tf-a[data-a="T"]{color:var(--tTrue)}
+.tf-item.show .tf-a[data-a="F"]{color:var(--tFalse)}
+.tf-exp{display:none; padding:0 14px 13px 3.4em; font-size:.9rem; color:var(--ink2); line-height:1.8}
+.tf-item.show .tf-exp{display:block}
+.tf-exp .verdict{font-weight:700}
+.tf-exp .verdict.t{color:var(--tTrue)} .tf-exp .verdict.f{color:var(--tFalse)}
+.tf-exp .ref{color:var(--dim); font-size:.85em}
+
+.readbox{border:1px solid var(--rule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:4px; padding:20px 24px; margin:14px 0 26px}
+.readbox .tag{display:block; font-size:.76rem; font-weight:700; letter-spacing:.05em; color:var(--ask); margin-bottom:10px}
+.readbox blockquote{margin:0; font-family:"Noto Serif KR",serif; font-size:1.06rem; line-height:2.05; text-indent:.5em}
+.readbox cite{display:block; text-align:right; font-style:normal; font-size:.82rem; color:var(--ink2); margin-top:12px}
+.readbox .note{font-size:.8rem; color:var(--dim); line-height:1.7; margin:12px 0 0; padding-top:10px; border-top:1px dotted var(--askRule)}
+
+.arrow{color:var(--acc); font-weight:700}
+.foot{margin-top:60px; padding-top:14px; border-top:1px solid var(--rule); color:var(--dim); font-size:.78rem}
+.modal{position:fixed; inset:0; z-index:80; display:none; place-items:center; background:rgba(20,16,32,.55); padding:20px}
+.modal.on{display:grid}
+.modal .box{background:var(--card); color:var(--ink); border-radius:8px; padding:20px; max-width:520px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal .url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; word-break:break-all;
+  background:var(--accFace); border:1px solid var(--rule); border-radius:4px; padding:10px; margin:12px 0; user-select:all}
+body.immersive .bar{position:static}
+body.immersive .wrap{max-width:100%; padding-block:12px 40px}
+
+@media (max-width:640px){
+  .titlebox{flex-direction:column; align-items:flex-start; gap:8px}
+  .wrap{padding-left:16px; padding-right:16px}
+  .flow .a{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@media print{
+  .bar,.modal,.no-print{display:none!important}
+  body{background:#fff; color:#000; font-size:10.2pt}
+  .wrap{max-width:none; padding:0}
+  .bl.show{color:#000; border-bottom-color:#000}
+  .ch.show .o.a{color:#000}
+  .video .frame{display:none}
+  .tf-item.show .tf-exp{display:none}
+  .tf-item.show .tf-a{color:#000}
+  h2.part{break-after:avoid} h3{break-after:avoid}
+  .src-box,.tw,.ask,.recall,.tf-item,.readbox{break-inside:avoid}
+}
+</style>
+</head><body>
+
+<div class="bar">
+  <div class="in">
+    <button class="btn" id="all" type="button">정답 모두 보기</button>
+    <div class="grp" role="group" aria-label="글자 크기">
+      <button class="btn" id="fmin" type="button" aria-label="글자 작게">A−</button>
+      <button class="btn" id="fplus" type="button" aria-label="글자 크게">A+</button>
+    </div>
+    <button class="btn no-print" id="imm" type="button">몰입 모드</button>
+    <span class="sp"></span>
+    <a class="btn" id="pop" href="#" target="_blank" rel="noopener" hidden>새 창에서 크게 보기</a>
+    <button class="btn no-print" id="prt" type="button">인쇄</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="l">2026-2 세화여자고등학교 &middot; 인문학과 윤리</div>
+    <div class="r">원전 기반 학습 자료 ⑥ &middot; Ⅳ. 다양성과 포용성</div>
+  </div>
+
+  <div class="titlebox">
+    <h1>밀, 『자유론』<br>서로 다른 의견을 어떻게 포용할 수 있을까?</h1>
+    <div class="who">2학년 (　　)반　이름 ____________</div>
+  </div>
+
+  <!-- ===================== 0 ===================== -->
+  <h2 class="part">0. 수업 열기</h2>
+
+  <div class="readbox">
+    <span class="tag">♦ 좋은 문구 읽기 — 소리 내어 함께 읽어 봅시다</span>
+    <blockquote>전체 인류 가운데 단 한 사람이 다른 생각을 한다고 하여, <b>그 사람에게 침묵을 강요하는 일은 옳지 못하다.</b></blockquote>
+    <cite>— 밀, 『자유론』 · 교과서 123쪽</cite>
+    <p class="note">※ 99명이 찬성하고 1명이 반대할 때, 밀은 그 1명의 입을 막아서는 안 된다고 말한다. 왜 그럴까? 오늘 학습지는 이 물음에 답하는 과정이다.</p>
+  </div>
+
+  <div class="video">
+    <div class="vh"><b>▶ 함께 보기 — 수업 열기 영상</b><a class="btn" href="https://youtu.be/l1V2p0cERog" target="_blank" rel="noopener">YouTube에서 보기</a></div>
+    <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/l1V2p0cERog" title="함께 보기 — 수업 열기 영상" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각 열기 ♣ 명호의 두 장면 · 교과서 112쪽</span>
+    <p style="margin:.2em 0 .5em"><b>장면 1</b> 코끼리의 꼬리만 만져 본 명호가 말한다. “코끼리는 굵은 밧줄이야! 내가 만져 봤더니 확실히 밧줄이었어.”<br>
+    <b>장면 2</b> 학급 회장 명호가 말한다. “체육 대회 우승 상금을 받아 왔습니다. 내가 회장이니 내 마음대로 분배할게요!”</p>
+    <ol>
+      <li>두 장면 속 명호의 행동에는 어떤 공통점이 있을까?</li>
+      <li>나에게도 명호와 같은 모습이 있었는지 돌아보자.</li>
+    </ol>
+    <div class="lines"><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 명호는 두 장면 모두에서 <b>자신의 경험이나 관점만을 근거로 전체를 판단</b>하고, 자기 생각만 옳다고 여긴다. 나도 친구가 발표를 제대로 못 하자 불성실하다고 단정한 적이 있는데, 알고 보니 그날 몸이 아팠던 것이었다. 내가 틀릴 수 있음을 인정하고 다른 사람의 상황을 먼저 헤아려야겠다.</div>
+  </div>
+
+  <!-- ===================== 1 ===================== -->
+  <h2 class="part">[1] 밀과 『자유론』 만나기</h2>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>사상가</th><td>밀(J. S. Mill, 1806~1873) — 영국의 철학자이자 <span class="bl w6" data-a="정치 경제학자" tabindex="0" role="button">ㅈㅊ ㄱㅈㅎㅈ</span></td></tr>
+        <tr><th>공리주의</th><td>벤담의 공리주의를 보완하여 <span class="bl w6" data-a="질적 공리주의" tabindex="0" role="button">ㅈㅈ ㄱㄹㅈㅇ</span>를 발전시켰다.<br>“만족한 돼지보다 불만족한 인간이, 만족한 바보보다 불만족한 소크라테스가 되는 편이 낫다.”</td></tr>
+        <tr><th>삶</th><td>동인도 회사에서 35년 근무 · 하원 의원으로서 노동자 처우 개선과 <b>여성 참정권</b>을 위해 노력 · 아내 해리엇 테일러는 학문적 동지</td></tr>
+        <tr class="hi"><th>『자유론』</th><td>1859년 출간. 현대 <span class="bl" data-a="민주주의" tabindex="0" role="button">ㅁㅈㅈㅇ</span>의 뿌리가 되는 고전. 민주주의 사회의 가장 중요한 기반으로 <b>생각과 표현의 자유</b>를 강력히 옹호하였다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">교과서 113쪽 · 길벗 교과서 109쪽</small>
+
+  <div class="flow">
+    <div class="f"><b>왜 다를까?</b><span>의견이 다양한 이유</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>무엇이 막을까?</b><span>다양성을 방해하는 요인</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>어떻게 품을까?</b><span>토론과 상호 존중</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>어디까지?</b><span>타인에게 해를 끼치지 않는 한</span></div>
+  </div>
+
+  <!-- ===================== 2 ===================== -->
+  <h2 class="part">[2] 다양한 의견의 발생 원인</h2>
+
+  <h3><span class="n">1.</span>서로 다른 의견이 생기는 이유</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ①] 교과서 114쪽</span>
+    <p class="tr">이 책에서 주장하는 바는 바로 <b>생각의 자유</b>이다.</p>
+    <cite>— 밀, 『자유론』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 친구의 얼굴·목소리·말투가 나와 다른 것처럼 생각도 다르다. 약 80억 명이 사는 세상에서 <b>의견이 다양한 것은 당연하다.</b></p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:30%">원인</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>① 성장 환경</th><td>서로 다른 유전자·교육·문화 속에서 자라며 저마다 다른 <span class="bl" data-a="가치관" tabindex="0" role="button">ㄱㅊㄱ</span>과 신념을 갖게 된다.</td></tr>
+        <tr><th>② 빠른 사회 변화</th><td>과학 기술의 발달, 경제 성장, 산업화·정보화로 <span class="bl" data-a="세대" tabindex="0" role="button">ㅅㄷ</span> 간 가치관이 서로 달라졌다.</td></tr>
+        <tr><th>③ 집단과 개인</th><td>속한 집단에 따라, 같은 집단 안에서도 개인의 신념에 따라 추구하는 삶의 방향이 다르다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="n">2.</span>민주주의 사회에서 의견이 충돌하는 까닭</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ②] 교과서 115쪽</span>
+    <p class="tr">사람들은 자신의 기호를 즐기고 자기가 희망하는 것을 추구할 자유를 지녀야 한다. <b>각각의 개성에 맞게 자기 삶을 설계하고</b> 자기 좋은 대로 살아갈 자유를 누려야 한다.</p>
+    <cite>— 밀, 『자유론』</cite>
+  </div>
+  <p>민주주의 사회의 국민은 통치자이자 피치자이므로 <span class="bl w6" data-a="능동적 시민" tabindex="0" role="button">ㄴㄷㅈ ㅅㅁ</span>이어야 한다. 이를 위해 민주주의 사회는 ① 개인의 <span class="bl" data-a="자유" tabindex="0" role="button">ㅈㅇ</span>를 보장하고 ② 인간 <span class="bl" data-a="존엄성" tabindex="0" role="button">ㅈㅇㅅ</span>을 바탕에 둔다.</p>
+  <p><span class="arrow">→</span> 저마다 다른 생각을 가진 사람들이 자유롭게 말하는 사회이므로, 민주주의 사회에서 의견이 충돌하는 것은 〔<span class="ch" data-a="1" tabindex="0" role="button">비정상적인 일|당연한 일</span>〕이다.</p>
+
+  <h3><span class="n">3.</span>의견은 어떻게 부딪칠까? — 충돌의 네 가지 모습</h3>
+  <p class="lead" style="font-size:.88rem">각 사례가 어떤 충돌인지 골라 보자. 괄호를 누르면 답이 나온다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:52%">사례</th><th>충돌의 모습</th></tr></thead>
+      <tbody>
+        <tr><td>같은 정책을 두고 보수 진영과 진보 진영의 의견이 갈린다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">정치적 갈등|집단 간 갈등</span></td></tr>
+        <tr><td>한정된 장학금을 서로 더 많이 받으려 한다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">국가와 개인|개인 간 갈등</span></td></tr>
+        <tr><td>쓰레기 소각장은 필요하지만 “우리 동네만은 안 된다.”(님비 현상)</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">집단(지역) 간 갈등|정치적 갈등</span></td></tr>
+        <tr><td>자연을 지키려 개발 제한 구역을 지정했는데, 땅 주인의 재산권이 침해된다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">개인 간 갈등|공익과 사익의 충돌</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">교과서 116쪽</small>
+
+  <div class="src-box">
+    <span class="tag">[원문 ③] 교과서 116쪽</span>
+    <p class="tr">자신에 대한 반대 의견까지 폭넓게 수용함으로써, 그리고 자신은 물론 다른 사람에게도 어떤 의견이 왜 잘못되었는지 자세히 설명해 줌으로써, <b>옳은 의견 못지않게 그릇된 의견을 통해서도 이득을 얻게 되는 것</b>이다.</p>
+    <cite>— 밀, 『자유론』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 의견의 불일치는 골칫거리가 아니라 <b>다양성을 만들어 내는 원천</b>이다.</p>
+  </div>
+
+  <h3><span class="n">4.</span>왜 다른 의견을 막으면 안 될까?</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ④] 길벗 교과서 110쪽</span>
+    <p class="tr">어떤 생각을 억압한다는 것이 심각한 문제가 되는 가장 큰 이유는, 그런 행위가 현세대뿐만 아니라 미래의 인류에게까지 <b>강도질을 하는 것과 같은 악</b>을 저지르는 셈이 되기 때문이다. 만일 그 의견이 옳다면 그러한 행위는 잘못을 드러내고 진리를 찾을 기회를 박탈하는 것이다. 설령 잘못된 것이라고 해도 그 의견을 억압하는 것은 틀린 의견과 옳은 의견을 대비함으로써 <b>진리를 더 생생하고 명확하게 드러낼 수 있는</b> 대단히 소중한 기회를 놓치는 결과를 낳는다.</p>
+    <cite>— 밀, 『자유론』</cite>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:30%">막으려는 의견이…</th><th>막으면 무엇을 잃는가? (밀이 든 네 가지 이유)</th></tr></thead>
+      <tbody>
+        <tr><th>① 옳을 수도 있다</th><td>침묵당하는 의견도 <span class="bl" data-a="진리" tabindex="0" role="button">ㅈㄹ</span>일 가능성이 있다. 이를 부인하면 내가 절대 옳다고 전제하는 꼴이 된다.</td></tr>
+        <tr><th>② 일부만 옳다</th><td>틀린 의견도 <b>일정 부분</b> 진리를 담고 있을 수 있다. 부딪쳐야 나머지 진리를 찾는다.</td></tr>
+        <tr class="hi"><th>③ 틀렸다 해도</th><td>시험받지 않은 통설은 근거도 모른 채 간직하는 하나의 <span class="bl" data-a="편견" tabindex="0" role="button">ㅍㄱ</span>이 된다.</td></tr>
+        <tr><th>④ 그 결과</th><td>그 주장의 의미 자체가 퇴색하여 사람의 성격과 행동에 영향을 주지 못한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">길벗 교과서 120쪽</small>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 1 ♣ 틀린 의견도 막으면 안 될까</span>
+    <p style="margin:.2em 0 .5em">밀이 <b>“잘못된 의견이라도 억압하면 안 된다.”</b>라고 주장한 이유를 [원문 ④]를 바탕으로 서술해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 잘못된 의견이라 해도 그것을 억압하면, 틀린 의견과 옳은 의견을 대비함으로써 진리를 더 생생하고 명확하게 드러낼 수 있는 소중한 기회를 놓치기 때문이다. 틀린 의견을 반박하는 과정에서 우리는 옳은 의견의 근거를 더 분명히 알게 된다.</div>
+  </div>
+
+  <!-- ===================== 3 ===================== -->
+  <h2 class="part">[3] 민주주의 사회와 포용성</h2>
+
+  <h3><span class="n">5.</span>다양한 의견을 방해하는 세 가지</h3>
+  <p class="lead" style="font-size:.9rem">히틀러는 다른 주장을 하는 사람을 쫓아내 모두가 같은 생각을 하는 <b>전체주의</b> 사회를 만들었지만, 몰락의 결말을 얻었을 뿐이다. 다양한 의견을 가로막는 것은 무엇일까?</p>
+
+  <div class="src-box">
+    <span class="tag">[원문 ⑤] 무오류성의 권위 · 교과서 120쪽</span>
+    <p class="tr">사람들에게는 세속의 권력자 또는 신이 좋아하거나 싫어할 것이라고 생각되는 바를 <b>맹목적으로 추종하는 노예근성</b> 같은 것이 있다.</p>
+    <cite>— 밀, 『자유론』</cite>
+  </div>
+  <div class="src-box">
+    <span class="tag">[원문 ⑥] 다수의 횡포 · 교과서 121쪽</span>
+    <p class="tr">정치 영역에서의 <b>‘다수의 횡포’</b>는 온 사회가 경계하지 않으면 안 될 큰 해악 가운데 하나로 분명히 인식되고 있다.</p>
+    <cite>— 밀, 『자유론』</cite>
+  </div>
+  <div class="src-box">
+    <span class="tag">[원문 ⑦] 관습과 권위 · 교과서 121쪽</span>
+    <p class="tr">거짓의 유혹을 이겨 낼 수 있을 정도로 <b>진리를 향한 인간의 열정이 뜨거운 것은 아니다.</b> 법적 제재, 사회적 제재가 충분히 가해지면 진리나 거짓을 향한 열정은 중단되고 만다.</p>
+    <cite>— 밀, 『자유론』</cite>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:24%">방해 요인</th><th>뜻</th><th style="width:30%">예</th></tr></thead>
+      <tbody>
+        <tr><th><span class="bl w6" data-a="무오류성의 권위" tabindex="0" role="button">ㅁㅇㄹㅅㅇ ㄱㅇ</span></th><td>다수나 집단의 의견은 <b>틀릴 리 없다</b>는 권위에 눌려 자기 생각을 말하지 못함</td><td>“다들 그렇다는데 내가 틀렸겠지…”</td></tr>
+        <tr class="hi"><th><span class="bl w6" data-a="다수의 횡포" tabindex="0" role="button">ㄷㅅㅇ ㅎㅍ</span></th><td>다수의 의견을 절대적으로 옳은 것으로 받아들임</td><td>소크라테스의 사형, 노예 무역, 여성 참정권 불인정</td></tr>
+        <tr><th><span class="bl w6" data-a="관습과 권위" tabindex="0" role="button">ㄱㅅㄱ ㄱㅇ</span></th><td>공동체의 관습과 권위를 비판적 고민 없이 그대로 받아들임</td><td>“원래 옛날부터 그렇게 해 왔어.”</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">※ 관습과 권위가 반드시 나쁜 것은 아니다. 위험한 것은 <b>따져 보지 않고 무조건 따르는 것(맹종)</b>이다.</p>
+
+  <div class="recall">
+    <h4>‘아니요’라고 말하는 용기<span>— 윌버포스와 노예 제도 폐지 · 교과서 120쪽</span></h4>
+    <div class="body">
+      <p>18세기 말 영국에서 노예 무역은 국가 수입의 3분의 1을 차지할 만큼 ‘당연한’ 일이었다. 윌버포스는 매국노라는 비난과 암살 시도에도 반대 의견을 굽히지 않았고, <b>46년 만인 1833년</b> 영국 의회는 노예 제도 폐지 법안을 통과시켰다.</p>
+      <p><span class="arrow">→</span> 다수가 옳다고 믿는 것도 틀릴 수 있다. 소수의 “아니요”가 사회를 바꾸기도 한다.</p>
+    </div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 2 ♣ 우리 반에 적용하기</span>
+    <p style="margin:.2em 0 .5em">우리 반(학교)에서 <b>다수의 횡포</b>가 나타날 수 있는 장면을 하나 떠올리고, 밀의 생각을 바탕으로 소수 의견을 포용하기 위한 방법을 한 가지 제안해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 학급 회의에서 다수가 원하는 의견이 나오면 반대 의견을 말하는 친구가 “분위기 깬다”는 눈치를 받는다. 밀에 따르면 소수 의견도 진리의 일부를 담고 있을 수 있고, 반대 의견과 부딪쳐야 우리의 결정도 더 단단해진다. 그러므로 투표 전에 반대 의견을 반드시 한 번 이상 듣는 시간을 정해 두자고 제안한다.</div>
+  </div>
+
+  <h3><span class="n">6.</span>다양한 의견을 포용하는 방법</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ⑧] 교과서 123쪽</span>
+    <p class="tr">인간은 <b>토론과 경험에 힘입어 자신의 과오를 고칠 수 있다.</b> 경험만으로는 부족하다. …(중략)… 잘못된 생각과 관행은 사실과 논쟁 앞에서 점차 그 힘을 잃게 된다.</p>
+    <cite>— 밀, 『자유론』</cite>
+  </div>
+  <div class="src-box">
+    <span class="tag">[원문 ⑨] 『논어』 · 교과서 122쪽</span>
+    <p class="tr">군자는 남과 화합하되 뇌동하지 않으며[和而不同], 소인은 뇌동하되 화합하지 않는다[同而不和].</p>
+    <cite>— 『논어』 「자로」</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 다른 사람과 잘 어울리되, 줏대 없이 남의 의견을 무조건 따라가지는 않는다(<b>부화뇌동</b>하지 않는다).</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:26%">방법</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>① 편견 알아차리기</th><td>다수의 주장이 늘 옳은 것은 아니며, 관습과 <b>나의 생각 속에도</b> <span class="bl" data-a="편견" tabindex="0" role="button">ㅍㄱ</span>이 있을 수 있음을 깨닫는다.</td></tr>
+        <tr class="hi"><th>② 자유로운 토론</th><td>주장하기 → 반론하기 → <span class="bl" data-a="재반론하기" tabindex="0" role="button">ㅈㅂㄹㅎㄱ</span> → 검토와 정리. 모든 사람이, <b>심지어 악마의 편에 선 것처럼 보이는 사람까지도</b> 자기주장을 펼 수 있어야 한다.</td></tr>
+        <tr><th>③ 상호 존중</th><td>공자의 <span class="bl" data-a="서(恕)" tabindex="0" role="button">ㅅ</span> — 내 마음과 남의 마음이 같다고 여겨 타인의 마음을 헤아리는 것. “내가 바라지 않는 것을 남에게 강요하지 말라.”</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">교과서 122~123쪽 · 길벗 교과서 119쪽</small>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 단 150분 만의 사형 판결 · 교과서 122쪽</span>
+    <p style="margin:.2em 0 .5em">1944년 미국에서 14세 흑인 소년 스티니는 무죄를 주장했지만, 변호사는 증인 한 명 부르지 않았고 백인 배심원단은 10여 분 만에 유죄를 평결했다. 70년 뒤인 2014년, 법원은 이 판결을 무효로 선고했다.</p>
+    <div class="video">
+      <div class="vh"><b>▶ 함께 보기 — 스티니 사건 영상</b><a class="btn" href="https://youtu.be/Ylulmi5roJQ" target="_blank" rel="noopener">YouTube에서 보기</a></div>
+      <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/Ylulmi5roJQ" title="함께 보기 — 스티니 사건 영상" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+    </div>
+    <p style="margin:.2em 0 .5em">이런 판결이 내려진 이유는 무엇이며, 배심원단은 무엇을 했어야 할까?</p>
+    <div class="lines"><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 당시 사회에 퍼져 있던 인종 차별이라는 편견 때문에 소년의 말은 제대로 들리지 않았다. 배심원단은 편견을 내려놓고 증거와 피고인의 진술을 객관적으로 살피며, 반대편의 이야기를 충분히 들었어야 했다.</div>
+  </div>
+
+  <h3><span class="n">7.</span>자유에도 한계가 있을까? — 타인 위해의 원리</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ⑩] 길벗 교과서 117쪽</span>
+    <p class="tr">첫째, 각 개인은 자기 행동이 다른 사람의 이해관계에 해를 주지 않고 <b>자기 자신에게만 영향을 미칠 때</b> 사회에서 책임지지 않는다. …… 정당하게 의사를 표시할 수 있는 유일한 방법은 <b>충고, 훈계, 설득</b> 또는 상대해 주지 않고 피하는 것뿐이다. 둘째, <b>다른 사람의 이익을 침해하는 행동</b>에 대해서는 당사자가 당연히 책임을 져야 한다. …… 그런 행동에 관해 사회적 또는 법적 처벌을 가할 수 있다.</p>
+    <cite>— 밀, 『자유론』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 남에게 해를 끼치지 않는 한 무엇을 생각하고 행동하든 자유다. 나에게만 영향을 주는 일이라면 <b>충고·설득은 할 수 있어도 처벌할 수는 없다.</b></p>
+  </div>
+
+  <p class="lead" style="font-size:.88rem">밀이라면 어떻게 판단할까? 괄호를 누르면 답이 나온다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:55%">사례</th><th>밀의 판단</th></tr></thead>
+      <tbody>
+        <tr><td>불법 도박장을 열어 운영한다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">처벌할 수 없음|처벌할 수 있음</span></td></tr>
+        <tr><td>스스로 원해서 도박장에 간다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">충고·설득만 가능|처벌할 수 있음</span></td></tr>
+        <tr><td>수업 토론에서 다수와 반대되는 의견을 말한다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">간섭할 수 없음|간섭할 수 있음</span></td></tr>
+        <tr><td>사실이 아닌 소문을 퍼뜨려 친구의 명예를 훼손한다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">간섭할 수 없음|간섭할 수 있음</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">※ 도박장을 연 사람은 사행심을 부추겨 <b>사회에 해</b>를 끼치지만, 스스로 도박장에 가는 사람의 선택은 <b>자신에게만</b> 해를 끼친다(길벗 교과서 117~118쪽).</p>
+
+  <div class="warn"><b>단 하나 허락되지 않는 자유</b> — 밀은 스스로를 노예로 만드는 <b>‘자유를 포기할 자유’</b>만은 허용하지 않았다. 자신에게 가장 해로울 뿐 아니라 공동체의 자유까지 위험에 빠뜨리기 때문이다.</div>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 3 ♣ 자유의 한계</span>
+    <p style="margin:.2em 0 .5em">밀이 『자유론』에서 제시한 <b>자유의 한계</b>를 [원문 ⑩]을 바탕으로 한두 문장으로 써 보자.</p>
+    <div class="lines"><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 자신에게만 영향을 미치는 행동은 자유이지만, 타인의 이익이나 권리를 침해하는 행동은 자유의 범위를 넘어선 것이므로 사회나 법이 제한하거나 처벌할 수 있다.</div>
+  </div>
+
+  <!-- ===================== 4 ===================== -->
+  <h2 class="part">[4] 한눈에 정리하고 성찰하기</h2>
+
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><th>의견이 다양한 이유</th><td>성장 환경 · 빠른 사회 변화(세대 차이) · 집단과 개인의 신념</td></tr>
+        <tr><th>충돌은 당연하다</th><td>개인의 자유와 인간 존엄성을 보장하는 민주주의 사회이기 때문. 불일치는 다양성의 원천</td></tr>
+        <tr><th>막으면 안 되는 이유</th><td>옳든, 일부만 옳든, 틀리든 막으면 진리를 찾고 분명히 할 기회를 잃는다</td></tr>
+        <tr class="hi"><th>방해 요인</th><td>무오류성의 권위 · 다수의 횡포 · 관습과 권위</td></tr>
+        <tr><th>포용의 방법</th><td>편견 알아차리기 · 자유로운 토론 · 상호 존중(서, 화이부동)</td></tr>
+        <tr><th>자유의 한계</th><td>타인에게 해를 끼칠 때만 제한 — 타인 위해의 원리</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 4 ♣ 나의 경험 돌아보기</span>
+    <p style="margin:.2em 0 .5em">누군가와 의견이 달랐던 경험을 하나 떠올려 보자. 그때 나는 어떻게 행동했는지 쓰고, 밀과 공자의 생각을 바탕으로 <b>앞으로의 다짐</b>을 써 보자.</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 조별 과제 주제를 정할 때 나는 환경 문제를, 친구는 과학 기술을 원했는데, 나는 내가 옳다고 확신해 친구의 말을 끝까지 듣지 않았다. 밀은 다른 의견과 부딪치는 과정에서 진리가 드러난다고 했고, 공자는 화합하되 휩쓸리지 말라고 했다. 앞으로는 먼저 상대가 왜 그렇게 생각하는지 끝까지 듣고, 서로의 생각에서 배울 점을 찾겠다.</div>
+  </div>
+
+  <!-- ===================== 5 ===================== -->
+  <h2 class="part">[5] 자유론, 진실 혹은 거짓!</h2>
+  <p class="lead" style="font-size:.9rem">각 문항을 눌러 답과 해설을 확인하세요. 위 <b>정답 모두 보기</b>를 누르면 한꺼번에 열립니다.</p>
+
+  <div id="tf"></div>
+
+  <div class="foot">
+    ※ ‘교과서’는 천재교육 『인문학과 윤리』 Ⅳ-1(112~125쪽), ‘길벗 교과서’는 길벗 『인문학과 윤리』 Ⅳ-1(108~121쪽)이다. 원문 번역은 각 교과서를 따랐다.<br>
+    2026-2 세화여자고등학교 인문학과 윤리 · 원전 기반 학습 자료 ⑥ 밀 『자유론』
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <p style="margin-top:0"><b>새 창이 열리지 않았습니다.</b><br>아래 주소를 복사해 사파리 주소창에 붙여 넣으면 전체 화면으로 볼 수 있습니다.</p>
+    <div class="url" id="murl"></div>
+    <div style="display:flex; gap:8px; justify-content:flex-end">
+      <button class="btn" id="mcopy" type="button">주소 복사</button>
+      <button class="btn" id="mclose" type="button">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var TF = [
+    {q:"밀은 벤담의 공리주의를 보완하여 ‘양적 공리주의’를 발전시켰다.", a:"F",
+     e:"밀이 발전시킨 것은 <b>질적 공리주의</b>다. “만족한 돼지보다 불만족한 인간이 되는 편이 낫다.”라는 말이 이를 잘 보여 준다.", r:"[1]"},
+    {q:"『자유론』은 현대 민주주의의 뿌리가 되는 고전으로, 생각과 표현의 자유를 강력히 옹호한다.", a:"T",
+     e:"밀은 민주주의 사회의 가장 중요한 기반으로 <b>생각과 표현의 자유</b>를 꼽았다.", r:"[1]"},
+    {q:"민주주의 사회에서 의견이 충돌하는 것은 사회가 잘못되었다는 증거이다.", a:"F",
+     e:"개인의 자유와 인간 존엄성을 보장하는 민주주의 사회에서 의견 충돌은 <b>자연스럽고 당연한 일</b>이며, 오히려 <b>다양성을 만들어 내는 원천</b>이다.", r:"[2] 2·3"},
+    {q:"님비 현상과 핌피 현상은 정반대의 개념이지만 지역 이기주의라는 점에서 같다.", a:"T",
+     e:"님비는 우리 지역에 이롭지 않은 일을 반대하고, 핌피는 이익이 되는 사업을 우리 지역에 끌어오려 한다. 둘 다 <b>집단(지역) 간 갈등</b>의 모습이다.", r:"[2] 3"},
+    {q:"밀은 틀린 의견은 진리를 찾는 데 도움이 되지 않으므로 무시해도 된다고 보았다.", a:"F",
+     e:"틀린 의견과 옳은 의견을 대비할 때 <b>진리가 더 생생하고 명확하게</b> 드러난다. 그릇된 의견을 통해서도 이득을 얻는다.", r:"[2] 4"},
+    {q:"무오류성의 권위란 개인이 다수나 집단의 의견은 틀릴 리 없다고 여겨 자기 생각을 말하지 못하는 것이다.", a:"T",
+     e:"인간은 완전하지 않아 누구의 의견이든 틀릴 수 있다. 그런데 다수의 의견이나 관행에는 <b>거부할 수 없는 권위</b>를 부여하기 쉽다.", r:"[3] 5"},
+    {q:"밀은 관습과 권위는 모두 나쁜 것이므로 버려야 한다고 주장하였다.", a:"F",
+     e:"관습과 권위가 반드시 나쁜 것은 아니다. 문제는 <b>비판적이고 진지한 고민 없이 받아들이는 것</b>이다.", r:"[3] 5"},
+    {q:"공자의 ‘화이부동(和而不同)’은 남과 화합하되 줏대 없이 휩쓸리지 않는다는 뜻이다.", a:"T",
+     e:"군자는 <b>화합하되 뇌동하지 않고</b>, 소인은 뇌동하되 화합하지 않는다(『논어』 「자로」).", r:"[3] 6"},
+    {q:"밀은 자신에게만 해로운 행동이라도 본인을 위해 법으로 처벌해야 한다고 보았다.", a:"F",
+     e:"자신에게만 영향을 미치는 행동에 대해 사회가 할 수 있는 것은 <b>충고·훈계·설득</b>뿐이다. 스스로 도박장에 가는 사람을 처벌해서는 안 된다고 한 것도 같은 이유다.", r:"[3] 7"},
+    {q:"밀은 스스로를 노예로 만드는 ‘자유를 포기할 자유’도 개인의 선택이므로 허용해야 한다고 보았다.", a:"F",
+     e:"‘자유를 포기할 자유’는 밀이 <b>유일하게 허락하지 않은 자유</b>다. 자신에게 가장 해로울 뿐 아니라 공동체의 자유까지 위험에 빠뜨리기 때문이다.", r:"[3] 7"}
+  ];
+
+  var host = document.getElementById("tf");
+  TF.forEach(function(it, i){
+    var d = document.createElement("div");
+    d.className = "tf-item";
+    d.innerHTML =
+      '<div class="tf-head" tabindex="0" role="button" aria-expanded="false">' +
+        '<span class="tf-no">' + (i+1) + '</span>' +
+        '<span class="tf-q">' + it.q + '</span>' +
+        '<span class="tf-a" data-a="' + it.a + '">T / F</span>' +
+      '</div>' +
+      '<div class="tf-exp"><span class="verdict ' + (it.a==="T"?"t":"f") + '">' +
+        (it.a==="T"?"참":"거짓") + '</span> — ' + it.e +
+        ' <span class="ref">(' + it.r + ')</span></div>';
+    var head = d.querySelector(".tf-head"), ansEl = d.querySelector(".tf-a");
+    function toggle(){
+      var on = d.classList.toggle("show");
+      head.setAttribute("aria-expanded", on ? "true" : "false");
+      ansEl.textContent = on ? (it.a==="T" ? "참 T" : "거짓 F") : "T / F";
+    }
+    head.addEventListener("click", toggle);
+    head.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); } });
+    d.setAttribute("data-ans", it.a);
+    host.appendChild(d);
+  });
+
+  document.querySelectorAll(".bl").forEach(function(el){
+    el.dataset.hint = el.textContent;
+    function t(){ var on = el.classList.toggle("show"); el.textContent = on ? el.dataset.a : el.dataset.hint; }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+  document.querySelectorAll(".ch").forEach(function(el){
+    var opts = el.textContent.split("|"), idx = parseInt(el.dataset.a, 10);
+    el.innerHTML = opts.map(function(o,i){ return '<span class="o' + (i===idx?" a":"") + '">' + o + '</span>'; }).join("");
+    function t(){ el.classList.toggle("show"); }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+
+  var allOn = false, allBtn = document.getElementById("all");
+  allBtn.addEventListener("click", function(){
+    allOn = !allOn;
+    allBtn.classList.toggle("on", allOn);
+    allBtn.textContent = allOn ? "정답 숨기기" : "정답 모두 보기";
+    document.body.classList.toggle("reveal", allOn);
+    document.querySelectorAll(".bl").forEach(function(el){ el.classList.toggle("show", allOn); el.textContent = allOn ? el.dataset.a : el.dataset.hint; });
+    document.querySelectorAll(".ch").forEach(function(el){ el.classList.toggle("show", allOn); });
+    document.querySelectorAll(".tf-item").forEach(function(d){
+      d.classList.toggle("show", allOn);
+      var a = d.getAttribute("data-ans");
+      d.querySelector(".tf-head").setAttribute("aria-expanded", allOn?"true":"false");
+      d.querySelector(".tf-a").textContent = allOn ? (a==="T"?"참 T":"거짓 F") : "T / F";
+    });
+  });
+
+  var fs = 1;
+  function setFs(v){
+    fs = Math.min(1.6, Math.max(0.85, v));
+    document.documentElement.style.setProperty("--fs", fs.toFixed(2) + "rem");
+    try{ localStorage.setItem("ml-fs", String(fs)); }catch(e){}
+  }
+  try{ var s = localStorage.getItem("ml-fs"); if(s) setFs(parseFloat(s)); }catch(e){}
+  document.getElementById("fplus").addEventListener("click", function(){ setFs(fs + 0.08); });
+  document.getElementById("fmin").addEventListener("click", function(){ setFs(fs - 0.08); });
+  document.getElementById("prt").addEventListener("click", function(){ window.print(); });
+
+  var immBtn = document.getElementById("imm");
+  immBtn.addEventListener("click", function(){
+    var el = document.documentElement;
+    if(document.fullscreenElement){ document.exitFullscreen(); return; }
+    var p = el.requestFullscreen ? el.requestFullscreen() : null;
+    if(p && p.catch){ p.catch(fallback); } else { setTimeout(function(){ if(!document.fullscreenElement) fallback(); }, 400); }
+    function fallback(){ var on = document.body.classList.toggle("immersive"); immBtn.classList.toggle("on", on); }
+  });
+
+  (function(){
+    [["apple-mobile-web-app-capable","yes"],["apple-mobile-web-app-status-bar-style","default"],["mobile-web-app-capable","yes"]].forEach(function(m){
+      var e = document.createElement("meta"); e.name = m[0]; e.content = m[1]; document.head.appendChild(e);
+    });
+  })();
+
+  if(window.self !== window.top){
+    var pop = document.getElementById("pop");
+    pop.hidden = false; pop.href = location.href;
+    pop.addEventListener("click", function(){
+      setTimeout(function(){
+        if(document.hasFocus()){
+          document.getElementById("murl").textContent = location.href;
+          document.getElementById("modal").classList.add("on");
+        }
+      }, 500);
+    });
+    document.getElementById("mclose").addEventListener("click", function(){ document.getElementById("modal").classList.remove("on"); });
+    document.getElementById("mcopy").addEventListener("click", function(){
+      var btn = this, t = location.href;
+      function sel(){ var n = document.getElementById("murl"), r = document.createRange(); r.selectNodeContents(n); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){ btn.textContent = "복사됨"; }, sel); } else { sel(); }
+    });
+  }
+})();
+</script>
+
+</body></html>
