@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>장자와 가상 세계 학습지</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<style>
+/* 원전 기반 학습 자료 계열(에피쿠로스·밀·격몽요결)과 같은 바이올렛-슬레이트 규격 */
+:root{
+  --paper:#F7F5FA; --card:#FFFFFF; --ink:#1F1D2B; --ink2:#494657; --dim:#7E7A8C;
+  --rule:#DDD8E7; --thead:#EFEAF7; --theadInk:#4A3374;
+  --acc:#5B3E86; --accFace:#F2EDF9; --ans:#B4262B;
+  --ask:#A2622A; --askFace:#FBF3E4; --askRule:#EDDCC0;
+  --shadow:0 1px 2px rgba(31,29,43,.04),0 8px 24px rgba(31,29,43,.06);
+  --fs:1rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+    --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+    --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+    --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+  --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+  --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+  --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:var(--fs); line-height:1.75; -webkit-text-size-adjust:100%; word-break:keep-all; overflow-wrap:break-word;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:50; background:var(--paper)}
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid var(--rule)}
+.bar .in{max-width:980px; margin:0 auto; padding-block:8px; padding-left:max(20px,env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px)); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.bar .sp{flex:1 1 auto; min-width:8px}
+.btn{font:inherit; font-size:.82rem; font-weight:500; letter-spacing:.01em; color:var(--ink2); background:var(--card);
+  border:1px solid var(--rule); border-radius:999px; padding:6px 14px; cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap}
+.btn:hover{border-color:var(--acc); color:var(--acc)}
+.btn.on{background:var(--acc); border-color:var(--acc); color:var(--card)}
+.btn:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.grp{display:inline-flex; border:1px solid var(--rule); border-radius:999px; overflow:hidden; background:var(--card)}
+.grp .btn{border:0; border-radius:0; padding:6px 11px}
+.grp .btn+.btn{border-left:1px solid var(--rule)}
+
+.wrap{max-width:980px; margin:0 auto; padding-block:26px 72px; padding-left:max(20px,env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px))}
+.masthead{border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:6px;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; justify-content:space-between}
+.masthead .l{font-size:.8rem; letter-spacing:.02em; color:var(--ink2)}
+.masthead .r{font-size:.8rem; color:var(--dim)}
+.titlebox{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;
+  border:1px solid var(--rule); border-left:4px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:14px 18px; margin:14px 0 34px; box-shadow:var(--shadow)}
+.titlebox h1{font-family:"Noto Serif KR",serif; font-size:1.32rem; font-weight:600; margin:0; letter-spacing:-.01em; text-wrap:balance}
+.titlebox .who{font-size:.82rem; color:var(--dim); white-space:nowrap}
+
+h2.part{font-family:"Noto Serif KR",serif; font-size:1.16rem; font-weight:700; color:var(--acc);
+  margin:52px 0 18px; padding-bottom:8px; border-bottom:1.5px solid var(--acc); text-wrap:balance}
+h2.part:first-of-type{margin-top:8px}
+h2.part small{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.78rem; color:var(--ink2); margin-top:4px}
+h3{font-family:"Noto Serif KR",serif; font-size:1.02rem; font-weight:600; margin:30px 0 10px;
+   padding-bottom:5px; border-bottom:1px solid var(--rule); text-wrap:balance}
+h3 .n{color:var(--acc); margin-right:.35em}
+p{margin:.55em 0}
+.lead{color:var(--ink2)}
+small.src{display:block; text-align:right; color:var(--dim); font-size:.76rem; margin-top:6px}
+
+.src-box{border:1px dashed var(--acc); background:var(--card); border-radius:3px; padding:13px 16px; margin:14px 0}
+.src-box .tag{font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--acc); display:block; margin-bottom:8px}
+.src-box .hm{margin:0; font-family:"Noto Serif KR",serif; font-weight:600; color:var(--acc); font-size:.98rem; line-height:1.9; letter-spacing:.04em}
+.src-box .yin{margin:2px 0 10px; padding-bottom:9px; border-bottom:1px dotted var(--rule); font-size:.78rem; color:var(--dim); line-height:1.7}
+.tr{margin:0; font-size:.97rem; line-height:1.9}
+.tr + .tr{margin-top:.5em}
+.tr .who{font-weight:700; color:var(--acc); margin-right:.3em}
+.src-box cite{display:block; text-align:right; font-style:normal; font-size:.78rem; color:var(--dim); margin-top:8px}
+.easy{margin:10px 0 0; padding-top:8px; border-top:1px dotted var(--rule); font-size:.88rem; color:var(--ink2)}
+.easy b{color:var(--acc)}
+
+.tw{overflow-x:auto; margin:14px 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.9rem; background:var(--card)}
+th,td{border:1px solid var(--rule); padding:9px 11px; vertical-align:middle; text-align:left}
+thead th{background:var(--thead); color:var(--theadInk); font-weight:700; text-align:center; font-size:.86rem}
+td.c,th.c{text-align:center}
+tbody th{background:var(--thead); color:var(--theadInk); font-weight:600; text-align:center; width:1%; white-space:nowrap}
+tbody th .hz{display:block; font-family:"Noto Serif KR",serif; font-weight:500; font-size:.8rem; opacity:.85}
+tr.hi td,tr.hi th{background:var(--accFace)}
+td.fill{height:52px}
+.tbl-note{font-size:.83rem; color:var(--ink2); margin:6px 0 0; padding-left:1.1em; text-indent:-1.1em}
+
+.flow{display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; margin:16px 0 4px}
+.flow .f{flex:1 1 150px; border:1px solid var(--rule); border-top:3px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:10px 12px; text-align:center; box-shadow:var(--shadow)}
+.flow .f b{display:block; font-family:"Noto Serif KR",serif; color:var(--acc); font-size:1rem}
+.flow .f span{display:block; font-size:.82rem; color:var(--ink2); margin-top:3px}
+.flow .a{flex:0 0 auto; display:grid; place-items:center; color:var(--acc); font-weight:700}
+
+.ask{border:1px solid var(--askRule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:3px; padding:13px 16px; margin:18px 0}
+.ask .tag{font-size:.76rem; font-weight:700; letter-spacing:.03em; color:var(--ask); display:block; margin-bottom:6px}
+.ask ol{margin:0; padding-left:1.25em}
+.ask li{margin:.35em 0}
+.ask li::marker{color:var(--ask); font-weight:700}
+.ask .tw table{background:var(--card)}
+.lines{margin:10px 0 4px}
+.lines i{display:block; border-bottom:1px dotted var(--rule); height:30px}
+.sample{display:block; margin:10px 0 0; padding:11px 13px; border-left:3px solid var(--ans);
+  background:var(--card); border-radius:0 3px 3px 0; font-size:.88rem; color:var(--ink2); line-height:1.8}
+.sample b{color:var(--ans)}
+.video{border:1px solid var(--rule); background:var(--card); border-radius:4px; margin:16px 0; overflow:hidden; box-shadow:var(--shadow)}
+.video .vh{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--rule)}
+.video .vh b{font-size:.86rem; color:var(--acc)}
+.video .vh span{display:block; font-size:.78rem; color:var(--dim); font-weight:400}
+.video .frame{position:relative; aspect-ratio:16/9; max-width:100%; background:#000}
+.video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+.bl{display:inline-block; min-width:4.6em; padding:0 .35em; margin:0 .12em;
+  border-bottom:1.4px solid var(--ink2); text-align:center; cursor:pointer;
+  color:var(--dim); font-size:.82em; letter-spacing:.06em; vertical-align:baseline;
+  border-radius:2px 2px 0 0; transition:background .12s}
+.bl:hover{background:var(--accFace)}
+.bl:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.bl.show{color:var(--ans); font-weight:700; font-size:1em; letter-spacing:0; border-bottom-color:var(--ans)}
+.bl.w6{min-width:6.4em}
+.ch{cursor:pointer; border-radius:2px; padding:0 .15em}
+.ch:hover{background:var(--accFace)}
+.ch:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.ch .o{color:var(--ink)}
+.ch .o+.o::before{content:" / "; color:var(--dim)}
+.ch.show .o{color:var(--dim)}
+.ch.show .o.a{color:var(--ans); font-weight:700; text-decoration:underline; text-underline-offset:3px}
+
+.recall{border:1px solid var(--acc); background:var(--card); border-radius:4px; margin:26px 0; overflow:hidden; box-shadow:var(--shadow)}
+.recall > h4{margin:0; padding:12px 18px; background:var(--acc); color:var(--card);
+  font-family:"Noto Serif KR",serif; font-size:1rem; font-weight:600}
+.recall > h4 span{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.76rem; opacity:.85; margin-top:2px}
+.recall .body{padding:16px 18px}
+.recall .body > :first-child{margin-top:0}
+.warn{border-left:3px solid var(--ans); background:var(--accFace); padding:11px 14px; margin:14px 0 0; border-radius:0 3px 3px 0; font-size:.92rem}
+.warn b{color:var(--ans)}
+
+.readbox{border:1px solid var(--rule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:4px; padding:20px 24px; margin:14px 0 26px}
+.readbox .tag{display:block; font-size:.76rem; font-weight:700; letter-spacing:.05em; color:var(--ask); margin-bottom:10px}
+.readbox blockquote{margin:0; font-family:"Noto Serif KR",serif; font-size:1.06rem; line-height:2.05; text-indent:.5em}
+.readbox cite{display:block; text-align:right; font-style:normal; font-size:.82rem; color:var(--ink2); margin-top:12px}
+.readbox .note{font-size:.8rem; color:var(--dim); line-height:1.7; margin:12px 0 0; padding-top:10px; border-top:1px dotted var(--askRule)}
+
+.arrow{color:var(--acc); font-weight:700}
+.foot{margin-top:60px; padding-top:14px; border-top:1px solid var(--rule); color:var(--dim); font-size:.78rem}
+.modal{position:fixed; inset:0; z-index:80; display:none; place-items:center; background:rgba(20,16,32,.55); padding:20px}
+.modal.on{display:grid}
+.modal .box{background:var(--card); color:var(--ink); border-radius:8px; padding:20px; max-width:520px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal .url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; word-break:break-all;
+  background:var(--accFace); border:1px solid var(--rule); border-radius:4px; padding:10px; margin:12px 0; user-select:all}
+body.immersive .bar{position:static}
+body.immersive .wrap{max-width:100%; padding-block:12px 40px}
+
+@media (max-width:640px){
+  .titlebox{flex-direction:column; align-items:flex-start; gap:8px}
+  .wrap,.bar .in{padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .flow .a{display:none}
+  .readbox{padding:16px 18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@media print{
+  .bar,.modal,.no-print{display:none!important}
+  body{background:#fff; color:#000; font-size:10.2pt}
+  body::before{display:none}
+  .wrap{max-width:none; padding:0}
+  .bl.show{color:#000; border-bottom-color:#000}
+  .ch.show .o.a{color:#000}
+  .video .frame,.video .vh .btn{display:none}
+  h2.part{break-after:avoid} h3{break-after:avoid}
+  .src-box,.tw,.ask,.recall,.readbox{break-inside:avoid}
+}
+</style>
+</head><body>
+
+<div class="bar">
+  <div class="in">
+    <button class="btn" id="all" type="button">정답 모두 보기</button>
+    <div class="grp" role="group" aria-label="글자 크기">
+      <button class="btn" id="fmin" type="button" aria-label="글자 작게">A−</button>
+      <button class="btn" id="fplus" type="button" aria-label="글자 크게">A+</button>
+    </div>
+    <button class="btn no-print" id="imm" type="button">몰입 모드</button>
+    <span class="sp"></span>
+    <a class="btn" id="pop" href="#" target="_blank" rel="noopener" hidden>새 창에서 크게 보기</a>
+    <button class="btn no-print" id="prt" type="button">인쇄</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="l">2026-2 세화여자고등학교 &middot; 인문학과 윤리</div>
+    <div class="r">원전 기반 학습 자료 ⑦ &middot; Ⅳ. 다양성과 포용성</div>
+  </div>
+
+  <div class="titlebox">
+    <h1>장자, 『장자』<br>가상 세계와 현실 세계의 구분은 가능할까?</h1>
+    <div class="who">2학년 (　　)반　이름 ____________</div>
+  </div>
+
+  <!-- ===================== 0 ===================== -->
+  <h2 class="part">0. 수업 열기</h2>
+
+  <div class="readbox">
+    <span class="tag">♦ 좋은 문구 읽기 — 소리 내어 함께 읽어 봅시다</span>
+    <blockquote>도대체 장주가 꿈에 나비가 되었을까요? 아니면 <b>나비가 꿈에 장주가 된 것일까요?</b></blockquote>
+    <cite>— 『장자』 「제물론」 · 교과서 130쪽</cite>
+    <p class="note">※ 꿈에서 깨면 현실로 돌아오기 마련이다. 그런데 장자는 꿈이 현실이 되고 현실이 꿈이 될 수 있다고 말한다. 게임과 메타버스 속에서 또 하나의 삶을 사는 우리에게, 가상과 현실의 구분은 가능할까? 오늘 학습지는 이 물음에 답하는 과정이다.</p>
+  </div>
+
+  <div class="video">
+    <div class="vh"><b>▶ 함께 보기 — 수업 열기 영상<span>MBC VR 다큐멘터리 「너를 만났다」 시즌 3 “엄마 나 한번만 안아주면 안돼?” (2022. 5. 6. 방송 · 15분)</span></b><a class="btn" href="https://youtu.be/F8bhu8E_4jE?si=uVmKyOaBEkMzIGoS" target="_blank" rel="noopener">YouTube에서 보기</a></div>
+    <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/F8bhu8E_4jE" title="함께 보기 — 너를 만났다 시즌 3" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각 열기 ① ♣ 영상을 보고</span>
+    <ol>
+      <li>암 투병 끝에 세상을 떠난 엄마와 딸이 VR 속에서 만난 것은 ‘진짜 만남’이라고 할 수 있을까? 그렇게 생각하는 이유는?</li>
+      <li>이 장면에서 가상 세계와 현실 세계는 어떻게 이어져 있는가? (가상의 만남이 현실의 가족에게 남긴 것)</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 엄마의 모습은 컴퓨터가 만든 가상이지만, 딸이 느낀 그리움과 눈물, 엄마에게 건넨 말과 작별 인사는 실제로 일어난 일이므로 ‘진짜 만남’의 의미가 있다. 반대로 상대가 실제로 응답하는 존재가 아니므로 만남이라기보다 기억을 되살린 경험이라는 의견도 가능하다. ② 가상의 만남은 현실의 가족에게 위로와 작별의 기회를 남겼다. 가상 세계는 현실과 분명히 구분되지만, 현실의 감정과 관계에 뿌리를 두고 다시 현실에 영향을 준다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각 열기 ② ♣ 나의 두 정체성 · 교과서 126쪽</span>
+    <p style="margin:.2em 0 .5em">가상 공간은 기술로 최근에 새롭게 탄생한 것이 아니라, 인간의 상상 속에 존재하던 또 다른 세계를 구현하는 <span class="bl" data-a="오래된" tabindex="0" role="button">ㅇㄹㄷ</span> 방법이다. 선사 시대 <b>라스코 동굴 벽화</b>는 어두운 동굴 속 조명의 변화에 따라 현실보다 더 현실적인 모습을 보이며 사람들을 몰입하게 했고, 게임 「모여 봐요 동물의 숲」에서는 나의 <span class="bl" data-a="아바타" tabindex="0" role="button">ㅇㅂㅌ</span>가 땅을 개척하며 생산 활동과 경제 활동을 한다.</p>
+    <p style="margin:.2em 0 .5em">가상 공간에서의 나와 현실 공간에서의 나를 비교해 보자.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:22%"></th><th>현실 공간의 나</th><th>가상 공간의 나 (게임·SNS·메타버스)</th></tr></thead>
+        <tbody>
+          <tr><th>이름·모습</th><td class="fill"></td><td class="fill"></td></tr>
+          <tr><th>주로 하는 일</th><td class="fill"></td><td class="fill"></td></tr>
+          <tr><th>더 자유로운 점</th><td class="fill"></td><td class="fill"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sample"><b>예시 답안</b> — 현실 공간에서 나는 거의 대부분 학교에서 하루를 보내므로 생활하는 공간이 제한되는데, 게임 속의 나는 여러 나라를 건너며 전투를 하거나 사냥을 해서 현실의 나보다 훨씬 넓은 공간을 휘젓는다. 현실 세계보다 가상 세계에서 더 자유롭게 움직일 수 있어서 가상 세계의 내가 현실 세계보다 자유분방한 정체성을 지닌 것 같다.</div>
+  </div>
+
+  <!-- ===================== 1 ===================== -->
+  <h2 class="part">[1] 장자와 『장자』 만나기<small>※ 장자의 자유와 평등은 Ⅲ단원에서 칸트와 함께 더 깊이 배운다. 여기서는 가상 세계를 읽는 데 필요한 개념을 먼저 익혀 둔다.</small></h2>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>사상가</th><td>장자(莊子, 이름은 주(周), B.C. 365?~B.C. 270?) — 중국 전국 시대 송나라 몽 지역 사람. 세속적인 가치나 성공에 연연하지 않고, 구속 없는 자유로운 경지에서 노닐고자 하였다.</td></tr>
+        <tr><th>도가 사상</th><td>유교 사상(공자·맹자)이 <span class="bl" data-a="인위(人爲)" tabindex="0" role="button">ㅇㅇ</span>의 윤리를 중시한다면, 도가 사상(노자·장자)은 <span class="bl" data-a="무위(無爲)" tabindex="0" role="button">ㅁㅇ</span>의 윤리를 추구한다. 노자와 장자를 함께 일러 <b>노장사상</b>이라 한다.</td></tr>
+        <tr><th>노자와 장자</th><td>노자가 헤아릴 수 없는 현묘함으로 도(道)를 전했다면(“도를 도라 하면 참된 도가 아니다[道可道非常道].”), 장자는 타고난 <span class="bl w6" data-a="이야기꾼" tabindex="0" role="button">ㅇㅇㄱㄲ</span>으로서 거리낌 없이 도를 풀어 나갔다.</td></tr>
+        <tr class="hi"><th>『장자』</th><td>10만여 자에 달하는 저서로, 대체로 <span class="bl" data-a="우화" tabindex="0" role="button">ㅇㅎ</span> 형식을 띤다. 「내편」 7편이 장자 자신의 글로, 「외편」·「잡편」에는 후학들의 글이 섞여 있다고 본다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">교과서 127쪽 · Ⅲ단원 교과서 77·79쪽</small>
+
+  <div class="src-box">
+    <span class="tag">[원문 ①] 벼슬을 거절한 장자 · 교과서 127쪽</span>
+    <p class="tr">그대들은 빨리 돌아가 나를 더 이상 욕되게 하지 마시오. 차라리 시궁창에서 즐거워할지언정 나라를 가진 제후들에게 구속당하지는 않을 것이오. 죽을 때까지 벼슬하지 않아 나의 마음을 즐겁게 하고자 하오.</p>
+    <cite>— 초나라 왕이 보낸 대부에게 한 장자의 말, 『사기(史記)』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 높은 벼슬과 부귀도 나를 묶는다면 거절하겠다. 장자에게 가장 소중한 것은 <b>구속 없는 마음의 자유</b>였다.</p>
+  </div>
+
+  <h3><span class="n">1.</span>가상 세계를 읽기 위한 장자의 열쇠말</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:18%">개념</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><th>자연<span class="hz">自然</span></th><td>‘<span class="bl w6" data-a="스스로 그러함" tabindex="0" role="button">ㅅㅅㄹ ㄱㄹㅎ</span>’. 장자에게 자유는 곧 자연이다. 우리는 자연스러울 때 자유롭다.</td></tr>
+        <tr><th>인위<span class="hz">人爲</span></th><td>겉모습으로 이것과 저것을 <span class="bl" data-a="분별" tabindex="0" role="button">ㅂㅂ</span>하고 그것이 전부라고 여기는 것. 대표적인 인위는 <b>감각과 앎</b>이다.</td></tr>
+        <tr><th>물·무물<span class="hz">物·無物</span></th><td>인위로부터 생겨나 우리를 구속하는 것이 물(物)이다. 현상계의 사물뿐 아니라 인의예악 같은 도덕도 포함한다. 그 구속에서 벗어나는 것이 무물이다.</td></tr>
+        <tr class="hi"><th>소요유<span class="hz">逍遙遊</span></th><td>구애됨 없이 한가로이 노닌다. 분별과 차별의 세계를 떠나 무차별의 세계에서 노니는 <span class="bl" data-a="절대적" tabindex="0" role="button">ㅈㄷㅈ</span> 자유의 경지. 『장자』 첫 편의 이름이기도 하다.</td></tr>
+        <tr><th>무기·좌망<span class="hz">無己·坐忘</span></th><td>나조차 없는 경지(무기)에 머물고, 조용히 앉아 나를 구속하는 일체를 잊는 것(좌망). 몸과 감각, 지식을 잊고 도와 하나가 된다. (「대종사」)</td></tr>
+        <tr><th>심재<span class="hz">心齋</span></th><td>‘마음의 재계’. 귀나 머리로 판단하기 전에 마음을 <span class="bl" data-a="비워" tabindex="0" role="button">ㅂㅇ</span> 사물을 있는 그대로 맞이하는 것. “도는 오직 빈 곳에 모이니, 비움이 곧 심재이다[唯道集虛 虛者心齋也].” (「인간세」)</td></tr>
+        <tr><th>제물<span class="hz">齊物</span></th><td>만물을 가지런히 하나로 봄. 도의 관점에서 만물은 귀천이 없고 모두가 <span class="bl" data-a="대등" tabindex="0" role="button">ㄷㄷ</span>하다. 「제물론」의 핵심.</td></tr>
+        <tr class="hi"><th>물화<span class="hz">物化</span></th><td>사물의 <span class="bl" data-a="변화" tabindex="0" role="button">ㅂㅎ</span>. 모든 것은 끊임없이 변하며 서로 이어져 있다. → [2]의 ‘나비의 꿈’에서 다시 만난다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="lead" style="font-size:.88rem">바로 확인 — 각 사례는 장자의 어떤 개념에 가까울까? 괄호를 누르면 답이 나온다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:58%">사례</th><th>가까운 개념</th></tr></thead>
+      <tbody>
+        <tr><td>조회수와 등급으로 친구를 줄 세운다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">인위·분별|소요유</span></td></tr>
+        <tr><td>평가를 의식하지 않고 좋아하는 그림을 그리며 몰입한다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">인위·분별|소요유</span></td></tr>
+        <tr><td>댓글을 달기 전, 내 판단을 내려놓고 상대 글을 끝까지 읽는다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">물(物)|심재</span></td></tr>
+        <tr><td>‘이게 진짜, 저건 가짜’라고 단정하고 다른 생각을 무시한다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">인위·분별|제물</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flow">
+    <div class="f"><b>무엇이 같고 다를까?</b><span>가상 세계와 현실 세계</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>어떻게 이어질까?</b><span>나비의 꿈 · 방생 · 포정</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>나는 누구일까?</b><span>곤과 붕 · 통합적 자아</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>장자라면?</b><span>경험 기계 · 멋진 신세계</span></div>
+  </div>
+
+  <!-- ===================== 2 ===================== -->
+  <h2 class="part">[2] 가상 세계와 현실 세계의 상호성<small>학습 목표 · 가상 세계와 현실 세계의 같고 다른 점을 설명할 수 있다.</small></h2>
+
+  <h3><span class="n">2.</span>가상 세계와 현실 세계의 같고 다른 점</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>용어</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><th>메타버스</th><td>웹상에서 아바타를 이용하여 사회·경제·문화적 활동을 하는 따위처럼 가상 세계와 현실 세계의 경계가 <span class="bl" data-a="허물어지는" tabindex="0" role="button">ㅎㅁㅇㅈㄴ</span> 것</td></tr>
+        <tr><th>플랫폼</th><td>정보 시스템 환경을 구축하고 개방하여 누구나 다양하고 방대한 정보를 쉽게 활용할 수 있도록 제공하는 기반 서비스</td></tr>
+        <tr><th>아바타</th><td>가상 현실에서 자신의 역할을 <span class="bl" data-a="대신" tabindex="0" role="button">ㄷㅅ</span>하는 캐릭터</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">교과서 128쪽</small>
+
+  <div class="src-box">
+    <span class="tag">[원문 ②] 『스노 크래시』 · 교과서 128쪽</span>
+    <p class="tr">그러니까 히로는 전혀 다른 곳에 존재하는 셈이다. 그는 고글과 이어폰을 통해 컴퓨터가 만들어 낸 전혀 다른 세계에 있다. 이런 가상 장소를 전문 용어로 <b>‘메타버스’</b>라 부른다.</p>
+    <cite>— 닐 스티븐슨, 『스노 크래시』(1992)</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 이 소설에서 메타버스와 아바타라는 말이 처음 쓰였고, 이후 이를 실제 기술과 서비스로 구현하려는 시도가 이어졌다.</p>
+  </div>
+
+  <p>그 결과 우리는 가상 세계가 또 하나의 현실 세계로 자리 잡는 현상과 마주하게 되었다. <span class="arrow">→</span> 현실 세계는 가상 세계를 통해 <span class="bl" data-a="확장" tabindex="0" role="button">ㅎㅈ</span>되고, 가상 세계는 현실 세계에 <span class="bl" data-a="뿌리" tabindex="0" role="button">ㅃㄹ</span>를 두면서 실제처럼 다가온다.</p>
+
+  <p class="lead" style="font-size:.88rem">가상 세계가 현실에 가져온 변화 — 괄호를 누르면 답이 나온다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:58%">사례</th><th>변화의 모습</th></tr></thead>
+      <tbody>
+        <tr><td>아이돌 그룹이 가상 세계에서 전 세계 팬과 사인회를 연다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">현실의 확장|과거의 현재화</span></td></tr>
+        <tr><td>30년 전 고인이 된 가수가 사후에 발표된 노래를 부른다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">현실의 확장|과거의 현재화</span></td></tr>
+        <tr><td>대학이 가상 캠퍼스에서 입학식을 진행한다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">현실의 확장|과거의 현재화</span></td></tr>
+        <tr><td>인공지능 기술로 유관순 열사의 미소 짓는 모습을 재현한다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">현실의 확장|과거의 현재화</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">※ 가상 세계는 현실 세계를 확장하면서 <span class="bl" data-a="편리함" tabindex="0" role="button">ㅍㄹㅎ</span>과 효율성을 증가시켰고, 과거를 현재화하여 경험할 수 있게 하였다. <span class="arrow">→</span> 가상 세계는 현실 세계와 분명히 <b>구분</b>되는 세계이지만, 두 세계의 삶은 여러 <span class="bl" data-a="접점" tabindex="0" role="button">ㅈㅈ</span>을 가지기 때문에 서로의 경계를 넘나들고 있다.</p>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 유관순 열사의 미소 · 교과서 129쪽</span>
+    <p style="margin:.2em 0 .5em">인공지능 기술을 이용하여 만나고 싶은 역사적 인물이 있다면, 어떤 대화를 나누고 싶은가? 이런 기술의 긍정적 측면과 우려되는 점도 함께 적어 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 조선의 자주독립을 위해 헌신적으로 독립운동에 매진하였던 도산 안창호 선생님을 만나, 일제의 식민 지배에 맞서 싸울 수 있었던 용기가 어디서 나왔는지, 국가를 위해 자신을 희생하는 것이 두렵지는 않았는지 묻고 싶다. 이런 기술은 역사를 생생하게 배우고 작별하지 못한 이들에게 위로를 주지만, 고인이 하지 않은 말을 지어내거나 동의 없이 재현될 위험도 있다.</div>
+  </div>
+
+  <h3><span class="n">3.</span>나비의 꿈 — 가상 세계와 현실 세계의 연결</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ③] 호접몽(胡蝶夢) · 교과서 130쪽</span>
+    <p class="hm">昔者莊周夢爲胡蝶 栩栩然胡蝶也 自喩適志與 不知周也<br>俄然覺 則蘧蘧然周也 不知周之夢爲胡蝶與 胡蝶之夢爲周與<br>周與胡蝶 則必有分矣 此之謂物化</p>
+    <p class="yin">석자장주몽위호접 허허연호접야 자유적지여 부지주야 / 아연각 즉거거연주야 부지주지몽위호접여 호접지몽위주여 / 주여호접 즉필유분의 차지위물화</p>
+    <p class="tr">언젠가 장주(莊周)는 나비가 된 꿈을 꾸었습니다. 훨훨 날아다니는 나비가 된 채 유쾌하게 즐기면서도 자기가 장주라는 것을 깨닫지 못했습니다. 그러나 문득 깨어나 보니 틀림없는 장주입니다. 도대체 장주가 꿈에 나비가 되었을까요? 아니면 나비가 꿈에 장주가 된 것일까요? <b>장주와 나비 사이에 무슨 구별이 있기는 있을 것입니다.</b> 이런 것을 일러 ‘사물의 변화[物化]’라고 합니다.</p>
+    <cite>— 『장자』 「제물론(齊物論)」</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 지금이 현실인지 또 다른 꿈인지 묻는 이야기다. 장주와 나비의 구별을 <b>사물의 변화</b>라는 더 큰 관점에서 바라보라는 것이다.</p>
+  </div>
+
+  <p>장자에 따르면 꿈에서 현실로, 이 현실은 또 다른 꿈으로 계속 변화한다. 그래서 꿈과 현실은 다르지만 또 다르지만은 〔<span class="ch" data-a="0" tabindex="0" role="button">않다|하다</span>〕. 장주와 나비가 이어져 있듯 꿈과 현실도 이어져 있다. <span class="arrow">→</span> 모든 것은 각각 <span class="bl" data-a="개별" tabindex="0" role="button">ㄱㅂ</span>이면서 동시에 <span class="bl" data-a="연결" tabindex="0" role="button">ㅇㄱ</span>되어 있다.</p>
+
+  <div class="recall">
+    <h4>호접지몽의 또 다른 읽기<span>— 주체와 대상의 자리 바꾸기 · 교과서 134쪽 참고</span></h4>
+    <div class="body">
+      <p>우리는 흔히 ‘장주가 꿈에 나비가 된 것’으로 주체(장주)와 대상(나비)을 나눈다. 장자는 ‘나비의 꿈에 장주가 된 것인가’라고 물어 <b>주체와 대상의 자리를 뒤집는다.</b></p>
+      <p><span class="arrow">→</span> 내가 주체이고 상대가 대상이라는 인식을 넘어서는 것, 곧 나를 버려서 상대와 하나가 되는 것이 물화다.</p>
+    </div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 활동 ♣ 장주와 나비, 나와 아바타</span>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:24%"></th><th>「제물론」</th><th>오늘의 나</th></tr></thead>
+        <tbody>
+          <tr><th>현실의 존재</th><td>장주</td><td><span class="bl w6" data-a="현실 세계의 나" tabindex="0" role="button">ㅎㅅ ㅅㄱㅇ ㄴ</span></td></tr>
+          <tr><th>꿈속(가상)의 존재</th><td>나비</td><td><span class="bl" data-a="아바타" tabindex="0" role="button">ㅇㅂㅌ</span></td></tr>
+          <tr><th>경계가 모호해지는 순간</th><td>깨어난 뒤 “나비가 장주 꿈을 꾸는가?”</td><td class="fill"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sample"><b>예시 답안</b> — 게임을 오래 하다 보면 현실에서도 게임 속 말투나 규칙이 튀어나온다. SNS에서 받은 ‘좋아요’ 수 때문에 하루 기분이 달라진다. 가상 세계가 삶의 일부로 자리 잡은 뒤 두 세계는 서로 침투하며 경계가 허물어지고 있다.</div>
+  </div>
+
+  <h3><span class="n">4.</span>사물의 한 면만 보고 집착하지 말라</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ④] 방생(方生) · 교과서 130쪽</span>
+    <p class="hm">物無非彼 物無非是 … 故曰 彼出於是 是亦因彼 彼是方生之說也<br>雖然 方生方死 方死方生 方可方不可 方不可方可 … 是以聖人不由 而照之於天</p>
+    <p class="yin">물무비피 물무비시 … 고왈 피출어시 시역인피 피시방생지설야 / 수연 방생방사 방사방생 방가방불가 방불가방가 … 시이성인불유 이조지어천</p>
+    <p class="tr">사물은 모두 ‘저것’ 아닌 것이 없고, 동시에 모두 ‘이것’ 아닌 것이 없다. 상대방이 자기를 보면 ‘저것’이 되는 줄을 모르고, 자기가 자기에 대한 것만 알 뿐이다. 그러기에 이르기를 ‘저것’은 ‘이것’에서 나오고 ‘이것’은 ‘저것’ 때문에 생긴다고 하였다. 이것이 바로 ‘이것’과 ‘저것’이 서로를 생겨나게 한다는 <b>‘방생(方生)’</b>이라는 것이다. 삶이 있기에 죽음이 있고, 죽음이 있기에 삶이 있다. 됨이 있기에 안 됨이 있고, 안 됨이 있기에 됨이 있다. 옳음이 있기에 그름이 있고, 그름이 있기에 옳음이 있다. 그러므로 성인(聖人)은 일방적 방법에 의지하지 않고, 전체를 동시에 볼 수 있는 자연[天]에 비추어 보는 것이다.</p>
+    <cite>— 『장자』 「제물론」</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 사물을 ‘이것’이라고만 고집하면 사물의 한 측면만을 보고 <b>집착</b>하게 된다. ‘현실은 진짜, 가상은 가짜’도, ‘가상은 자유, 현실은 속박’도 한쪽만 붙드는 생각이다.</p>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 디지털 세상의 집착 · 교과서 130쪽</span>
+    <p style="margin:.2em 0 .5em">디지털 세상에서 사람들이 쉽게 집착하는 것은 무엇일까? 장자의 ‘방생’을 바탕으로 이야기해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 디지털 세상에서 사람들이 쉽게 집착하는 것 중 하나가 바로 ‘표현의 자유’인 것 같다. 많은 사람이 현실 세계에서는 자신의 의견을 제대로 표현할 수 없고, 가상 세계에서는 자유롭게 자신의 의견을 표현할 수 있다고 생각하는 것 같다. 하지만 사실 가상 세계와 현실 세계는 서로 연결되어 있고, 가상 세계는 현실 세계 표현의 범위와 자유를 갖는다. 어느 한쪽의 세계가 더 자유롭거나 무제약적인 것은 아니다. 가상 세계에서 마음대로 표현할 수 있는 자유에 지나치게 집착하지 말아야 한다고 생각한다.</div>
+  </div>
+
+  <h3><span class="n">5.</span>나비의 꿈과 메타버스</h3>
+  <p>장주가 꿈에서 나비가 된 것은 가상 세계에서 <b>아바타</b>로 활동하는 우리와 비슷하다. 꿈과 현실의 경계가 모호한 것은 가상 세계와 현실 세계를 넘나드는 현재 상황과 유사하다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:26%">가상 공간</th><th>또 다른 현실이 될 수 있을까?</th></tr></thead>
+      <tbody>
+        <tr><th>나만의 <span class="bl" data-a="고립된" tabindex="0" role="button">ㄱㄹㄷ</span> 공간</th><td>현실의 피곤함을 잊고 싶을 때 몰입하는 공간이라면, 단지 가상에 머물 뿐 또 다른 현실이 되지 못한다.</td></tr>
+        <tr class="hi"><th>메타버스</th><td>여러 사람이 모여 활동하며 <span class="bl w6" data-a="상호 작용" tabindex="0" role="button">ㅅㅎ ㅈㅇ</span>하는 <span class="bl" data-a="공유" tabindex="0" role="button">ㄱㅇ</span> 공간이기에 단지 가상이 아닌 ‘가상 현실’이 될 수 있다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="arrow">→</span> 공유하는 가상 세계는 장자가 말하는 사물의 변화[<span class="bl" data-a="물화" tabindex="0" role="button">ㅁㅎ</span>]가 작동하는 세상이므로, 가상 세계와 현실 세계는 서로 이어져 있다.</p>
+  <small class="src">교과서 131쪽</small>
+
+  <div class="src-box">
+    <span class="tag">[원문 ⑤] 동굴 안의 세계 · 교과서 131쪽</span>
+    <p class="tr">동굴 지하의 가장 깊은 곳에는 어려서부터 결박된 죄수들이 있다. … 태어날 때부터 동굴 깊숙한 곳에 속박된 채 벽면의 그림자만을 보며 살아온 죄수들은 <b>기물의 그림자를 실물로 생각한다.</b> … 지나가는 동행인들의 말소리를 듣고도 그것을 그림자의 소리라고 생각한다.</p>
+    <cite>— 플라톤, 『국가』</cite>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 나는 장주인가, 동굴 속 죄수인가</span>
+    <p style="margin:.2em 0 .5em">나는 장주처럼 현실 세계와 가상 세계를 넘나들며 자유롭게 살고 있는가, 아니면 동굴 속 죄수들처럼 가상 세계를 현실 세계로 굳게 믿으며 살고 있는가? 자신의 모습을 성찰해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 나는 자유롭게 살고 있다고 생각한다. 현실 세계와 가상 세계가 서로 연결되어 있고, 두 세계가 별개의 세계가 아니며 온라인에서 만나는 사람들과 관계를 맺어갈 때 그들이 가상의 존재가 아닌 현실에 존재하는 사람들이라는 것을 인식하고 현실 세계의 공중 예절을 지키는 만큼 가상 세계의 에티켓을 잘 지키며 살아가고 있다고 생각한다.</div>
+  </div>
+
+  <h3><span class="n">6.</span>장자가 알려 주는 삶의 자세 — 포정의 소 각 뜨기</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ⑥] 포정해우(庖丁解牛) · 교과서 132쪽</span>
+    <p class="tr">포정(庖丁)이라는 훌륭한 요리사가 문혜군(文惠君)을 위하여 소를 잡았습니다. … 칼 쓰는 대로 설컹설컹, 완벽한 음률, 무곡(舞曲)에 맞추어 춤추는 것 같고, 악장(樂章)에 맞춰 율동하는 것 같았습니다. 문혜군이 말했습니다. “참 훌륭하도다. 기술[術]이 어찌 이런 경지에 이를 수 있을까?” 요리사가 칼을 내려놓고 대답했습니다.</p>
+    <p class="hm" style="margin-top:10px">臣之所好者道也 進乎技矣 … 依乎天理 … 以無厚入有閒 恢恢乎其於遊刃必有餘地矣</p>
+    <p class="yin">신지소호자도야 진호기의 … 의호천리 … 이무후입유간 회회호기어유인필유여지의</p>
+    <p class="tr">“제가 귀히 여기는 것은 <b>도(道)</b>입니다. 기술을 넘어선 것입니다. 제가 처음 소를 잡을 때는 눈에 보이는 것이 온통 소뿐이었습니다. 3년이 지나자 통째인 소가 보이지 않게 되었습니다. 지금은 신(神)으로 대할 뿐, 눈으로 보지 않습니다. 감각 기관은 쉬고, 신이 원하는 대로 움직입니다. 하늘이 낸 결을 따라 큰 틈바구니에 칼을 밀어 넣고, 큰 구멍에 칼을 댑니다. … 소의 뼈마디에는 틈이 있고 이 칼날에는 두께가 없습니다. 두께 없는 칼날이 틈이 있는 뼈마디로 들어가니, 칼이 마음대로 놀 수 있는 여지가 생기는 것입니다. 그러기에 19년이 지났는데도 칼날이 이제 막 숫돌에서 갈려 나온 것과 같습니다.”</p>
+    <p class="tr">문혜군이 말했습니다. “훌륭하도다. 나는 오늘 포정의 말을 듣고 ‘생명을 북돋움[養生]’이 무엇인지 터득했노라.”</p>
+    <cite>— 『장자』 「양생주(養生主)」</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 포정은 소를 억지로 자르지 않고 소의 결, 곧 <b>천리(天理)</b>를 따른다. 기술을 넘어 도의 경지에 이른 것이다. ‘포정해우’는 기술과 솜씨가 매우 뛰어나다는 뜻의 고사성어가 되었다.</p>
+  </div>
+  <p>현실 세계와 가상 세계를 넘나들며 살아가는 우리는 종종 현실감을 잃고 가상 세계에서 손쉽게 얻을 수 있는 관계와 활동에 빠져들기도 한다. 포정 이야기는 <b>어느 곳에서 활동하더라도</b> 세상을 살아가면서 지녀야 할 마음가짐과 태도를 가르쳐 준다.</p>
+
+  <div class="ask">
+    <span class="tag">♣ 고전과 일상 ♣ 나의 ‘소 각 뜨기’ · 교과서 132쪽</span>
+    <ol>
+      <li>윗글을 통해 얻을 수 있는 교훈을 써 보자.</li>
+      <li>내가 윗글의 ‘포정’이라면, 나에게 ‘소 각 뜨기’는 무엇인지 찾아보자.</li>
+      <li>위의 답을 토대로 가상 세계와 현실 세계를 조화롭게 연결해 주는 삶의 자세를 말해 보자.</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 포정의 ‘소 각 뜨기’ 이야기는 단순한 기술 숙련이 아니라, 삶을 어떤 태도로 대해야 하는지에 대한 교훈을 전한다. 처음에는 단순한 힘과 기술로 도축하고자 했던 포정이 시간이 지나면서 소의 구조를 이해하고 칼을 자연스럽게 움직이는 경지에 이르렀듯이, 어떤 일이든 기계적이고 단순한 반복이 아닌 본질을 이해하고 조화롭게 수행하는 것이 중요하다.<br>② 내게 ‘소 각 뜨기’는 수학 공부다. 처음에는 눈에 보이는 문제마다 풀이를 외우느라 바빴다(통째인 소만 보이던 때). 지금은 문제를 보면 어떤 개념이 숨어 있는지, 단원들이 어떻게 이어지는지가 먼저 보인다. 결을 따라 칼을 넣듯 개념의 흐름을 따라 풀면 힘을 덜 들이고도 처음 보는 문제를 풀 수 있다. (영어 지문 읽기라면, 모르는 단어마다 걸려 억지로 해석하던 것에서 글의 구조를 먼저 잡고 읽게 된 경험도 좋다.)<br>③ 포정이 소의 구조를 이해하고 칼을 사용하듯이, 우리는 디지털 도구와 데이터를 단순히 활용하는 것이 아니라, 그것이 현실과 어떻게 연결되는지 깊이 이해해야 한다. 가상 세계에서 얻은 지식과 경험을 현실에 실제로 적용하며 ‘나의 기술’을 연마하는 것이 중요하다.</div>
+  </div>
+
+  <!-- ===================== 3 ===================== -->
+  <h2 class="part">[3] 가상 세계에서의 태도<small>학습 목표 · 가상 세계에서도 자신과 타인을 존중하는 태도를 갖춘 사례를 발표할 수 있다.</small></h2>
+
+  <h3><span class="n">7.</span>자아 개념의 확장 — 곤과 붕</h3>
+  <p class="lead" style="font-size:.9rem">가상 세계가 또 다른 현실인 시대를 살고 있는 우리는 자아를 어떻게 이해해야 할까?</p>
+  <div class="src-box">
+    <span class="tag">[원문 ⑦] 곤(鯤)과 붕(鵬) · 교과서 134쪽</span>
+    <p class="hm">北冥有魚 其名爲鯤 鯤之大 不知其幾千里也 化而爲鳥 其名爲鵬<br>鵬之背 不知其幾千里也 怒而飛 其翼若垂天之雲<br>是鳥也 海運則將徙於南冥 南冥者 天池也</p>
+    <p class="yin">북명유어 기명위곤 곤지대 부지기기천리야 화이위조 기명위붕 / 붕지배 부지기기천리야 노이비 기익약수천지운 / 시조야 해운즉장사어남명 남명자 천지야</p>
+    <p class="tr">‘북쪽 깊은 바다’에 물고기 한 마리가 살았는데, 그 이름을 곤이라 하였습니다. 그 크기가 몇 천 리인지 알 수 없었습니다. 이 물고기가 변하여 새가 되었는데, 이름을 붕이라 하였습니다. 그 등 길이가 몇 천 리인지 알 수 없었습니다. 한번 기운을 모아 힘차게 날아오르면 날개는 하늘에 드리운 구름 같았습니다. 이 새는 바다 기운이 움직여 물결이 흉흉해지면 남쪽 깊은 바다로 가는데, 그 바다를 예로부터 ‘하늘 못[天池]’이라 하였습니다.</p>
+    <cite>— 『장자』 「소요유」 · 1리 ≒ 0.393km</cite>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:24%">곤과 붕</th><th>우리의 자아</th></tr></thead>
+      <tbody>
+        <tr><td>겉으로는 다른 존재이지만 <span class="bl" data-a="근본" tabindex="0" role="button">ㄱㅂ</span>은 동일하다.</td><td>자아는 계속 변화하며 기존의 자신을 넘어서지만, 그 변화 속에서 <span class="bl" data-a="동일성" tabindex="0" role="button">ㄷㅇㅅ</span>을 유지한다.</td></tr>
+        <tr class="hi"><td>곤(鯤)은 한자로 <b>물고기 알</b>. 작은 알이 큰 물고기가 되고, 다시 큰 새가 되어 천지로 날아간다.</td><td>자아의 변화가 나아가야 할 올바른 방향은 우리에게 잠재된 무한한 <span class="bl" data-a="가능성" tabindex="0" role="button">ㄱㄴㅅ</span>을 실현하는 것이다.</td></tr>
+        <tr><td>곤과 붕에게 각각 바다와 하늘 못[天池]이 있다.</td><td>우리 자아를 초월적 변화로 이끄는 세상은 <span class="bl" data-a="메타버스" tabindex="0" role="button">ㅁㅌㅂㅅ</span> 세상일 가능성이 크다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">※ 곤과 붕은 신비로운 초자연적 존재가 아니라 바로 <b>우리 자신</b>이다. 실크 로드와 대항해가 공간을 넓혔듯, 우리 시대에는 디지털 가상 세계가 시공간을 확장하고 있다.</p>
+  <div class="warn"><b>작은 새는 붕의 뜻을 모른다</b> — 「소요유」에서 매미와 작은 비둘기는 “우리는 힘껏 날아도 느릅나무에 닿으면 그치는데, 어찌 구만 리나 올라 남쪽으로 가는가?” 하고 붕을 비웃는다. 작은 앎은 큰 앎에 미치지 못한다[小知不及大知].</div>
+  <p class="tbl-note" style="margin-top:14px">▶ 가상 세계와 현실 세계의 모호한 경계, 성찰적 사고와 디지털 시민성은 <b>교과서 135~138쪽</b>으로 이어서 학습합니다.</p>
+
+  <!-- ===================== 4 ===================== -->
+  <h2 class="part">[4] 장자의 눈으로 다시 보기<small>심화 — 교과서 밖 자료 포함</small></h2>
+
+  <h3><span class="n">8.</span>완벽한 가상 세계에 들어가겠는가?</h3>
+  <div class="recall">
+    <h4>노직의 경험 기계<span>— 『아나키, 국가, 그리고 유토피아』의 사고 실험 요약 · 교과서 밖 자료</span></h4>
+    <div class="body">
+      <p>당신이 원하는 어떤 경험이든 제공해 주는 기계가 있다고 하자. 신경과학자들이 당신의 뇌를 자극하면, 당신은 위대한 소설을 쓰거나 친구를 사귀거나 흥미로운 책을 읽고 있다고 생각하고 느끼게 된다. 그동안 당신은 내내 뇌에 전극을 꽂은 채 수조 속에 떠 있다. <b>당신은 평생 이 기계에 연결되어 살겠는가?</b></p>
+      <p><span class="arrow">→</span> 노직은 대부분의 사람이 기계에 들어가지 않을 것이라고 보았다. 우리는 경험만이 아니라 실제로 무언가를 <b>하기</b>를, 어떤 사람이 <b>되기</b>를 원하기 때문이다.</p>
+      <p><span class="arrow">→</span> 장자의 눈으로 보면? 5에서 배운 것처럼 나만의 <span class="bl" data-a="고립된" tabindex="0" role="button">ㄱㄹㄷ</span> 공간은 단지 가상에 머물 뿐이다. 경험 기계 속에는 함께 변화하는 타인이 없다.</p>
+    </div>
+  </div>
+
+  <div class="src-box">
+    <span class="tag">[원문 ⑧] 또 다른 가상 세계인 고전 속 이상 세계 · 교과서 139쪽</span>
+    <p class="tr"><span class="who">J</span>하지만 저는 불편한 것을 좋아합니다.</p>
+    <p class="tr"><span class="who">M</span>우리는 그렇지 않아. 우리는 여건을 안락하게 만들기를 좋아하네.</p>
+    <p class="tr"><span class="who">J</span>하지만 저는 안락을 원치 않습니다. 저는 신을 원합니다. 시와 진정한 위험과 자유와 선을 원합니다. 저는 죄를 원합니다.</p>
+    <p class="tr"><span class="who">M</span>그러니까 자네는 불행해질 권리를 요구하고 있군그래.</p>
+    <p class="tr"><span class="who">J</span>그렇게 말씀하셔도 좋습니다. 불행해질 권리를 요구합니다. … 저는 그 모든 것을 요구합니다.</p>
+    <cite>— 헉슬리, 『멋진 신세계』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 『멋진 신세계』의 인간은 다섯 계급으로 나뉘어 태어나며, 약물 ‘소마’ 덕분에 우울이나 불행을 느낄 틈이 없다. 야만인 존(J)은 그런 완전한 행복 대신 <b>불완전하지만 스스로 선택하는 삶</b>을 요구한다.</p>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 ♣ 완전하지만 통제된 사회 vs 불완전하지만 자유로운 사회</span>
+    <p style="margin:.2em 0 .5em">모든 것이 완전하지만 통제된 사회(멋진 신세계·경험 기계)와 불완전하지만 개인의 자유가 보장된 사회 중 하나를 선택하고, 그 근거를 장자의 개념(소요유, 물화, 심재 중 하나 이상)을 활용하여 제시해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 나는 불완전하지만 개인의 자유가 보장된 사회를 선택하겠다. 통제된 사회의 행복은 주어진 것이어서, 장자가 말한 구애됨 없이 노니는 <b>소요유</b>가 아니라 또 다른 구속이다. 또 경험 기계 속의 나는 홀로 고립되어 있어 타인과 함께 변화하는 <b>물화</b>가 일어나지 않는다. 불완전함 속에서 배우고 실수하며 스스로 선택하는 삶이, 곤이 붕이 되듯 내 가능성을 실현하는 길이다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 비판적으로 따져 보기 ♣ 장자라면 가상 세계로 떠날까?</span>
+    <p style="margin:.2em 0 .5em">“꿈과 현실이 다르지 않다면, 현실이 힘들 때 가상 세계로 떠나 사는 것도 괜찮다.” 이 주장은 장자 사상을 올바르게 이해한 것인가? 장자 사상의 한계와 함께 평가해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 올바른 이해가 아니다. 장자는 꿈과 현실이 ‘다르지만 또 다르지만은 않다’고 했고, 장주와 나비 사이에 ‘반드시 구별이 있다[必有分]’고 했다. 한쪽 세계로 도피하는 것은 오히려 한쪽에 집착하는 일이다. 다만 장자 사상이 내면의 자유에 치중하다 보면 현실의 부조리를 바꾸려는 노력을 약하게 만들 수 있고, 현실 도피를 정당화하는 근거로 악용될 수 있다는 한계도 함께 생각해야 한다.</div>
+  </div>
+
+  <!-- ===================== 5 ===================== -->
+  <h2 class="part">[5] 한눈에 정리하기</h2>
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><th>도가 사상</th><td>노자·장자 · 무위(無爲)의 윤리 · 자연(스스로 그러함)이 곧 자유</td></tr>
+        <tr><th>같고 다른 점</th><td>가상 세계는 현실을 확장하고 과거를 현재화한다. 두 세계는 분명히 구분되지만 여러 접점으로 경계를 넘나든다.</td></tr>
+        <tr class="hi"><th>나비의 꿈</th><td>꿈과 현실은 다르지만 또 다르지만은 않다 — 물화. 모든 것은 개별이면서 동시에 연결되어 있다.</td></tr>
+        <tr><th>방생</th><td>이것과 저것은 서로를 생겨나게 한다. 한 면만 보고 집착하지 말 것.</td></tr>
+        <tr><th>메타버스</th><td>여러 사람이 상호 작용하는 공유 공간이기에 ‘가상 현실’이 된다.</td></tr>
+        <tr><th>포정해우</th><td>기술을 넘어 도에 이름 — 어디서든 결(천리)을 따르는 성실한 삶의 자세</td></tr>
+        <tr class="hi"><th>곤과 붕</th><td>변화 속에서 동일성 유지 · 무한한 가능성 실현 · 통합적 자아 · 열린 자아</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    ※ ‘교과서’는 천재교육 『인문학과 윤리』 Ⅳ-2(126~139쪽)이다. 『장자』 원문 번역은 교과서를 따랐으며, 노직의 경험 기계는 교과서 밖 심화 자료이다.<br>
+    2026-2 세화여자고등학교 인문학과 윤리 · 원전 기반 학습 자료 ⑦ 장자 『장자』
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <p style="margin-top:0"><b>새 창이 열리지 않았습니다.</b><br>아래 주소를 복사해 사파리 주소창에 붙여 넣으면 전체 화면으로 볼 수 있습니다.</p>
+    <div class="url" id="murl"></div>
+    <div style="display:flex; gap:8px; justify-content:flex-end">
+      <button class="btn" id="mcopy" type="button">주소 복사</button>
+      <button class="btn" id="mclose" type="button">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  document.querySelectorAll(".bl").forEach(function(el){
+    el.dataset.hint = el.textContent;
+    function t(){ var on = el.classList.toggle("show"); el.textContent = on ? el.dataset.a : el.dataset.hint; }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+  document.querySelectorAll(".ch").forEach(function(el){
+    var opts = el.textContent.split("|"), idx = parseInt(el.dataset.a, 10);
+    el.innerHTML = opts.map(function(o,i){ return '<span class="o' + (i===idx?" a":"") + '">' + o + '</span>'; }).join("");
+    function t(){ el.classList.toggle("show"); }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+
+  var allOn = false, allBtn = document.getElementById("all");
+  allBtn.addEventListener("click", function(){
+    allOn = !allOn;
+    allBtn.classList.toggle("on", allOn);
+    allBtn.textContent = allOn ? "정답 숨기기" : "정답 모두 보기";
+    document.querySelectorAll(".bl").forEach(function(el){ el.classList.toggle("show", allOn); el.textContent = allOn ? el.dataset.a : el.dataset.hint; });
+    document.querySelectorAll(".ch").forEach(function(el){ el.classList.toggle("show", allOn); });
+  });
+
+  var fs = 1;
+  function setFs(v){
+    fs = Math.min(1.6, Math.max(0.85, v));
+    document.documentElement.style.setProperty("--fs", fs.toFixed(2) + "rem");
+    try{ localStorage.setItem("zz-fs", String(fs)); }catch(e){}
+  }
+  try{ var s = localStorage.getItem("zz-fs"); if(s) setFs(parseFloat(s)); }catch(e){}
+  document.getElementById("fplus").addEventListener("click", function(){ setFs(fs + 0.08); });
+  document.getElementById("fmin").addEventListener("click", function(){ setFs(fs - 0.08); });
+  document.getElementById("prt").addEventListener("click", function(){ window.print(); });
+
+  var immBtn = document.getElementById("imm");
+  immBtn.addEventListener("click", function(){
+    var el = document.documentElement;
+    if(document.fullscreenElement){ document.exitFullscreen(); return; }
+    var p = el.requestFullscreen ? el.requestFullscreen() : null;
+    if(p && p.catch){ p.catch(fallback); } else { setTimeout(function(){ if(!document.fullscreenElement) fallback(); }, 400); }
+    function fallback(){ var on = document.body.classList.toggle("immersive"); immBtn.classList.toggle("on", on); }
+  });
+
+  (function(){
+    [["apple-mobile-web-app-capable","yes"],["apple-mobile-web-app-status-bar-style","default"],["mobile-web-app-capable","yes"],["apple-mobile-web-app-title","장자와 가상 세계"]].forEach(function(m){
+      if(document.querySelector('meta[name="'+m[0]+'"]')) return;
+      var e = document.createElement("meta"); e.name = m[0]; e.content = m[1]; document.head.appendChild(e);
+    });
+  })();
+
+  var framed = false; try{ framed = window.self !== window.top; }catch(e){ framed = true; }
+  if(framed){
+    var pop = document.getElementById("pop");
+    pop.hidden = false; pop.href = location.href;
+    pop.addEventListener("click", function(){
+      setTimeout(function(){
+        if(document.hasFocus()){
+          document.getElementById("murl").textContent = location.href;
+          document.getElementById("modal").classList.add("on");
+        }
+      }, 500);
+    });
+    document.getElementById("mclose").addEventListener("click", function(){ document.getElementById("modal").classList.remove("on"); });
+    document.getElementById("mcopy").addEventListener("click", function(){
+      var btn = this, t = location.href;
+      function sel(){ var n = document.getElementById("murl"), r = document.createRange(); r.selectNodeContents(n); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try{ navigator.clipboard.writeText(t).then(function(){ btn.textContent = "복사됨"; }, sel); }catch(e){ sel(); }
+    });
+  }
+})();
+</script>
+</body></html>
