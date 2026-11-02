@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>엘리아데 『성과 속』 학습지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<style>
+/* 원전 기반 학습 자료 계열(에피쿠로스·밀·격몽요결·장자)과 같은 바이올렛-슬레이트 규격 */
+:root{
+  --paper:#F7F5FA; --card:#FFFFFF; --ink:#1F1D2B; --ink2:#494657; --dim:#7E7A8C;
+  --rule:#DDD8E7; --thead:#EFEAF7; --theadInk:#4A3374;
+  --acc:#5B3E86; --accFace:#F2EDF9; --ans:#B4262B;
+  --ask:#A2622A; --askFace:#FBF3E4; --askRule:#EDDCC0;
+  --shadow:0 1px 2px rgba(31,29,43,.04),0 8px 24px rgba(31,29,43,.06);
+  --fs:1rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+    --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+    --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+    --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+  --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+  --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+  --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:var(--fs); line-height:1.75; -webkit-text-size-adjust:100%; word-break:keep-all; overflow-wrap:break-word;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:50; background:var(--paper)}
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid var(--rule)}
+.bar .in{max-width:980px; margin:0 auto; padding-block:8px; padding-left:max(20px,env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px)); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.bar .sp{flex:1 1 auto; min-width:8px}
+.btn{font:inherit; font-size:.82rem; font-weight:500; letter-spacing:.01em; color:var(--ink2); background:var(--card);
+  border:1px solid var(--rule); border-radius:999px; padding:6px 14px; cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap}
+.btn:hover{border-color:var(--acc); color:var(--acc)}
+.btn.on{background:var(--acc); border-color:var(--acc); color:var(--card)}
+.btn:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.grp{display:inline-flex; border:1px solid var(--rule); border-radius:999px; overflow:hidden; background:var(--card)}
+.grp .btn{border:0; border-radius:0; padding:6px 11px}
+.grp .btn+.btn{border-left:1px solid var(--rule)}
+
+.wrap{max-width:980px; margin:0 auto; padding-block:26px 72px; padding-left:max(20px,env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px))}
+.masthead{border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:6px;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; justify-content:space-between}
+.masthead .l{font-size:.8rem; letter-spacing:.02em; color:var(--ink2)}
+.masthead .r{font-size:.8rem; color:var(--dim)}
+.titlebox{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;
+  border:1px solid var(--rule); border-left:4px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:14px 18px; margin:14px 0 34px; box-shadow:var(--shadow)}
+.titlebox h1{font-family:"Noto Serif KR",serif; font-size:1.32rem; font-weight:600; margin:0; letter-spacing:-.01em; text-wrap:balance}
+.titlebox .who{font-size:.82rem; color:var(--dim); white-space:nowrap}
+
+h2.part{font-family:"Noto Serif KR",serif; font-size:1.16rem; font-weight:700; color:var(--acc);
+  margin:52px 0 18px; padding-bottom:8px; border-bottom:1.5px solid var(--acc); text-wrap:balance}
+h2.part:first-of-type{margin-top:8px}
+h2.part small{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.78rem; color:var(--ink2); margin-top:4px}
+h3{font-family:"Noto Serif KR",serif; font-size:1.02rem; font-weight:600; margin:30px 0 10px;
+   padding-bottom:5px; border-bottom:1px solid var(--rule); text-wrap:balance}
+h3 .n{color:var(--acc); margin-right:.35em}
+p{margin:.55em 0}
+.lead{color:var(--ink2)}
+small.src{display:block; text-align:right; color:var(--dim); font-size:.76rem; margin-top:6px}
+
+.src-box{border:1px dashed var(--acc); background:var(--card); border-radius:3px; padding:13px 16px; margin:14px 0}
+.src-box .tag{font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--acc); display:block; margin-bottom:8px}
+.src-box .hm{margin:0; font-family:"Noto Serif KR",serif; font-weight:600; color:var(--acc); font-size:.98rem; line-height:1.9; letter-spacing:.04em}
+.src-box .yin{margin:2px 0 10px; padding-bottom:9px; border-bottom:1px dotted var(--rule); font-size:.78rem; color:var(--dim); line-height:1.7}
+.tr{margin:0; font-size:.97rem; line-height:1.9}
+.tr + .tr{margin-top:.5em}
+.tr .who{font-weight:700; color:var(--acc); margin-right:.3em}
+.src-box cite{display:block; text-align:right; font-style:normal; font-size:.78rem; color:var(--dim); margin-top:8px}
+.easy{margin:10px 0 0; padding-top:8px; border-top:1px dotted var(--rule); font-size:.88rem; color:var(--ink2)}
+.easy b{color:var(--acc)}
+
+.tw{overflow-x:auto; margin:14px 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.9rem; background:var(--card)}
+th,td{border:1px solid var(--rule); padding:9px 11px; vertical-align:middle; text-align:left}
+thead th{background:var(--thead); color:var(--theadInk); font-weight:700; text-align:center; font-size:.86rem}
+td.c,th.c{text-align:center}
+tbody th{background:var(--thead); color:var(--theadInk); font-weight:600; text-align:center; width:1%; white-space:nowrap}
+tbody th .hz{display:block; font-family:"Noto Serif KR",serif; font-weight:500; font-size:.8rem; opacity:.85}
+tr.hi td,tr.hi th{background:var(--accFace)}
+td.fill{height:52px}
+.tbl-note{font-size:.83rem; color:var(--ink2); margin:6px 0 0; padding-left:1.1em; text-indent:-1.1em}
+
+.flow{display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; margin:16px 0 4px}
+.flow .f{flex:1 1 150px; border:1px solid var(--rule); border-top:3px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:10px 12px; text-align:center; box-shadow:var(--shadow)}
+.flow .f b{display:block; font-family:"Noto Serif KR",serif; color:var(--acc); font-size:1rem}
+.flow .f span{display:block; font-size:.82rem; color:var(--ink2); margin-top:3px}
+.flow .a{flex:0 0 auto; display:grid; place-items:center; color:var(--acc); font-weight:700}
+
+.ask{border:1px solid var(--askRule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:3px; padding:13px 16px; margin:18px 0}
+.ask .tag{font-size:.76rem; font-weight:700; letter-spacing:.03em; color:var(--ask); display:block; margin-bottom:6px}
+.ask ol{margin:0; padding-left:1.25em}
+.ask li{margin:.35em 0}
+.ask li::marker{color:var(--ask); font-weight:700}
+.ask .tw table{background:var(--card)}
+.lines{margin:10px 0 4px}
+.lines i{display:block; border-bottom:1px dotted var(--rule); height:30px}
+.sample{display:block; margin:10px 0 0; padding:11px 13px; border-left:3px solid var(--ans);
+  background:var(--card); border-radius:0 3px 3px 0; font-size:.88rem; color:var(--ink2); line-height:1.8}
+.sample b{color:var(--ans)}
+.video{border:1px solid var(--rule); background:var(--card); border-radius:4px; margin:16px 0; overflow:hidden; box-shadow:var(--shadow)}
+.video .vh{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--rule)}
+.video .vh b{font-size:.86rem; color:var(--acc)}
+.video .vh span{display:block; font-size:.78rem; color:var(--dim); font-weight:400}
+.video .frame{position:relative; aspect-ratio:16/9; max-width:100%; background:#000}
+.video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+.bl{display:inline-block; min-width:4.6em; padding:0 .35em; margin:0 .12em;
+  border-bottom:1.4px solid var(--ink2); text-align:center; cursor:pointer;
+  color:var(--dim); font-size:.82em; letter-spacing:.06em; vertical-align:baseline;
+  border-radius:2px 2px 0 0; transition:background .12s}
+.bl:hover{background:var(--accFace)}
+.bl:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.bl.show{color:var(--ans); font-weight:700; font-size:1em; letter-spacing:0; border-bottom-color:var(--ans)}
+.bl.w6{min-width:6.4em}
+.ch{cursor:pointer; border-radius:2px; padding:0 .15em}
+.ch:hover{background:var(--accFace)}
+.ch:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.ch .o{color:var(--ink)}
+.ch .o+.o::before{content:" / "; color:var(--dim)}
+.ch.show .o{color:var(--dim)}
+.ch.show .o.a{color:var(--ans); font-weight:700; text-decoration:underline; text-underline-offset:3px}
+
+.recall{border:1px solid var(--acc); background:var(--card); border-radius:4px; margin:26px 0; overflow:hidden; box-shadow:var(--shadow)}
+.recall > h4{margin:0; padding:12px 18px; background:var(--acc); color:var(--card);
+  font-family:"Noto Serif KR",serif; font-size:1rem; font-weight:600}
+.recall > h4 span{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.76rem; opacity:.85; margin-top:2px}
+.recall .body{padding:16px 18px}
+.recall .body > :first-child{margin-top:0}
+.warn{border-left:3px solid var(--ans); background:var(--accFace); padding:11px 14px; margin:14px 0 0; border-radius:0 3px 3px 0; font-size:.92rem}
+.warn b{color:var(--ans)}
+
+.readbox{border:1px solid var(--rule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:4px; padding:20px 24px; margin:14px 0 26px}
+.readbox .tag{display:block; font-size:.76rem; font-weight:700; letter-spacing:.05em; color:var(--ask); margin-bottom:10px}
+.readbox blockquote{margin:0; font-family:"Noto Serif KR",serif; font-size:1.06rem; line-height:2.05; text-indent:.5em}
+.readbox cite{display:block; text-align:right; font-style:normal; font-size:.82rem; color:var(--ink2); margin-top:12px}
+.readbox .note{font-size:.8rem; color:var(--dim); line-height:1.7; margin:12px 0 0; padding-top:10px; border-top:1px dotted var(--askRule)}
+
+.arrow{color:var(--acc); font-weight:700}
+.foot{margin-top:60px; padding-top:14px; border-top:1px solid var(--rule); color:var(--dim); font-size:.78rem}
+.modal{position:fixed; inset:0; z-index:80; display:none; place-items:center; background:rgba(20,16,32,.55); padding:20px}
+.modal.on{display:grid}
+.modal .box{background:var(--card); color:var(--ink); border-radius:8px; padding:20px; max-width:520px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal .url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; word-break:break-all;
+  background:var(--accFace); border:1px solid var(--rule); border-radius:4px; padding:10px; margin:12px 0; user-select:all}
+body.immersive .bar{position:static}
+body.immersive .wrap{max-width:100%; padding-block:12px 40px}
+
+@media (max-width:640px){
+  .titlebox{flex-direction:column; align-items:flex-start; gap:8px}
+  .wrap,.bar .in{padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .flow .a{display:none}
+  .readbox{padding:16px 18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@media print{
+  .bar,.modal,.no-print{display:none!important}
+  body{background:#fff; color:#000; font-size:10.2pt}
+  body::before{display:none}
+  .wrap{max-width:none; padding:0}
+  .bl.show{color:#000; border-bottom-color:#000}
+  .ch.show .o.a{color:#000}
+  .video .frame,.video .vh .btn{display:none}
+  h2.part{break-after:avoid} h3{break-after:avoid}
+  .src-box,.tw,.ask,.recall,.readbox{break-inside:avoid}
+}
+
+/* 개요식 정리 */
+.outline{margin:.6em 0 .4em}
+.outline .oh{margin:.7em 0 .25em;font-weight:700;color:var(--ink,inherit)}
+.outline ul{margin:.1em 0 .3em;padding-left:1.4em;list-style:disc}
+.outline ul ul{list-style:circle;margin:.15em 0 .2em}
+.outline li{margin:.22em 0;line-height:1.75}
+
+/* 스케치 칸 */
+.sketch{height:520px;margin:.5em 0 .4em;border:1.5px dashed var(--line,#bbb);border-radius:10px;background-image:radial-gradient(circle,rgba(120,120,140,.28) 1px,transparent 1.2px);background-size:22px 22px}
+@media print{.sketch{height:150mm;break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="in">
+    <button class="btn" id="all" type="button">정답 모두 보기</button>
+    <div class="grp" role="group" aria-label="글자 크기">
+      <button class="btn" id="fmin" type="button" aria-label="글자 작게">A−</button>
+      <button class="btn" id="fplus" type="button" aria-label="글자 크게">A+</button>
+    </div>
+    <button class="btn no-print" id="imm" type="button">몰입 모드</button>
+    <span class="sp"></span>
+    <a class="btn" id="pop" href="#" target="_blank" rel="noopener" hidden>새 창에서 크게 보기</a>
+    <button class="btn no-print" id="prt" type="button">인쇄</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="l">2026-2 세화여자고등학교 &middot; 인문학과 윤리</div>
+    <div class="r">원전 기반 학습 자료 ⑧ &middot; Ⅵ. 삶의 의미에 대한 물음</div>
+  </div>
+
+  <div class="titlebox">
+    <h1>엘리아데, 『성과 속』<br>종교는 우리 삶에 어떤 의미를 줄까?</h1>
+    <div class="who">2학년 (　　)반　이름 ____________</div>
+  </div>
+
+  <!-- ===================== 0 ===================== -->
+  <h2 class="part">0. 수업 열기</h2>
+
+  <div class="readbox">
+    <span class="tag">♦ 좋은 문구 읽기 — 소리 내어 함께 읽어 봅시다</span>
+    <blockquote>창공은 고개 들어 그것을 바라보는 것만으로 <b>종교적인 체험</b>을 불러일으킨다. 하늘은 그 자신을 무한한 것, 초월적인 것으로 보여 준다.</blockquote>
+    <cite>— 엘리아데, 『성과 속』 · 천재 183쪽</cite>
+    <p class="note">※ 같은 하늘을 보고도 누군가는 날씨를 확인하고, 누군가는 경외감을 느낀다. 엘리아데는 일상적이고 세속적인 경험의 차원을 ‘속(俗)’, 그것과 질적으로 구별되는 성스러운 실재의 차원을 ‘성(聖)’이라 불렀다. 오늘 학습지는 과학의 시대를 사는 우리에게도 성스러운 것이 남아 있는지 묻는 과정이다.</p>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각 열기 ① ♣ 기적을 바란 적이 있나요? · 길벗 177쪽</span>
+    <ol>
+      <li>내 뜻대로 되지 않는 상황에서 ‘기적’을 간절하게 바란 적이 있는가? 그때 나는 무엇을, 누구에게 빌었는가?</li>
+      <li>우리는 종교가 없어도 “오, 신이시여!”, “하늘도 무심하시지.”와 같은 말을 쓴다. 우리 언어생활에 ‘하늘’이나 ‘신’ 같은 종교적 은유가 깊이 뿌리내린 이유는 무엇일까?</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 할머니가 수술을 받으실 때 수술실 밖에서 “제발 무사히 끝나게 해 주세요.”라고 마음속으로 빌었다. 특정한 신을 믿지는 않지만 누군가에게 기대고 싶은 마음이 들었다. ② 인간이 불완전한 존재이기 때문이다. 아무리 노력해도 내 힘으로 어찌할 수 없는 일 앞에서 인간은 자신보다 크고 완전한 무언가를 떠올리게 되고, 그 마음이 오랫동안 말 속에 쌓여 왔다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각 열기 ② ♣ 나무는 몇 그루일까? · 길벗 177쪽</span>
+    <p style="margin:.2em 0 .5em">마을 어귀에 오래된 느티나무 한 그루가 서 있다. 마을 사람들은 해마다 이 나무 앞에서 마을을 지켜 달라고 제사(동제)를 지낸다. 이 나무는 <b>몇 그루</b>일까? 우리 눈에 보이는 것은 한 그루이지만, 혹시 다른 방식으로 셀 수도 있을까?</p>
+    <div class="lines"><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 눈에 보이는 나무는 한 그루이다. 하지만 마을 사람들에게 이 나무는 그늘을 주는 평범한 나무이면서 동시에 마을을 지켜 주는 특별한 나무이다. 그렇게 보면 ‘평범한 나무’와 ‘특별한 나무’ 두 그루가 겹쳐 있다고 말할 수도 있다.</div>
+  </div>
+
+  <!-- ===================== 1 ===================== -->
+  <h2 class="part">[1] 엘리아데와 『성과 속』 만나기<small>※ 표시가 없는 내용은 교과서 기본 내용이고, ‘교과서 밖 심화’ 표시가 있는 내용은 더 깊이 알고 싶은 학생을 위한 선택 학습이다.</small></h2>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>사상가</th><td>미르체아 엘리아데(Mircea Eliade, 1907~1986) — 루마니아 출신으로 미국에서 활동한 철학자이자 <span class="bl" data-a="종교학자" tabindex="0" role="button">ㅈㄱㅎㅈ</span>. 성스러움[聖]과 속됨[俗]을 구분하고 그 영역들을 연구하였다.</td></tr>
+        <tr><th>인간관</th><td>엘리아데는 인간의 <span class="bl" data-a="유한성" tabindex="0" role="button">ㅇㅎㅅ</span>과 세계 경험을 바탕으로, 인간이 원초적으로 종교성을 지닌 ‘<span class="bl w6" data-a="종교적 인간" tabindex="0" role="button">ㅈㄱㅈ ㅇㄱ</span>’이라고 보았다.</td></tr>
+        <tr class="hi"><th>『성과 속』</th><td>엘리아데에 따르면, 성스러움으로서의 종교가 세계를 올바르게 바라보게 하고, 현실 세계에 <span class="bl" data-a="질서" tabindex="0" role="button">ㅈㅅ</span>와 의미를 부여하는 기능을 한다. 이를 통해 인간의 속된 삶이 <span class="bl w6" data-a="종교적 의미" tabindex="0" role="button">ㅈㄱㅈ ㅇㅁ</span>의 삶이 된다.</td></tr>
+        <tr><th>세계를 보는 두 차원</th><td>인간은 이성과 <span class="bl w6" data-a="종교적 상상력" tabindex="0" role="button">ㅈㄱㅈ ㅅㅅㄹ</span>을 복합적으로 사용하며, 세계를 물리적인 현실 세계와 성스러운 세계라는 두 차원으로 바라본다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 181쪽 · 길벗 177쪽</small>
+
+  <h3><span class="n">1.</span>엘리아데의 열쇠말</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:20%">개념</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><th>속<span class="hz">俗</span></th><td><span class="bl" data-a="일상적" tabindex="0" role="button">ㅇㅅㅈ</span>이고 세속적인 경험의 차원.</td></tr>
+        <tr><th>성<span class="hz">聖</span></th><td>속된 현실과 <span class="bl" data-a="질적" tabindex="0" role="button">ㅈㅈ</span>으로 구별되는 성스러운 실재의 차원. <span class="bl w6" data-a="독특한 경험" tabindex="0" role="button">ㄷㅌㅎ ㄱㅎ</span>을 통해서만 드러나며, 종교적 인간에게 완전하고 초월적인 실재로 경험된다.</td></tr>
+        <tr class="hi"><th>성현<span class="hz">聖顯</span></th><td>성스러운 것이 나무·돌 같은 속된 사물이나 현실을 통해 자신을 <span class="bl" data-a="드러내는" tabindex="0" role="button">ㄷㄹㄴㄴ</span> 사건(히에로파니, hierophany). 이때 사물은 일상적인 사물로 남아 있으면서도, 종교적 인간에게는 초월적 실재를 드러내는 ‘<span class="bl w6" data-a="나무 이상의 나무" tabindex="0" role="button">ㄴㅁ ㅇㅅㅇ ㄴㅁ</span>’로 경험된다. <i style="color:var(--dim);font-style:normal">(교과서 밖 심화)</i></td></tr>
+        <tr><th>성스러운 공간·시간</th><td>종교적 인간에게 일상적인 공간·시간과 질적으로 구별되어 경험되는 공간·시간. 성지, 사원, 축제, 의례의 시간 등이 이에 해당한다. → [3]의 5·6에서 자세히 다룬다.</td></tr>
+        <tr><th>종교적 인간<span class="hz">homo religiosus</span></th><td>성스러운 것을 경험하고 그 안에서 살고자 하는 인간. 엘리아데는 인간이 원초적으로 <span class="bl" data-a="종교성" tabindex="0" role="button">ㅈㄱㅅ</span>을 가지고 있다고 보았다. (엘리아데의 해석)</td></tr>
+        <tr><th>종교적 상상력</th><td>불완전한 현실을 살아가는 인간의 <span class="bl" data-a="피난처" tabindex="0" role="button">ㅍㄴㅊ</span>. 인간은 초자연적인 존재나 현상을 믿고, 이를 통해 삶의 원동력과 위로를 얻었다.</td></tr>
+        <tr class="hi"><th>구원<span class="hz">救援</span></th><td>엘리아데의 설명에 따르면, 속에서 성으로, <span class="bl" data-a="분열" tabindex="0" role="button">ㅂㅇ</span>에서 전체성으로 회귀하는 것.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">길벗 177쪽 · 천재 185쪽</small>
+  <p class="warn"><b>주의</b> — 성과 속은 ‘평범한 것’과 ‘특별한 것’의 구분이 아니다. 내가 좋아하는 장소나 소중한 기념품이 곧바로 엘리아데가 말하는 성스러운 것이 되지는 않는다. 엘리아데의 성스러움은 종교적 인간에게 초월적 실재가 드러나는 경험이다.</p>
+
+  <p class="lead" style="font-size:.88rem">바로 확인 — 엘리아데라면 다음을 어떤 눈으로 본 것이라 할까? 괄호를 누르면 답이 나온다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:62%">말</th><th>세계를 보는 눈</th></tr></thead>
+      <tbody>
+        <tr><td>“저 느티나무는 수령 300년, 높이 20m의 활엽수일 뿐이다.”</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">속(俗)|성(聖)</span></td></tr>
+        <tr><td>“저 느티나무는 하늘과 땅을 잇고, 우리 마을을 지켜 준다.”</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">속(俗)|성(聖)</span></td></tr>
+        <tr><td>“무슬림에게 메카를 향한 하루 다섯 번의 기도 시간은 다른 시간과 다르다.”</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">속(俗)|성(聖)</span></td></tr>
+        <tr><td>“달력의 날은 모두 24시간이고, 오늘도 어제와 똑같은 하루일 뿐이다.”</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">속(俗)|성(聖)</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flow">
+    <div class="f"><b>왜 종교인가?</b><span>불완전한 인간 · 불안한 사회</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>성과 속</b><span>두 그루의 나무</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>성스러운 공간과 시간</b><span>예루살렘 · 기념일</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>우리 곁의 종교성</b><span>토템 · 종교적 인간의 후예</span></div>
+  </div>
+
+  <!-- ===================== 2 ===================== -->
+  <h2 class="part">[2] 불완전한 인간, 종교를 찾다<small>학습 목표 · 인간의 불완전성에 대한 성찰을 바탕으로, 불안한 현대 사회를 살아가는 데 있어 종교의 역할과 가치를 설명할 수 있다.</small></h2>
+
+  <h3><span class="n">2.</span>인간은 왜 불완전한 존재인가?</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:22%">불완전성</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th><span class="bl" data-a="육체적" tabindex="0" role="button">ㅇㅊㅈ</span></th><td>동물은 걷기까지 생후 몇 시간이면 충분하지만, 인간은 1년여의 세월이 필요하다.</td></tr>
+        <tr><th>사고 능력</th><td>사실을 부정확하게 이해하기도 하고, 잘못 파악하여 <span class="bl" data-a="오류" tabindex="0" role="button">ㅇㄹ</span>를 일으키기도 한다.</td></tr>
+        <tr><th><span class="bl" data-a="윤리적" tabindex="0" role="button">ㅇㄹㅈ</span></th><td>그릇된 행동임을 알면서도 <span class="bl" data-a="욕심" tabindex="0" role="button">ㅇㅅ</span> 때문에 잘못을 저지르기도 한다.</td></tr>
+        <tr class="hi"><th>그 밖의 불완전성</th><td>인간의 본성에는 선과 악이 함께 있다. 인간은 타인에게 <span class="bl" data-a="의존" tabindex="0" role="button">ㅇㅈ</span>하지 않고 홀로 살 수 없다. 인간은 늙고 병들고 죽음에 이르는 <span class="bl" data-a="유한한" tabindex="0" role="button">ㅇㅎㅎ</span> 존재이다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 182쪽 · 길벗 177쪽</small>
+
+  <div class="outline">
+    <p class="oh">■ 불안한 현대 사회</p>
+    <ul>
+      <li>불완전한 인간이 살아가는 현대 사회: 과학과 합리성을 추구하며 진보한 문명을 누림</li>
+      <li>그러나 여전히 불안함
+        <ul>
+          <li>사회의 부조리함과 약자의 고통</li>
+          <li>끊임없는 전쟁 소식</li>
+          <li>급변하는 세상의 속도에 대한 두려움</li>
+          <li>많은 사람과 교류하면서도 느끼는 외로움과 <span class="bl" data-a="소외감" tabindex="0" role="button">ㅅㅇㄱ</span></li>
+        </ul>
+      </li>
+      <li>과학 기술로 모든 것을 바꿀 수 있다고 믿었던 인간 <span class="arrow">→</span> 거대한 자연과 우주, 어찌할 수 없는 재난 앞에서 <span class="bl" data-a="무력감" tabindex="0" role="button">ㅁㄹㄱ</span>을 느낌 <span class="arrow">→</span> 자신의 불완전성을 더욱 자각</li>
+    </ul>
+    <p class="oh"><span class="arrow">→</span> 초월에 대한 추구 (교과서의 설명)</p>
+    <ul>
+      <li>스스로 불완전한 존재임을 인식한 인간 <span class="arrow">→</span> 간절한 마음으로 경외의 대상을 떠올림</li>
+      <li>이 세계를 넘어선 <span class="bl" data-a="초월적" tabindex="0" role="button">ㅊㅇㅈ</span>이고 완전한 존재를 갈망하고, 그에 의지함</li>
+      <li>마음의 평화와 행복을 추구하는 과정에서 <span class="bl" data-a="종교" tabindex="0" role="button">ㅈㄱ</span>가 발생</li>
+    </ul>
+  </div>
+  <p class="tbl-note">※ 이것은 종교의 기원에 대해 입증된 단 하나의 설명이 아니라, 인간의 불완전성에서 종교성을 이해하려는 하나의 해석이다. 종교의 기원은 사회적·문화적·심리적 관점 등 여러 방식으로 설명된다.</p>
+  <small class="src">천재 182~183쪽 · 길벗 176쪽</small>
+
+  <div class="src-box">
+    <span class="tag">[원문 ①] 하늘이 보여 주는 것 · 천재 183쪽</span>
+    <p class="tr">창공은 고개 들어 그것을 바라보는 것만으로 종교적인 체험을 불러일으킨다. 하늘은 그 자신을 무한한 것, 초월적인 것으로 보여 준다. ‘지고자(至高者)’의 개념이 저절로 신성의 속성이 된다. 인간이 접근할 수 없는 높은 지역, 별이 빛나는 영역은 초월성, 절대적인 실재, 영원성의 중대성을 획득한다. 이 모든 것은 논리적·합리적 작용으로 도달되는 것이 아니다. 하늘을 보면서 그는 신성의 측량 불가능성과 우주 안에서 자신의 상태를 발견한다. 왜냐하면 하늘은 그 존재 양식에 의해 이미 초월성, 힘, 영원성을 계시하기 때문이다. 하늘은 높고, 무한하고, 영원하고, 힘이 있어서 절대적으로 존재한다.</p>
+    <cite>— 엘리아데, 『성과 속』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 하늘의 성스러움은 따져서 얻은 결론이 아니라 <b>바라보는 순간 체험</b>되는 것이다. 끝없이 높은 하늘 앞에서 인간은 신성의 무한함과 함께, 우주 속에서 작고 유한한 <b>자기 자신</b>을 발견한다.</p>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 원문 해석하기 ♣ [원문 ①]의 핵심 문장</span>
+    <p style="margin:.2em 0 .5em">“이 모든 것은 논리적·합리적 작용으로 도달되는 것이 아니다.” 엘리아데가 이 문장을 통해 말하려는 것을 자신의 말로 풀어 쓰고, 하늘을 보며 이러한 경험을 한 적이 있는지 써 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 하늘이 초월적이고 영원한 것으로 느껴지는 것은 하늘의 높이를 재고 따져서 내린 결론이 아니라, 하늘을 바라보는 순간 직접 체험되는 것이라는 뜻이다. 성스러움은 추론의 결과가 아니라 경험 속에서 드러난다. 수련회에서 별이 가득한 밤하늘을 보았을 때, 설명할 수는 없지만 내가 아주 작은 존재라는 느낌과 함께 경외감이 들었다.</div>
+  </div>
+
+  <div class="src-box">
+    <span class="tag">[원문 ②] 속에서 성으로의 회복 · 천재 185쪽</span>
+    <p class="tr">구원의 일차적 의미는 병이나 자연적·사회적 재난에서 벗어나는 것으로, 인간은 재난을 자신들의 힘만으로는 극복할 수 없음을 깨달았다. 그러면 재난은 왜 생길까? 동양에서는 자연의 부조화나 성에서 속이 분리된 데서 온다고 믿는다. 즉, 완전성으로부터의 분열이 모든 재난의 원인이다. 서양에서도 위기(crisis)라는 말의 그리스어 ‘krisis(krinein)’가 분열을 뜻하고, 성을 뜻하는 ‘holy’의 어근은 앵글로·색슨어인 ‘hal’이며 이는 건강한, 온전한 혹은 전체를 뜻한다. 즉 고대인들은 병이나 재난의 원인을 성 혹은 완전성(전체성)에서 분리된 결과로 보았다. 결국 구원이란 속에서 성으로, 분열에서 전체성으로 회귀하는 것이다.</p>
+    <cite>— 엘리아데, 『성과 속』</cite>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:22%">원문 ②의 설명</th><th>재난과 병의 원인</th><th>구원</th></tr></thead>
+      <tbody>
+        <tr><th>엘리아데</th><td>성(완전성·전체성)에서 <span class="bl" data-a="분리" tabindex="0" role="button">ㅂㄹ</span>된 결과</td><td>속에서 성으로, 분열에서 <span class="bl" data-a="전체성" tabindex="0" role="button">ㅈㅊㅅ</span>으로의 회귀</td></tr>
+        <tr><th>단어 속 흔적</th><td>crisis ← krisis = ‘<span class="bl" data-a="분열" tabindex="0" role="button">ㅂㅇ</span>’</td><td>holy ← hal = ‘건강한, <span class="bl" data-a="온전한" tabindex="0" role="button">ㅇㅈㅎ</span>, 전체’</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">※ <b>어원과 해석을 구분하자.</b> 그리스어 krisis(동사 krinein)는 본래 ‘나누다, 가르다, 판단하다’라는 뜻이고, 영어 holy는 ‘온전한, 건강한’을 뜻하는 옛 영어 hāl과 뿌리가 같다. 이것은 단어의 역사에 관한 사실이다. 반면 이 어원을 근거로 ‘재난 = 성에서의 분리’, ‘구원 = 전체성의 회복’이라고 보는 것은 엘리아데의 철학적 해석이다.</p>
+
+  <div class="recall">
+    <h4>어원으로 풀어 보는 종교의 의미<span>천재 184쪽 「읽고 보는 이야기」</span></h4>
+    <div class="body">
+      <p>종교를 뜻하는 영어 ‘religion’의 어원은 ‘religio’이다. 이는 두 가지로 해석된다.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th style="width:30%">어원</th><th>뜻</th><th>종교의 의미</th></tr></thead>
+          <tbody>
+            <tr><th>relegere</th><td>삼가 경의를 표하다</td><td>사람이 자신보다 <span class="bl" data-a="존엄한" tabindex="0" role="button">ㅈㅇㅎ</span> 존재에게 경의를 표하는 것</td></tr>
+            <tr><th>religare</th><td>다시 <span class="bl" data-a="결합" tabindex="0" role="button">ㄱㅎ</span>하다</td><td>생명의 본원인 신에게서 떨어져 있다가 다시 신과 결합하는 것</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tbl-note">※ religio의 어원을 relegere로 볼지 religare로 볼지는 고대부터 해석이 갈려 왔으며, 오늘날 학자들 사이에서도 논란이 있다.</p>
+      <p>동양에서는 19세기 말 일본 메이지 시대에 ‘religion’을 ‘<span class="bl" data-a="근본적인" tabindex="0" role="button">ㄱㅂㅈㅇ</span>[宗] 가르침[敎]’으로 번역하여 사용하였다.</p>
+      <p class="warn"><b>연결하기</b> — ‘다시 결합하다(religare)’는 [원문 ②]의 ‘분열에서 전체성으로의 회귀’와 같은 방향을 가리킨다. 종교는 떨어져 나온 것을 다시 온전하게 잇는 일이다.</p>
+    </div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 과학의 시대에도 기도하는 사람들 · 천재 185쪽</span>
+    <ol>
+      <li>과학의 시대인 오늘날에도 수술실 밖에서 환자의 가족들이 기도하는 이유를 [원문 ②]의 ‘구원’의 의미와 연결하여 추측해 보자.</li>
+      <li>재난의 상황에서 초월적 존재를 생각해 본 적이 있다면 그 이유를 말해 보자.</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 수술실 밖의 가족은 사랑하는 사람의 생명이 자신의 힘으로는 어찌할 수 없는 영역에 놓였음을 절감한다. 병은 가족을 온전한 상태에서 떼어 놓는 ‘분열’이고, 기도는 그 분열이 회복되어 다시 온전해지기를, 즉 구원받기를 바라는 마음의 표현이다. 의학을 믿으면서도 기도하는 것은 과학이 줄 수 없는 마음의 안정을 얻기 위해서이다. ② 큰 지진 뉴스를 보았을 때, 인간의 기술로는 막을 수 없는 일 앞에서 피해자들이 무사하기를 누군가에게 빌고 싶었다. 내 힘이 닿지 않는 곳에 마음을 맡길 대상이 필요했기 때문이다.</div>
+  </div>
+
+  <h3><span class="n">3.</span>종교는 현대인의 삶에서 어떤 가치를 지닐까?</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:22%">역할</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>개인</th><td>초월적 존재를 상징하고 <span class="bl" data-a="안식" tabindex="0" role="button">ㅇㅅ</span>과 구원을 제시하며, 이상향의 모습을 안내하여 인간이 궁극적인 평화를 지향하도록 이끈다. → 현대 사회의 불안함을 극복하여 안정되고 행복한 삶을 영위하도록 돕는다.</td></tr>
+        <tr><th>사회</th><td>종교의 <span class="bl" data-a="계율" tabindex="0" role="button">ㄱㅇ</span>을 지키려고 노력하듯이 법과 규칙을 준수하게 하여 사회의 안정을 유지하는 데 기여한다.</td></tr>
+        <tr><th>인류의 역사</th><td>과거의 누군가가 종교를 통해 위로와 평안을 얻었듯이, 미래의 누군가에게도 깊은 <span class="bl" data-a="위로" tabindex="0" role="button">ㅇㄹ</span>를 줄 수 있다.</td></tr>
+        <tr class="hi"><th>의례와 문화</th><td>세계 각국의 종교와 신앙, 제사, 동제, 축제 등 종교적 <span class="bl" data-a="의례" tabindex="0" role="button">ㅇㄹ</span>와 문화는, 불완전한 인간이 겪는 불안감을 풀어 주고 삶을 살아가는 데 도움을 준다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 185쪽 · 길벗 177쪽</small>
+
+  <div class="ask">
+    <span class="tag">♣ 비판적으로 생각하기 ♣ 종교는 언제나 평화와 안정을 가져오는가?</span>
+    <p style="margin:.2em 0 .5em">종교는 개인에게 위로를 주고 공동체를 결속할 수 있다. 그러나 종교적 신념의 차이가 갈등으로 이어지는 경우도 있다.</p>
+    <ol>
+      <li>종교가 개인과 사회에 긍정적인 영향을 미치는 사례를 한 가지 제시해 보자.</li>
+      <li>종교가 갈등의 원인이 되거나 사회적 배제를 정당화하는 데 이용된 경우를 생각해 보자.</li>
+      <li>이러한 사례를 고려할 때, 종교가 현대 사회에서 지니는 가치는 무엇이라고 생각하는가?</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 여러 종교 단체가 무료 급식소와 재난 구호 활동을 운영하여 소외된 이웃을 돕고, 신자들은 신앙 공동체 안에서 위로와 소속감을 얻는다. ② 중세의 십자군 전쟁처럼 종교적 명분이 오랜 전쟁의 이유가 되기도 했고, 다른 신앙을 가진 사람을 배척하거나 차별하는 근거로 종교가 이용되기도 했다. ③ 종교가 언제나 평화를 가져오는 것은 아니므로 종교의 기능을 무조건 긍정할 수는 없다. 그러나 약자를 돌보고 이웃을 사랑하라는 가르침은 많은 종교가 공유하는 것이다. 종교의 가치는 다른 신념을 가진 사람을 존중하고 그 가르침을 인류애로 실천할 때 드러난다고 생각한다.</div>
+  </div>
+
+  <!-- ===================== 3 ===================== -->
+  <h2 class="part">[3] 엘리아데의 눈으로 세상 보기<small>성과 속은 서로 떨어진 두 세계일까, 겹쳐 있는 두 차원일까?</small></h2>
+
+  <h3><span class="n">4.</span>두 그루의 나무 — 성과 속</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ③] 세속적 인간은 종교적 인간의 후예 · 길벗 177쪽 「생각을 더하는 자료」</span>
+    <p class="tr">우리 눈에 보이는 나무는 한 그루이지만 엘리아데의 생각은 달랐다. 그는 한 그루의 나무가 나무인 동시에 ‘나무 이상의 나무’라고 말하였다. 앞의 나무는 인간이 일상적으로 경험하는 나무로 ‘속(俗)’에 해당하며, 뒤의 나무는 독특한 경험을 통해서만 드러나는 ‘성(聖)’에 해당하는 나무이다. 그는 나무가 인간의 세계인 땅에서 신의 세계인 하늘로 향하는 존재로, 성과 속, 하늘과 땅, 신과 인간을 연결해 준다고 하였다.</p>
+    <p class="tr">그러면 각각 성과 속의 세계에 속하는 두 그루의 나무가 있는 것일까? 이에 관해 엘리아데는 다시 ‘한 그루’의 나무에 주목하라고 말한다. 초자연적인 것은 자연적인 것과 뗄 수 없는 관계에 있기 때문이다. 세계는 그것을 초월하는 어떤 것을 드러낸다. 여기서 초월은 신이 바다를 움직이는 기적을 의미하는 것이 아니라 인간이 사물에 의미를 부여하는 순간 그 자체이다. 즉, 인간이 느끼고 접촉하고 사랑한 모든 것은 언제든 ‘성스러운 것’이 될 수 있다. 이러한 의미에서 엘리아데는 인간은 ‘종교적 인간’이며, 원초적으로 종교성을 가지고 있다고 역설하였다.</p>
+    <cite>— 길벗 『인문학과 윤리』 177쪽에서 엘리아데의 ‘성과 속’ 설명</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 성스러운 나무가 따로 있는 것이 아니다. <b>같은 한 그루</b>가 일상의 차원에서는 ‘속’으로, 종교적 인간에게는 성스러운 것을 드러내는 ‘성’으로 경험된다. 엘리아데에게 이것은 성스러운 것이 사물을 통해 자신을 드러내는 사건, 곧 <b>성현</b>이다.</p>
+  </div>
+  <p class="warn"><b>교과서 해설 읽기 주의</b> — 길벗 교과서는 ‘초월은 인간이 사물에 의미를 부여하는 순간’이라고 풀이한다. 이해를 돕는 설명이지만, 엘리아데의 성현을 개인의 주관적인 의미 부여로만 이해해서는 안 된다. 엘리아데에게 성스러움은 인간이 만들어 내는 것이라기보다 종교적 인간에게 <b>스스로를 드러내는</b> 것이다.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:22%"></th><th>앞의 나무</th><th>뒤의 나무</th></tr></thead>
+      <tbody>
+        <tr><th>영역</th><td class="c"><span class="bl" data-a="속(俗)" tabindex="0" role="button">ㅅ</span></td><td class="c"><span class="bl" data-a="성(聖)" tabindex="0" role="button">ㅅ</span></td></tr>
+        <tr><th>드러나는 방식</th><td>인간이 <span class="bl" data-a="일상적" tabindex="0" role="button">ㅇㅅㅈ</span>으로 경험</td><td><span class="bl w6" data-a="독특한 경험" tabindex="0" role="button">ㄷㅌㅎ ㄱㅎ</span>을 통해서만 드러남</td></tr>
+        <tr><th>나무의 의미</th><td>그늘과 목재를 주는 식물</td><td>땅과 하늘, 인간과 <span class="bl" data-a="신" tabindex="0" role="button">ㅅ</span>을 연결하는 존재</td></tr>
+        <tr class="hi"><th>결론</th><td colspan="2">두 나무는 결국 ‘<span class="bl" data-a="한 그루" tabindex="0" role="button">ㅎ ㄱㄹ</span>’이다. 초자연적인 것은 자연적인 것과 뗄 수 없다. 성스러운 것은 <span class="bl" data-a="속된" tabindex="0" role="button">ㅅㄷ</span> 사물을 통해 자신을 드러낸다[성현]. 나무는 여전히 나무이면서, 종교적 인간에게는 초월적 실재를 드러내는 존재로 경험된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 다시 생각하기 ♣ 생각 열기 ②의 느티나무로 돌아가기</span>
+    <p style="margin:.2em 0 .5em">마을 사람들에게 중요한 나무라고 해서 반드시 엘리아데가 말한 성현의 사례가 되는가? 그렇게 판단하려면 어떤 정보가 더 필요한가?</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 반드시 그렇지는 않다. 오래되고 정든 나무라서 아끼는 것이라면 그것은 애착이나 추억에 가깝다. 성현의 사례라고 판단하려면, 마을 사람들이 그 나무를 통해 마을을 지키는 신이나 초월적인 힘을 경험하는지, 그 나무 앞에서 제사와 같은 의례를 지내는지, 그 나무를 하늘과 땅을 잇는 존재로 여기는지 등을 알아야 한다. 즉 나무가 단지 ‘소중한 나무’인지, 종교적 인간에게 ‘성스러운 것이 드러나는 나무’인지를 구별할 정보가 필요하다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 확장 활동 ♣ 개인적 애착과 종교적 성스러움 비교하기</span>
+    <p style="margin:.2em 0 .5em">다른 사람에게는 평범하지만 나에게는 특별한 물건이나 장소를 하나 골라 보자. 그것이 엘리아데가 말하는 ‘성스러운 것’과 어떤 점에서 닮았고, 어떤 점에서 다른지 설명해 보자.</p>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th>나에게 특별한 것</th><td class="fill"></td></tr>
+          <tr><th>닮은 점</th><td class="fill"></td></tr>
+          <tr><th>다른 점</th><td class="fill"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sample"><b>예시 답안</b> — 특별한 것: 돌아가신 할아버지가 쓰시던 낡은 손목시계. 닮은 점: 다른 사람에게는 고장 난 시계(속)일 뿐이지만 나에게는 다른 물건과 질적으로 다르게 경험된다. 일상적인 사물이 그대로 남아 있으면서 특별한 존재가 된다는 점이 성현과 닮았다. 다른 점: 이 시계가 특별한 까닭은 할아버지에 대한 추억과 애착 때문이지, 시계를 통해 초월적인 실재가 드러난다고 경험하기 때문은 아니다. 또 공동체가 함께 지내는 의례와도 연결되어 있지 않다. 그러므로 이것은 성스러움 그 자체라기보다 성스러움을 이해하는 데 도움이 되는 비슷한 경험이라고 할 수 있다.</div>
+  </div>
+
+  <div class="recall">
+    <h4>세속적 인간은 종교적 인간의 후예<span>길벗 177쪽 · 교과서 밖 심화 포함</span></h4>
+    <div class="body">
+      <p>엘리아데는 종교를 갖지 않은 현대인도 종교적 인간의 ‘후예’라고 해석하였다. 스스로는 종교와 상관없이 산다고 여기지만, 고향이나 첫 만남의 장소를 특별하게 여기고, 새해 첫날 다짐을 새로 하는 모습 속에 종교적 인간의 흔적이 <b>위장된 채</b> 남아 있다는 것이다.</p>
+      <p>그러나 종교가 없는 사람은 이러한 경험을 종교적 의미가 아니라 <b>심리적</b> 의미(추억, 애착, 마음의 안정)나 <b>문화적</b> 의미(관습, 공동체의 정체성)로 해석할 수도 있다.</p>
+      <p class="warn"><b>정리</b> — ‘세속적 인간은 종교적 인간의 후예’라는 말은 증명된 사실이라기보다 엘리아데의 해석이다. 이 해석이 얼마나 설득력이 있는지 [4]에서 비판적으로 검토해 보자.</p>
+    </div>
+  </div>
+
+  <h3><span class="n">5.</span>성스러운 공간 — 세 종교의 성지, 예루살렘</h3>
+  <p class="lead">예루살렘에는 유대교, 이슬람교, 그리스도교의 모습이 모두 담겨 있다. 성지 순례를 위해 이 도시를 찾는 사람들에게 예루살렘은 다른 어떤 도시와도 같지 않은 곳이다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:22%">종교</th><th style="width:26%">성소</th><th>성스러움의 이유</th></tr></thead>
+      <tbody>
+        <tr><th>이슬람교</th><td><span class="bl" data-a="바위 사원" tabindex="0" role="button">ㅂㅇ ㅅㅇ</span></td><td>사원 내부 중심의 납작하고 널찍한 돌은 예언자 마호메트가 하늘로 <span class="bl" data-a="승천" tabindex="0" role="button">ㅅㅊ</span>한 장소라고 전해진다.</td></tr>
+        <tr><th>유대교</th><td><span class="bl" data-a="통곡의 벽" tabindex="0" role="button">ㅌㄱㅇ ㅂ</span></td><td>로마군이 예루살렘을 공격한 뒤 서쪽 성벽만 남겨 두었다. 유대인들이 성벽 앞에 모여 성전의 파괴를 슬퍼하였다는 데서 이름이 유래하였다는 설이 있다.</td></tr>
+        <tr><th>그리스도교</th><td><span class="bl" data-a="겟세마네" tabindex="0" role="button">ㄱㅅㅁㄴ</span> 동산</td><td>예수가 유대교도들에게 잡히기 전날 밤 기도하였다고 전해지는 곳이다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 187쪽 「인문학으로의 여행」</small>
+
+  <div class="video">
+    <div class="vh"><b>▶ 함께 보기 — 통곡의 벽<span>연합뉴스TV 「트럼프, 유대모자 쓰고 ‘통곡의 벽’ 앞에…사상 처음」 (2017. 5. 23.) · 소망을 적은 쪽지를 벽 틈에 끼우는 유대인의 관습에 주목해 보자.</span></b><a class="btn" href="https://youtu.be/MJHhmgQbw8M?si=AZkNyLDKAszAN6D6" target="_blank" rel="noopener">YouTube에서 보기</a></div>
+    <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/MJHhmgQbw8M" title="함께 보기 — 통곡의 벽" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 관점 비교하기 ♣ 성지인가, 유적인가?</span>
+    <p style="margin:.2em 0 .5em">같은 통곡의 벽이 어떤 사람에게는 성스러운 공간이지만, 다른 사람에게는 역사적 유적이나 관광지가 될 수 있다. 이 차이를 엘리아데의 개념(성과 속, 성현, 종교적 인간)으로 설명해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 성벽의 돌은 누구에게나 같은 돌이다. 그러나 그 앞에서 기도하는 유대인, 곧 종교적 인간에게 그곳은 성스러운 것이 드러나는 곳으로서 다른 공간과 질적으로 구별되어 경험된다. 반면 사진을 찍으러 온 관광객에게 그곳은 오래된 성벽, 즉 속된 공간으로 경험된다. 같은 장소라도 성스러움이 드러나는 경험이 있는지에 따라 성과 속의 차원이 달라진다.</div>
+  </div>
+
+  <div class="recall">
+    <h4>교과서 밖 심화 — 종교적 인간에게 공간은 균질하지 않다<span>엘리아데 『성과 속』 1장 「성스러운 공간」의 내용 정리</span></h4>
+    <div class="body">
+      <p>세속적인 경험의 차원에서 공간은 어디나 똑같이 나뉘고 측정되는 <b>균질한</b> 공간이다. 그러나 종교적 인간에게 공간은 <b><span class="bl w6" data-a="균질하지 않다" tabindex="0" role="button">ㄱㅈㅎㅈ ㅇㄷ</span></b>. 성스러움이 드러난 곳은 주변과 질적으로 다른, 특별하고 ‘강한’ 공간이 된다.</p>
+      <p>• <b>세계의 중심</b> — 성스러운 장소는 혼돈 속에서 방향을 잡게 해 주는 고정점이다. 종교적 인간은 성소를 ‘<span class="bl w6" data-a="세계의 중심" tabindex="0" role="button">ㅅㄱㅇ ㅈㅅ</span>’으로 여기고, 그곳에서 하늘과 땅이 이어진다고 보았다. 하늘로 뻗은 나무, 산, 기둥은 이 연결을 상징한다.</p>
+      <p>• <b>문지방</b> — 사원의 문지방은 성과 속 두 공간을 나누는 <span class="bl" data-a="경계" tabindex="0" role="button">ㄱㄱ</span>이자, 두 세계가 소통하는 통로이다. 그래서 많은 종교에서 문턱을 넘을 때 절을 하거나 신발을 벗는 등의 몸가짐을 갖춘다.</p>
+      <p class="tbl-note">※ 성스러운 공간은 단순히 ‘특별하다고 느끼는 장소’와 같지 않다. 종교적 인간에게 성스러운 것이 드러나 세계의 질서와 방향을 주는 곳이다.</p>
+    </div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 탐구하기 ♣ 아야 소피아, 성스러운 공간의 변신 · 천재 208쪽</span>
+    <p style="margin:.2em 0 .5em">아야 소피아(Hagia Sophia)는 ‘성스러운 지혜’라는 뜻으로, 튀르키예 이스탄불에 있는 동로마 제국의 대표적 건축물이다. 원래 대성당으로 지어졌으나 오스만 제국 이후 이슬람 사원(모스크)으로 사용되었고, 지금의 튀르키예가 세워지면서 박물관이 되었다가 근래 다시 모스크가 되었다.</p>
+    <ol>
+      <li>한 건물이 시대에 따라 대성당 → 모스크 → 박물관 → 모스크로 바뀐 것을 엘리아데의 ‘성과 속’ 개념으로 설명해 보자.</li>
+      <li>내가 일상에서 문턱을 넘을 때 몸가짐이 달라지는 공간(교실, 도서관, 할머니 댁, 추모 공간 등)이 있다면 써 보자.</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 건물의 돌과 돔은 그대로이지만, 사람들이 그곳에서 예배를 드릴 때 그 공간은 성스러운 공간이 되고 관람객이 표를 사고 둘러보는 박물관일 때는 속된 공간에 가까워진다. 같은 공간이 예배하는 사람에게는 성스러움이 드러나는 곳으로, 관람객에게는 역사 유적으로 경험된다는 점에서, 성과 속은 공간의 물리적 성질이 아니라 그 공간이 어떻게 경험되는가에 따라 구별됨을 알 수 있다. ② 추모 공간에 들어갈 때는 저절로 목소리를 낮추고 모자를 벗게 된다. 그 문턱 안쪽은 바깥의 시끄러운 거리와 다른 공간으로 느껴지기 때문이다.</div>
+  </div>
+
+  <h3><span class="n">6.</span>성스러운 시간 — 평일과 기념일은 어떻게 다를까?</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:18%">기념일</th><th>유래와 의미</th><th style="width:30%">기념 의식</th></tr></thead>
+      <tbody>
+        <tr><th>성탄절</th><td>4세기 중반 이후 그리스도교 문화권에서 12월 25일을 예수의 <span class="bl" data-a="출생일" tabindex="0" role="button">ㅊㅅㅇ</span>로 기념하는 관습이 정착되었다.</td><td>선물·카드 교환, 트리 꾸미기, 캐럴 부르기</td></tr>
+        <tr><th>망자의 날</th><td>죽은 이를 기리는 <span class="bl" data-a="멕시코" tabindex="0" role="button">ㅁㅅㅋ</span> 전통 축제로, 매년 10월 마지막 날부터 11월 초까지이다.</td><td>죽은 사람을 위한 특별한 제단 마련, 해골 분장·축제, 해골 모양 초콜릿 나누기</td></tr>
+        <tr><th>라마단</th><td>이슬람 최고의 예언자 무함마드가 『꾸란』을 계시받은 날로, 이슬람력 아홉 번째 달에 치러진다.</td><td>해가 떠서 질 때까지 <span class="bl" data-a="금식" tabindex="0" role="button">ㄱㅅ</span>하며 인내와 절제, 소외된 약자의 입장을 배움</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">길벗 178쪽</small>
+
+  <div class="video">
+    <div class="vh"><b>▶ 함께 보기 — 망자의 날<span>JTBC 아침& 「거리 가득 해골 분장한 사람들…멕시코 ‘망자의 날’ 행사」 (2022. 10. 24.) · 죽은 이의 영혼을 맞이하는 해골 분장과 제단에 주목해 보자.</span></b><a class="btn" href="https://youtu.be/F8AkBLqglo0?si=aYa4_SRep1LNkyZ_" target="_blank" rel="noopener">YouTube에서 보기</a></div>
+    <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/F8AkBLqglo0" title="함께 보기 — 망자의 날" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  </div>
+
+  <div class="video">
+    <div class="vh"><b>▶ 함께 보기 — 라마단<span>라마단 영상 · 해가 떠 있는 동안의 금식과 기도로 보내는 라마단의 모습에 주목해 보자.</span></b><a class="btn" href="https://youtu.be/4AWrZPwPxW0?si=uhBuBVfqwwm_PAQd" target="_blank" rel="noopener">YouTube에서 보기</a></div>
+    <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/4AWrZPwPxW0" title="함께 보기 — 라마단" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 의례의 의미 해석하기 ♣ 기념일은 왜 다시 돌아올까?</span>
+    <p style="margin:.2em 0 .5em">반복되는 기념일은 단순히 달력의 날짜가 다시 돌아오는 것과 무엇이 다른가? 성탄절·망자의 날·라마단의 의례는 과거의 사건을 현재의 삶과 어떻게 연결하는가?</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 달력의 날짜는 그냥 지나가지만, 기념일의 의례는 과거의 사건을 다시 지금 여기로 불러온다. 성탄절에 사람들은 예수의 탄생을 단순히 기억하는 것이 아니라 축하하며 그 기쁨을 새롭게 경험하고, 라마단의 금식은 무함마드가 계시를 받은 시간을 몸으로 다시 살게 한다. 망자의 날에는 제단을 차려 죽은 이를 지금의 가족 곁으로 맞아들인다. 이렇게 의례는 흘러가 버린 과거를 반복하여 현재 속에 되살린다는 점에서 평범한 시간과 다르다.</div>
+  </div>
+
+  <div class="recall">
+    <h4>교과서 밖 심화 — 종교적 인간에게 시간도 균질하지 않다<span>엘리아데 『성과 속』 2장 「성스러운 시간과 신화」의 내용 정리</span></h4>
+    <div class="body">
+      <p>평범한 시간은 흘러가면 다시 돌아오지 않는다. 그러나 종교적 인간은 축제와 의례를 통해 신화 속 <b><span class="bl" data-a="태초" tabindex="0" role="button">ㅌㅊ</span>의 시간</b>을 다시 현재로 불러온다. 그래서 성스러운 시간은 해마다 되풀이하여 새롭게 체험할 수 있는 시간이다.</p>
+      <p>• 새해 의례는 세계가 처음 창조되던 순간을 되풀이하여 시간과 세계를 다시 <span class="bl" data-a="새롭게" tabindex="0" role="button">ㅅㄹㄱ</span> 하는 일이다. 우리가 새해 첫날 해돋이를 보고 다짐을 새로 하는 모습에도 이 흔적이 남아 있다.</p>
+    </div>
+  </div>
+
+  <h3><span class="n">7.</span>우리 곁에 있는 종교성 — 토테미즘</h3>
+  <div class="outline">
+    <p class="oh">■ 토테미즘</p>
+    <ul>
+      <li>뜻: 원시 종교로서 특정 <span class="bl" data-a="동물" tabindex="0" role="button">ㄷㅁ</span>이나 식물을 숭배하는 것</li>
+      <li>예: 단군 신화 속의 곰과 호랑이 <span class="arrow">→</span> 우리 조상들이 곰과 호랑이를 <span class="bl" data-a="토템" tabindex="0" role="button">ㅌㅌ</span>으로 삼았음을 의미</li>
+    </ul>
+    <p class="oh">■ 현대 사회에서는 토테미즘이 사라졌을까?</p>
+    <ul>
+      <li>프로 야구 구단의 절반: 팀의 이름과 상징을 호랑이, 곰, 공룡, 독수리, 사자 등의 동물로 채택</li>
+      <li>의미: 당당하고 멋지게 경기에 임하겠다는 선수들의 마음가짐을 드러냄</li>
+      <li>교과서의 설명: 현대 사회의 토템은 과거처럼 <span class="bl" data-a="숭배" tabindex="0" role="button">ㅅㅂ</span>의 대상은 아니지만, 집단 구성원이 갖는 <span class="bl" data-a="태도" tabindex="0" role="button">ㅌㄷ</span>를 드러낸다는 점에서 여전히 유의미함</li>
+    </ul>
+  </div>
+  <p class="warn"><b>정확하게 이해하기</b> — 동물 로고를 쓰는 것과 전통 사회의 토테미즘은 같은 현상이 아니다. 전통 사회의 토템은 집단의 조상이나 신성한 존재로 여겨져 금기와 의례의 대상이 되었다. 현대 사회의 동물 상징은 전통 사회의 토테미즘과 <span class="bl" data-a="동일" tabindex="0" role="button">ㄷㅇ</span>하지 않지만, 집단의 <span class="bl" data-a="정체성" tabindex="0" role="button">ㅈㅊㅅ</span>과 구성원의 소속감을 나타낸다는 점에서 비교해 볼 수 있다.</p>
+  <small class="src">천재 186쪽 「고전과 일상」</small>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 나만의 토템 · 천재 186쪽</span>
+    <ol>
+      <li>프로 야구 구단처럼 현대 사회에서 토테미즘과 비교해 볼 수 있는 상징의 사례를 찾아보고, 전통 사회의 토템과 무엇이 같고 다른지 말해 보자.</li>
+      <li>나를 상징하는 ‘나만의 토템’이 있는지 생각해 보고, 친구들에게 소개해 보자.</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 학교 교표나 동아리 상징에 들어간 동물, 국가대표 축구팀의 호랑이 엠블럼, 지역 축제의 마스코트 등이 있다. 이들은 집단의 정체성과 소속감을 나타낸다는 점에서 토템과 닮았지만, 누구도 그 동물을 조상이나 신성한 존재로 여기거나 그에 대한 금기를 지키지는 않는다는 점에서 다르다. ② 나의 토템은 거북이다. 느리지만 멈추지 않는 거북이처럼 공부도 꾸준히 하고 싶어서 필통에 거북이 열쇠고리를 달고 다닌다. 시험 전에 그것을 만지면 마음이 차분해진다.</div>
+  </div>
+
+  <!-- ===================== 4 ===================== -->
+  <h2 class="part">[4] 깊이 생각하기</h2>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 ① ♣ 성현과 성스러움의 경험</span>
+    <p style="margin:.2em 0 .5em">엘리아데는 한 그루의 나무가 일상적인 식물이면서 동시에 성스러운 것을 드러내는 존재가 될 수 있다고 보았다.</p>
+    <ol>
+      <li>위 사례를 활용하여 성현의 의미를 서술하시오.</li>
+      <li>모든 사람이 같은 나무를 성스럽게 경험하는 것은 아닌 이유를 엘리아데의 관점에서 설명하시오.</li>
+      <li>개인적으로 소중하게 여기는 물건과 종교적 인간이 경험하는 성스러운 대상 사이의 공통점 또는 차이점을 서술하시오.</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — (1) 성현은 성스러운 것이 속된 사물이나 현실을 통해 자신을 드러내는 사건이다. 나무는 여전히 땅에 뿌리내린 식물이지만, 종교적 인간에게는 땅과 하늘, 인간과 신을 잇는 ‘나무 이상의 나무’로 경험된다. (2) 성스러움은 사물의 물리적 성질에 있는 것이 아니라 종교적 인간에게 드러나는 것이기 때문이다. 일상적이고 세속적인 경험의 차원에서 보는 사람에게 그 나무는 한 그루의 식물일 뿐이다. (3) 공통점: 둘 다 일상적인 사물이 그대로 남아 있으면서도 다른 사물과 질적으로 다르게 경험된다. 차이점: 개인적으로 소중한 물건은 추억과 애착에서 특별함이 생기지만, 종교적 인간이 경험하는 성스러운 대상은 초월적 실재가 드러나는 것으로 경험되며, 대개 공동체의 의례와 연결되어 있다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 ② ♣ 과학의 시대에도 인간은 ‘종교적 인간’인가?</span>
+    <p style="margin:.2em 0 .5em">“과학 기술이 발달한 오늘날, 인간은 더 이상 종교를 필요로 하지 않는다.” 이 주장에 대한 나의 입장을 정하고, 그 근거를 엘리아데의 개념(성과 속, 종교적 상상력, 구원, 종교적 인간 중 둘 이상)을 활용하여 제시해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 나는 이 주장에 반대한다. 과학 기술은 세상을 측정하고 바꾸는 힘을 주었지만, 거대한 자연과 재난 앞에서 인간은 여전히 불완전하고 무력하다. 이때 인간은 <b>종교적 상상력</b>을 통해 위로와 삶의 원동력을 얻는다. 수술실 밖의 기도처럼, 과학이 발달한 오늘날에도 인간은 분열에서 전체성으로 돌아가는 <b>구원</b>을 바란다. 또 종교를 갖지 않은 사람도 고향, 기념일, 소중한 물건에 의미를 부여하며 일상(속) 속에서 성스러운 것을 경험한다. 그러므로 엘리아데의 관점에서 보면 인간은 과학의 시대에도 여전히 <b>종교적 인간</b>이며, 종교성은 형태를 바꾸어 우리 삶에 남아 있다. 다만 이러한 경험을 심리적·문화적으로 설명하는 관점도 있으므로, 종교가 모든 사람에게 필요하다고 단정할 수는 없다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 비판적으로 따져 보기 ♣ “모든 인간은 종교적 인간이다”라는 주장</span>
+    <p style="margin:.2em 0 .5em">엘리아데는 종교를 갖지 않은 현대인도 종교적 인간의 후예라고 보았다. 이 주장에 대해 제기할 수 있는 반론을 한 가지 이상 쓰고, 엘리아데의 입장에서 그 반론에 답해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — <b>반론</b>: 내가 고향이나 할아버지의 시계를 특별하게 여기는 것은 추억이나 애착 같은 심리적인 현상일 뿐이다. 이것까지 ‘종교성’이라 부르면 종교의 의미가 지나치게 넓어져, 신을 믿지 않는 사람의 삶을 종교의 언어로 덮어씌우게 된다. 또 예루살렘처럼 여러 종교가 같은 곳을 성지로 여길 때 갈등이 생기기도 하므로, 성스러움을 강조하는 것이 언제나 삶에 질서와 평화를 주는 것은 아니다. <b>엘리아데의 입장에서 답하기</b>: 엘리아데는 추억과 애착이 곧 성스러움이라고 말하지 않는다. 다만 종교가 없는 사람도 어떤 공간과 시간을 다른 것과 질적으로 다르게 경험한다는 사실 자체가, 성스러운 것을 경험하던 종교적 인간의 방식이 세속화된 형태로 남아 있다는 증거라고 답할 것이다. <b>나의 평가</b>: 이 답변은 비종교인의 경험을 설명하는 흥미로운 틀이지만, 그 경험을 당사자가 종교적인 것으로 받아들이지 않는다면 ‘종교성’이라는 이름을 붙이는 것은 지나친 일반화일 수 있다.</div>
+  </div>
+
+  <!-- ===================== 5 ===================== -->
+  <h2 class="part">[5] 한눈에 정리하기</h2>
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><th>엘리아데</th><td>루마니아 출신 철학자·종교학자 · 성스러움[聖]과 속됨[俗]을 구분하고 연구 · 『성과 속』</td></tr>
+        <tr><th>불완전한 인간</th><td>육체적·사고·윤리적으로 불완전하고 유한함 → 초월적이고 완전한 존재를 갈망 → 종교의 발생 (교과서의 해석)</td></tr>
+        <tr class="hi"><th>성과 속</th><td>속: 일상적·세속적 경험의 차원 · 성: 속된 현실과 질적으로 구별되는 성스러운 실재의 차원 · 성현: 성스러운 것이 속된 사물을 통해 드러남 → 결국 ‘한 그루의 나무’</td></tr>
+        <tr><th>구원</th><td>엘리아데의 설명: 속에서 성으로, 분열에서 전체성으로의 회귀 (어원은 사실, 그 연결은 해석)</td></tr>
+        <tr><th>성스러운 공간</th><td>예루살렘의 바위 사원·통곡의 벽·겟세마네 동산 · 세계의 중심 · 문지방</td></tr>
+        <tr><th>성스러운 시간</th><td>성탄절·망자의 날·라마단 · 축제와 의례로 태초의 시간을 되살림</td></tr>
+        <tr class="hi"><th>종교적 인간</th><td>엘리아데의 해석: 인간은 원초적으로 종교성을 지님 · 세속적 인간도 종교적 인간의 후예 ↔ 심리적·문화적 해석도 가능</td></tr>
+        <tr><th>종교의 가치와 한계</th><td>개인: 안식과 구원, 불안 극복 · 사회: 법과 규칙 준수로 안정에 기여 · 의례와 문화: 불안감을 풀어 줌 ↔ 신념의 차이가 갈등과 배제로 이어지기도 함</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 개념도 그리기 ♣ 엘리아데의 개념을 화살표로 이어 보자</span>
+    <p style="margin:.2em 0 .5em">다음 개념을 모두 사용하여, 개념 사이의 관계를 화살표와 짧은 설명으로 연결한 개념도를 그려 보자.<br><b>속 · 성 · 성현 · 성스러운 공간 · 성스러운 시간 · 종교적 인간 · 구원 · 불완전한 인간</b></p>
+    <div class="lines"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 불완전한 인간 → (초월을 갈망) → 종교적 인간 → (속된 세계 속에서) → 성현: 성이 속된 사물을 통해 드러남 → 성스러운 공간(세계의 중심·문지방)과 성스러운 시간(축제·의례로 되살린 태초의 시간)으로 경험됨 → 구원: 속에서 성으로, 분열에서 전체성으로 회귀</div>
+  </div>
+
+  <div class="foot">
+    ※ ‘천재’는 천재교육 『인문학과 윤리』 Ⅵ-1(181~187쪽, 208쪽), ‘길벗’은 길벗 『인문학과 윤리』 Ⅵ-1(173~178쪽)이다. 『성과 속』 인용문의 번역은 교과서를 따랐으며, ‘교과서 밖 심화’ 표시 부분은 『성과 속』의 내용을 학습지용으로 정리한 것이다. (2판: 성현 개념의 정확성 보완, 엘리아데의 해석과 사실의 구분, 비판적 사고 활동 추가)<br>
+    2026-2 세화여자고등학교 인문학과 윤리 · 원전 기반 학습 자료 ⑧ 엘리아데 『성과 속』
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <p style="margin-top:0"><b>새 창이 열리지 않았습니다.</b><br>아래 주소를 복사해 사파리 주소창에 붙여 넣으면 전체 화면으로 볼 수 있습니다.</p>
+    <div class="url" id="murl"></div>
+    <div style="display:flex; gap:8px; justify-content:flex-end">
+      <button class="btn" id="mcopy" type="button">주소 복사</button>
+      <button class="btn" id="mclose" type="button">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  document.querySelectorAll(".bl").forEach(function(el){
+    el.dataset.hint = el.textContent;
+    function t(){ var on = el.classList.toggle("show"); el.textContent = on ? el.dataset.a : el.dataset.hint; }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+  document.querySelectorAll(".ch").forEach(function(el){
+    var opts = el.textContent.split("|"), idx = parseInt(el.dataset.a, 10);
+    el.innerHTML = opts.map(function(o,i){ return '<span class="o' + (i===idx?" a":"") + '">' + o + '</span>'; }).join("");
+    function t(){ el.classList.toggle("show"); }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+
+  var allOn = false, allBtn = document.getElementById("all");
+  allBtn.addEventListener("click", function(){
+    allOn = !allOn;
+    allBtn.classList.toggle("on", allOn);
+    allBtn.textContent = allOn ? "정답 숨기기" : "정답 모두 보기";
+    document.querySelectorAll(".bl").forEach(function(el){ el.classList.toggle("show", allOn); el.textContent = allOn ? el.dataset.a : el.dataset.hint; });
+    document.querySelectorAll(".ch").forEach(function(el){ el.classList.toggle("show", allOn); });
+  });
+
+  var fs = 1;
+  function setFs(v){
+    fs = Math.min(1.6, Math.max(0.85, v));
+    document.documentElement.style.setProperty("--fs", fs.toFixed(2) + "rem");
+    try{ localStorage.setItem("el-fs", String(fs)); }catch(e){}
+  }
+  try{ var s = localStorage.getItem("el-fs"); if(s) setFs(parseFloat(s)); }catch(e){}
+  document.getElementById("fplus").addEventListener("click", function(){ setFs(fs + 0.08); });
+  document.getElementById("fmin").addEventListener("click", function(){ setFs(fs - 0.08); });
+  document.getElementById("prt").addEventListener("click", function(){ window.print(); });
+
+  var immBtn = document.getElementById("imm");
+  immBtn.addEventListener("click", function(){
+    var el = document.documentElement;
+    if(document.fullscreenElement){ document.exitFullscreen(); return; }
+    var p = el.requestFullscreen ? el.requestFullscreen() : null;
+    if(p && p.catch){ p.catch(fallback); } else { setTimeout(function(){ if(!document.fullscreenElement) fallback(); }, 400); }
+    function fallback(){ var on = document.body.classList.toggle("immersive"); immBtn.classList.toggle("on", on); }
+  });
+
+  (function(){
+    [["apple-mobile-web-app-capable","yes"],["apple-mobile-web-app-status-bar-style","default"],["mobile-web-app-capable","yes"],["apple-mobile-web-app-title","엘리아데 성과 속"]].forEach(function(m){
+      if(document.querySelector('meta[name="'+m[0]+'"]')) return;
+      var e = document.createElement("meta"); e.name = m[0]; e.content = m[1]; document.head.appendChild(e);
+    });
+  })();
+
+  var framed = false; try{ framed = window.self !== window.top; }catch(e){ framed = true; }
+  if(framed){
+    var pop = document.getElementById("pop");
+    pop.hidden = false; pop.href = location.href;
+    pop.addEventListener("click", function(){
+      setTimeout(function(){
+        if(document.hasFocus()){
+          document.getElementById("murl").textContent = location.href;
+          document.getElementById("modal").classList.add("on");
+        }
+      }, 500);
+    });
+    document.getElementById("mclose").addEventListener("click", function(){ document.getElementById("modal").classList.remove("on"); });
+    document.getElementById("mcopy").addEventListener("click", function(){
+      var btn = this, t = location.href;
+      function sel(){ var n = document.getElementById("murl"), r = document.createRange(); r.selectNodeContents(n); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try{ navigator.clipboard.writeText(t).then(function(){ btn.textContent = "복사됨"; }, sel); }catch(e){ sel(); }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
