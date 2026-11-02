@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>장자와 칸트, 자유를 묻다 — 인문학과 윤리 학습지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F5FA; --card:#FFFFFF; --ink:#211C2B; --sub:#5E5870; --line:#DCD5E6;
+  --acc:#5B3E86; --acc-soft:#EEE8F6; --ans:#B4262B; --ask:#A2622A; --ask-soft:#FBF3EA;
+  --ok:#2E7D4F; --no:#B4262B; --hm:#3D2C5C;
+  --fs:16.5px;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --serif:"Noto Serif KR","AppleMyungjo","Batang",serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1B1822; --card:#25212E; --ink:#ECE8F3; --sub:#B3ABC4; --line:#3E3750;
+    --acc:#B79BE3; --acc-soft:#2F2840; --ans:#F08A8D; --ask:#E0A86E; --ask-soft:#30271F;
+    --ok:#7FCB9C; --no:#F08A8D; --hm:#D9CBF2; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1B1822; --card:#25212E; --ink:#ECE8F3; --sub:#B3ABC4; --line:#3E3750;
+  --acc:#B79BE3; --acc-soft:#2F2840; --ans:#F08A8D; --ask:#E0A86E; --ask-soft:#30271F;
+  --ok:#7FCB9C; --no:#F08A8D; --hm:#D9CBF2; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--fs);line-height:1.75;word-break:keep-all;overflow-wrap:break-word}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+
+/* toolbar */
+.tool{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line)}
+.tool .in{max-width:860px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tool .nm{font-weight:700;color:var(--acc);margin-right:auto;font-size:.9em}
+.tool button{font:inherit;font-size:.85em;padding:5px 11px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.tool button:hover{border-color:var(--acc)}
+.tool button[aria-pressed="true"]{background:var(--acc);color:var(--card);border-color:var(--acc)}
+button:focus-visible,.bl:focus-visible,.ch button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+main{max-width:860px;margin:0 auto;padding:24px 16px 80px}
+body.focus .tool .opt{display:none}
+body.focus main{max-width:980px}
+
+/* masthead */
+.mast{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;font-size:.82em;color:var(--sub);border-bottom:2px solid var(--acc);padding-bottom:6px}
+.titlebox{margin:22px 0 10px;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:4px 10px 10px 4px}
+.titlebox .kick{font-size:.86em;color:var(--sub)}
+.titlebox h1{font-family:var(--serif);font-size:1.75em;line-height:1.35;margin:6px 0 8px;color:var(--ink)}
+.titlebox .scope{font-size:.88em;color:var(--sub)}
+.who{display:flex;justify-content:flex-end;gap:18px;font-size:.92em;margin:10px 2px 26px}
+.who span{border-bottom:1px solid var(--ink);padding:0 4px}
+
+h2.part{font-family:var(--serif);font-size:1.4em;margin:48px 0 14px;padding:10px 14px;background:var(--acc);color:var(--card);border-radius:6px}
+h2.part small{font-family:var(--sans);font-weight:400;font-size:.62em;opacity:.9;margin-left:8px}
+h3{font-size:1.12em;margin:34px 0 10px;color:var(--acc);padding-bottom:4px;border-bottom:1px solid var(--line)}
+h4{font-size:1em;margin:20px 0 6px}
+p{margin:8px 0}
+.lead{color:var(--sub)}
+strong{color:var(--ink)}
+.key{color:var(--acc);font-weight:700}
+
+/* source box */
+.src{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin:14px 0}
+.src .sh{font-size:.82em;font-weight:700;color:var(--acc);margin-bottom:6px}
+.src .sh span{font-weight:400;color:var(--sub)}
+.src .ko{font-family:var(--serif);line-height:1.95}
+.src .hm{font-family:var(--serif);font-size:1.08em;color:var(--hm);letter-spacing:.06em;margin:4px 0 0}
+.src .yin{font-size:.8em;color:var(--sub);margin:0 0 8px}
+.src .dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-family:var(--serif);line-height:1.85}
+.src .dl b{font-family:var(--sans);font-weight:700;color:var(--acc);white-space:nowrap}
+.easy{margin-top:10px;padding:8px 12px;background:var(--acc-soft);border-radius:6px;font-size:.93em}
+.easy::before{content:"쉽게 말하면 ";font-weight:700;color:var(--acc)}
+
+/* boxes */
+.readbox{background:var(--card);border:1px dashed var(--acc);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.95em}
+.readbox .rh{font-weight:700;color:var(--acc);margin-bottom:4px}
+.recall{background:var(--acc-soft);border-radius:8px;padding:12px 16px;margin:14px 0}
+.recall .rh{font-weight:700;color:var(--acc);margin-bottom:4px}
+.warn{border-left:4px solid var(--ans);background:var(--card);padding:10px 14px;margin:14px 0;border-radius:0 8px 8px 0;font-size:.95em}
+.warn .rh{font-weight:700;color:var(--ans)}
+.ask{background:var(--ask-soft);border:1px solid color-mix(in srgb,var(--ask) 35%,transparent);border-radius:8px;padding:14px 16px;margin:16px 0}
+.ask .q{font-weight:700;color:var(--ask)}
+.ask .q .no{display:inline-block;min-width:1.6em}
+.write{min-height:4.6em;margin:8px 0 4px;background:repeating-linear-gradient(transparent 0 calc(1.75em - 1px),var(--line) calc(1.75em - 1px) 1.75em)}
+.write.s{min-height:3em}
+.sample{margin-top:8px;padding:8px 12px;border-left:3px solid var(--ask);background:var(--card);font-size:.92em;color:var(--sub);border-radius:0 6px 6px 0}
+.sample::before{content:"예시 답안  ";font-weight:700;color:var(--ask)}
+
+/* blanks */
+.bl{display:inline-block;min-width:3.5em;padding:0 4px;margin:0 2px;border-bottom:1.5px solid var(--ink);color:transparent;cursor:pointer;line-height:1.45;text-align:center;border-radius:2px;user-select:none}
+.bl.on,body.show .bl{color:var(--ans);font-weight:700;background:color-mix(in srgb,var(--ans) 7%,transparent)}
+
+/* choice */
+.ch{display:inline-flex;gap:4px;vertical-align:middle;flex-wrap:wrap}
+.ch button{font:inherit;font-size:.85em;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);cursor:pointer}
+.ch button.ok{background:var(--ok);border-color:var(--ok);color:var(--card)}
+.ch button.no{border-color:var(--no);color:var(--no);text-decoration:line-through}
+body.show .ch button[data-right]{background:var(--ok);border-color:var(--ok);color:var(--card)}
+
+/* tables */
+.tw{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;min-width:520px;background:var(--card);font-size:.94em}
+th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+th{background:var(--acc-soft);color:var(--acc);font-weight:700}
+td.c,th.c{text-align:center}
+ol.items{padding-left:1.4em}
+ol.items li{margin:6px 0}
+ol.items li .ch{margin-left:6px}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.flow .st{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:.92em}
+.flow .st.end{border-color:var(--ans);color:var(--ans);font-weight:700}
+.flow .ar{color:var(--sub)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.two > div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.two h4{margin:0 0 6px;color:var(--acc)}
+.quote{font-family:var(--serif);font-size:1.05em;line-height:1.9;padding:12px 16px;background:var(--card);border-radius:8px;border:1px solid var(--line);margin:10px 0}
+.quote cite{display:block;font-family:var(--sans);font-style:normal;font-size:.8em;color:var(--sub);margin-top:4px}
+.foot{margin-top:56px;padding-top:10px;border-top:1px solid var(--line);font-size:.8em;color:var(--sub);text-align:center}
+
+/* two worlds figure */
+.fig{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto}
+.fig .cap{font-size:.85em;color:var(--sub);text-align:center;margin-top:6px}
+.kd text{font-family:var(--sans);fill:var(--ink)}
+.kd .tt{font-size:15px;font-weight:700}
+.kd .st{font-size:12.5px;fill:var(--sub)}
+.kd .bt{font-size:14px;font-weight:700}
+.kd .bs{font-size:12px;fill:var(--sub)}
+.kd .up{fill:var(--acc-soft);stroke:var(--acc);stroke-width:1}
+.kd .dn{fill:color-mix(in srgb,var(--ask) 9%,var(--card));stroke:var(--ask);stroke-width:1}
+.kd .bx{fill:var(--card);stroke:var(--line);stroke-width:1}
+.kd .bxa{fill:var(--acc-soft);stroke:var(--acc);stroke-width:1.5}
+.kd .hm{fill:var(--card);stroke:var(--ink);stroke-width:1;stroke-dasharray:4 3}
+.kd .ln{stroke:var(--sub);stroke-width:1.5;fill:none}
+.kd .la{stroke:var(--acc);stroke-width:1.8;fill:none;stroke-dasharray:6 4}
+.kd .tu{fill:var(--acc)}
+.kd .td{fill:var(--ask)}
+
+@media (max-width:640px){
+  :root{--fs:15.5px}
+  .two{grid-template-columns:1fr}
+  .titlebox{padding:16px}
+  .titlebox h1{font-size:1.45em}
+  .src .dl{grid-template-columns:1fr}
+}
+@media print{
+  :root{--paper:#fff;--card:#fff;--ink:#000;--sub:#444;--line:#bbb;--acc:#5B3E86;--acc-soft:#F1ECF7;--ans:#B4262B;--ask:#A2622A;--ask-soft:#fff;color-scheme:light;padding:0}
+  body::before,.tool{display:none}
+  main{max-width:none;padding:0}
+  body{font-size:10.5pt}
+  .bl,body.show .bl,.bl.on{color:transparent !important;background:none !important}
+  .ch button.ok,.ch button.no,body.show .ch button[data-right]{background:#fff !important;color:#000 !important;border-color:#bbb !important;text-decoration:none !important}
+  h2.part{break-after:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h3{break-after:avoid}
+  .src,.ask,.recall,.readbox,table,.two > div{break-inside:avoid}
+  @page{size:A4;margin:14mm 13mm}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+<div class="tool"><div class="in">
+  <span class="nm">장자와 칸트, 자유를 묻다</span>
+  <button type="button" id="bShow" aria-pressed="false">정답 모두 보기</button>
+  <button type="button" class="opt" id="bMinus" aria-label="글자 작게">A−</button>
+  <button type="button" class="opt" id="bPlus" aria-label="글자 크게">A+</button>
+  <button type="button" id="bFocus" aria-pressed="false">몰입 모드</button>
+  <button type="button" class="opt" id="bNew">새 창</button>
+  <button type="button" class="opt" id="bPrint">인쇄</button>
+</div></div>
+
+<main>
+
+<div class="mast">
+  <span>2026-2 세화여자고등학교 · 인문학과 윤리</span>
+  <span>원전 기반 학습 자료 ⑧ · Ⅲ. 자유와 평등</span>
+</div>
+
+<div class="titlebox">
+  <div class="kick">Ⅲ-1 우리는 자유롭고 평등한 존재일까?</div>
+  <h1>나는 무엇에 묶여 있고,<br>어떻게 풀려날 수 있을까</h1>
+  <div class="scope">장자와 칸트가 말하는 자유 · 교과서 78~83쪽 중 ‘자유’ 부분 (평등은 다음 학습지에서)</div>
+</div>
+<div class="who"><span>2학년 (&nbsp;&nbsp;&nbsp;)반</span><span>(&nbsp;&nbsp;&nbsp;)번</span><span>이름 (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</span></div>
+
+<!-- ============ 0 ============ -->
+<h2 class="part">0. 수업 열기</h2>
+
+<h3>좋은 문구 읽기</h3>
+<div class="two">
+  <div>
+    <h4>장자</h4>
+    <div class="quote">발을 잊는 것은 신발이 꼭 맞기 때문이고,<br>허리를 잊는 것은 허리띠가 꼭 맞기 때문이다.<cite>『장자』 「달생(達生)」</cite></div>
+  </div>
+  <div>
+    <h4>칸트</h4>
+    <div class="quote">생각할수록 감탄과 경외로 마음을 채우는 두 가지가 있다. 내 위의 별이 빛나는 하늘과 내 안의 도덕 법칙이다.<cite>칸트, 『실천이성비판』 맺음말 (칸트의 묘비명)</cite></div>
+  </div>
+</div>
+<p class="lead">한 사람은 ‘잊어버릴 때’ 자유롭다고 하고, 다른 한 사람은 ‘스스로 법칙을 세울 때’ 자유롭다고 합니다. 오늘 학습이 끝나면 두 문장이 무슨 뜻인지 설명할 수 있게 됩니다.</p>
+
+<h3>생각 열기</h3>
+<div class="ask">
+  <p class="q"><span class="no">1.</span> 교과서 77쪽 어부와 사업가의 대화를 읽어 봅시다. 두 사람 가운데 누가 더 자유롭다고 생각하나요? 그렇게 판단한 기준은 무엇인가요?</p>
+  <div class="write"></div>
+  <div class="sample">어부가 더 자유롭다. 사업가는 ‘더 많이 벌어야 나중에 즐길 수 있다’는 생각에 묶여 지금을 미루지만, 어부는 이미 충분하다고 여기고 원하는 삶을 지금 누리기 때문이다. 나의 기준은 ‘무엇에 쫓기지 않고 스스로 만족할 수 있는가’이다.</div>
+</div>
+<div class="ask">
+  <p class="q"><span class="no">2.</span> 오늘 나를 묶었던 것을 떠올려 표에 하나씩 적어 봅시다. 그중 내가 벗어날 수 있는 것과 벗어날 수 없는 것을 구분해 봅시다.</p>
+  <div class="tw"><table>
+    <tr><th style="width:26%">나를 묶는 것</th><th>오늘 나의 경우</th><th class="c" style="width:22%">벗어날 수 있다 / 없다</th></tr>
+    <tr><td>타인의 시선과 평가</td><td></td><td></td></tr>
+    <tr><td>욕망 (졸음, 식욕, 스마트폰 …)</td><td></td><td></td></tr>
+    <tr><td>관습·규칙·법</td><td></td><td></td></tr>
+    <tr><td>자연법칙 (중력, 배고픔 …)</td><td></td><td></td></tr>
+  </table></div>
+  <div class="sample">타인의 시선: 단체 사진 속 내 얼굴이 신경 쓰여 하루 종일 기분이 가라앉았다(벗어날 수 있다). 욕망: 자기 전에 휴대 전화를 놓지 못했다(벗어날 수 있다). 자연법칙: 4교시에 배가 고파 집중이 안 됐다(벗어날 수 없다).</div>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2 class="part">[1] 같은 질문, 다른 답 <small>장자와 칸트 만나기</small></h2>
+
+<div class="tw"><table>
+  <tr><th style="width:18%"></th><th>장자 (莊子, B.C. 365?~B.C. 270?)</th><th>칸트 (I. Kant, 1724~1804)</th></tr>
+  <tr><td>시대·장소</td><td>중국 전국 시대, 송나라 몽 지역. 나라끼리 전쟁이 끊이지 않던 때</td><td>18세기 프로이센 쾨니히스베르크. 과학 혁명 뒤, 계몽의 시대</td></tr>
+  <tr><td>사상</td><td>도가. 유교가 강조한 인위적 예교(禮敎)를 비판</td><td>비판 철학. 인간 이성이 할 수 있는 일과 그 한계를 따짐</td></tr>
+  <tr><td>오늘 읽을 책</td><td>『장자』 — 「소요유」 「대종사」 「추수」 「변무」 「달생」</td><td>『윤리형이상학 정초』(1785), 『실천이성비판』(1788)</td></tr>
+  <tr><td>삶의 한 장면</td><td>초나라 왕이 재상 자리를 제안했으나 거절하고 글쓰기에 전념함</td><td>평생 고향을 거의 떠나지 않고, 매일 같은 시각에 산책했다는 일화로 유명함</td></tr>
+</table></div>
+
+<div class="readbox">
+  <div class="rh">자유를 묻는 두 가지 질문</div>
+  <p><b>질문 1.</b> 무엇이 나를 묶고 있는가? (구속의 원인)<br>
+  <b>질문 2.</b> 어떻게 하면 거기서 풀려날 수 있는가? (자유에 이르는 길)</p>
+  <p>장자와 칸트는 두 질문에 전혀 다르게 답합니다. 학습지를 따라가며 두 사람의 답을 찾고, [4]에서 나란히 놓아 봅시다.</p>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2 class="part">[2] 장자 <small>스스로 그러함의 자유</small></h2>
+
+<h3>1. 자연(自然)과 인위(人爲)</h3>
+<p>장자에 따르면 자유는 <span class="key">자연(自然)</span>, 곧 ‘스스로[自] 그러함[然]’입니다. 여기서 자연은 산과 바다 같은 대자연이 아니라, 어떤 것이 <b>본래 생긴 그대로 저절로 그러한 상태</b>를 말합니다. 우리는 자연스러울 때 자유롭고, 자연을 벗어나 <span class="key">인위(人爲)</span>를 일으킬 때 묶입니다.</p>
+
+<div class="src">
+  <div class="sh">[원문 ①] <span>『장자』 「추수(秋水)」</span></div>
+  <p class="hm">牛馬四足 是謂天 落馬首 穿牛鼻 是謂人</p>
+  <p class="yin">우마사족 시위천 낙마수 천우비 시위인</p>
+  <p class="ko">하백이 물었다. “무엇을 하늘(자연)이라 하고, 무엇을 사람(인위)이라 합니까?” 북해약이 대답하였다. “소와 말에게 발이 네 개인 것, 이것을 하늘이라 한다. 말 머리에 굴레를 씌우고 소의 코를 뚫는 것, 이것을 사람이라 한다. 그러므로 사람의 일로 하늘을 해치지 말라.”</p>
+  <div class="easy">네 발로 들판을 달리는 것은 소와 말이 ‘스스로 그러한’ 모습이다. 굴레와 코뚜레는 사람이 자기 쓸모에 맞추려고 덧씌운 것, 곧 인위다.</div>
+</div>
+
+<div class="src">
+  <div class="sh">[원문 ②] <span>『장자』 「변무(騈拇)」</span></div>
+  <p class="hm">鳧脛雖短 續之則憂 鶴脛雖長 斷之則悲</p>
+  <p class="yin">부경수단 속지즉우 학경수장 단지즉비</p>
+  <p class="ko">긴 것도 남는 것이 아니고, 짧은 것도 모자라는 것이 아니다. 그러므로 오리 다리가 짧다고 이어 주면 오리가 괴로워하고, 학 다리가 길다고 잘라 주면 학이 슬퍼한다. 본래 긴 것은 자를 것이 아니고, 본래 짧은 것은 이을 것이 아니다.</p>
+  <div class="easy">‘길다·짧다’는 사람이 비교해서 붙인 이름일 뿐이다. 그 이름에 맞춰 고치려 들면 오히려 상대를 해친다.</div>
+</div>
+
+<div class="recall">
+  <div class="rh">바로 확인</div>
+  <p>• 자연: <span class="bl" data-a="스스로 그러함"></span>. 장자가 생각하는 자유이다.</p>
+  <p>• 인위: 겉모습으로 이것과 저것을 <span class="bl" data-a="분별"></span>하고, 그것이 전부라고 여기는 것이다.</p>
+  <p>• 원문 ①에서 인위에 해당하는 것: <span class="bl" data-a="말 머리의 굴레, 소의 코뚜레"></span></p>
+</div>
+
+<div class="ask">
+  <p class="q"><span class="no">3.</span> 우리 학교나 사회에서 ‘오리 다리를 이어 붙이거나 학 다리를 잘라 내는’ 일의 사례를 하나 찾고, 장자라면 무엇이라 말할지 써 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">그림을 좋아하는 친구에게 “성적이 되니 무조건 의대에 가라”고 하는 것. 장자라면 “그 아이의 다리는 본래 그 길이다. 남들이 정한 ‘좋은 길’의 길이에 맞추려 자르면 그 아이는 슬퍼할 뿐이다”라고 말할 것이다.</div>
+</div>
+
+<h3>2. 물(物)과 무물(無物) — 무엇이 나를 묶는가</h3>
+<p>장자는 인위로부터 <span class="key">물(物)</span>이 생겨나고, 사람은 이 물에 묶여 자유를 잃는다고 보았습니다. 물은 단지 ‘물건’이 아닙니다. 우리가 분별하여 붙잡고 있는 <b>모든 사물과 사건</b>, 그리고 <b>인의예악(仁義禮樂) 같은 도덕까지</b> 포함합니다. 장자에게는 ‘착해야 한다’는 도덕 기준조차 사람을 묶는 줄이 될 수 있습니다.</p>
+
+<div class="flow">
+  <span class="st">감각과 앎</span><span class="ar">→</span>
+  <span class="st">분별 (이것 / 저것, 좋다 / 나쁘다)</span><span class="ar">→</span>
+  <span class="st">차별 (귀하다 / 천하다)</span><span class="ar">→</span>
+  <span class="st">물(物)에 매임</span><span class="ar">→</span>
+  <span class="st end">자유를 잃음</span>
+</div>
+<p>그렇다면 물의 구속에서 벗어나려면[<span class="key">무물(無物)</span>] 어떻게 해야 할까요? 장자는 대표적인 인위인 <b>감각과 앎에서 비롯된 분별과 차별의 세계</b>를 떠나, 차별이 없는 세계에서 노닐어야 한다고 말합니다.</p>
+
+<div class="recall">
+  <div class="rh">바로 확인</div>
+  <p>• 장자가 말하는 구속의 출발점은 감각과 <span class="bl" data-a="앎"></span>에서 비롯된 분별과 차별이다.</p>
+  <p>• 물(物)에는 사물과 사건뿐 아니라 <span class="bl" data-a="인의예악"></span> 같은 도덕도 포함된다.</p>
+</div>
+
+<div class="ask">
+  <p class="q"><span class="no">4.</span> 지금 나를 묶고 있는 ‘물’ 하나를 골라, 그것이 어떤 분별에서 생겼는지 적어 봅시다. 그 분별을 내려놓는다면 무엇이 달라질까요?</p>
+  <div class="write"></div>
+  <div class="sample">나를 묶는 물은 ‘등급’이다. 친구와 나를 1등급과 3등급으로 나누는 분별에서 생겼다. 이 분별을 내려놓으면 등급이 아니라 내가 오늘 새로 이해한 것을 볼 수 있고, 친구의 성적을 보며 초조해할 일도 줄어들 것이다.</div>
+</div>
+
+<h3>3. 소요유(逍遙遊) — 기대지 않고 노닐다</h3>
+<p><span class="key">소요유</span>는 ‘구애됨 없이 한가로이 노닌다’는 뜻으로, 장자가 추구한 <b>절대적 자유의 경지</b>입니다. 『장자』의 첫 편 이름이기도 합니다. 그 편에 나오는 열자(列子)의 이야기는 ‘진짜 자유’가 무엇인지 잘 보여 줍니다.</p>
+
+<div class="src">
+  <div class="sh">[원문 ③] <span>『장자』 「소요유」</span></div>
+  <p class="ko">열자는 바람을 타고 다녔는데, 그 모습이 가뿐하고 훌륭하였다. 보름이 지나서야 돌아오곤 했다. 그는 복을 구하는 일에 안달하지 않았다. 그러나 이것은 걸어 다니는 수고는 면했지만 <b>여전히 기대는 것이 있다[猶有所待].</b> 만약 하늘과 땅의 바름을 타고 여섯 기운의 변화를 부리며 끝없는 곳에서 노니는 자라면, 그가 무엇에 기대겠는가?</p>
+  <p class="hm">至人無己 神人無功 聖人無名</p>
+  <p class="yin">지인무기 신인무공 성인무명</p>
+  <p class="ko">그러므로 말한다. 지극한 사람에게는 자기가 없고, 신령한 사람에게는 공적이 없으며, 성스러운 사람에게는 이름이 없다.</p>
+  <div class="easy">열자는 대단해 보이지만 바람이 불어야만 날 수 있다. 무언가에 기대는 자유는 그것이 사라지면 함께 사라진다. 장자의 자유는 기댈 것이 없는 자유, 그리고 ‘나’라는 생각마저 내려놓은 자유이다.</div>
+</div>
+
+<div class="tw"><table>
+  <tr><th style="width:24%"></th><th>열자의 자유</th><th>장자가 말하는 소요유</th></tr>
+  <tr><td>기대는 것</td><td><span class="bl" data-a="있음 (바람)"></span> — 유대(有待)</td><td><span class="bl" data-a="없음"></span> — 무대(無待)</td></tr>
+  <tr><td>성격</td><td>조건이 갖추어질 때만 누리는 자유</td><td>어떤 조건에도 묶이지 않는 <span class="bl" data-a="절대적"></span> 자유</td></tr>
+</table></div>
+
+<div class="ask">
+  <p class="q"><span class="no">5.</span> 내가 ‘날기 위해’ 기대는 바람은 무엇인가요? 그 바람이 멈추면 나는 어떻게 되는지 써 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">나의 바람은 선생님과 부모님의 칭찬이다. 칭찬을 들으면 공부도 즐겁지만, 칭찬이 없으면 금세 의욕을 잃고 ‘내가 잘하고 있나’ 불안해진다. 칭찬이라는 바람이 그쳐도 계속 걸어갈 수 있어야 진짜 나의 자유라고 생각한다.</div>
+</div>
+
+<h3>4. 무기(無己)와 좌망(坐忘) — 잊음으로써 자유로워지다</h3>
+<p>소요유에 이르려면 <span class="key">무기(無己)</span>, 곧 <b>나조차 없는</b> 절대 자연에 머물면서, <b>그 머무름 자체도 잊는</b> <span class="key">좌망(坐忘)</span>의 경지에 이르러야 합니다. 좌망은 ‘조용히 앉아서 우리를 구속하는 일체의 것을 잊어버리는 것’입니다. 장자는 이것을 공자와 그 제자 안회의 대화로 보여 줍니다.</p>
+
+<div class="src">
+  <div class="sh">[원문 ④] <span>『장자』 「대종사(大宗師)」</span></div>
+  <div class="dl">
+    <b>안회</b><span>제가 나아졌습니다. 인의(仁義)를 잊었습니다.</span>
+    <b>공자</b><span>좋다. 그러나 아직 멀었다.</span>
+    <b>안회</b><span>(며칠 뒤) 제가 나아졌습니다. 예악(禮樂)을 잊었습니다.</span>
+    <b>공자</b><span>좋다. 그러나 아직 멀었다.</span>
+    <b>안회</b><span>(며칠 뒤) 제가 나아졌습니다. 좌망하게 되었습니다.</span>
+    <b>공자</b><span>(깜짝 놀라며) 무엇을 좌망이라 하느냐?</span>
+    <b>안회</b><span>손발과 몸을 잊고, 귀와 눈의 작용을 물리쳐, 형체를 떠나고 앎을 버려서 크게 통하는 도(道)와 하나가 되는 것, 이것을 좌망이라 합니다.</span>
+    <b>공자</b><span>도와 하나가 되면 좋고 싫음의 차별이 없어지고, 변화를 따르면 한 곳에 집착하지 않게 된다. 너는 참으로 훌륭하구나. 나도 네 뒤를 따르겠다.</span>
+  </div>
+  <p class="hm">墮肢體 黜聰明 離形去知 同於大通 此謂坐忘</p>
+  <p class="yin">휴지체 출총명 이형거지 동어대통 차위좌망</p>
+  <div class="easy">유교의 성인 공자가 제자에게 “나도 따르겠다”고 말하는 장면은 일부러 비튼 것이다. 유교가 가장 귀하게 여긴 인의와 예악마저 사람을 묶는 인위라는 뜻이다.</div>
+</div>
+
+<div class="tw"><table>
+  <tr><th class="c" style="width:16%">단계</th><th>안회가 잊은 것</th><th style="width:34%">공자의 평가</th></tr>
+  <tr><td class="c">1</td><td><span class="bl" data-a="인의(仁義)"></span> — 마음속 도덕 덕목</td><td>좋다, 그러나 아직 멀었다</td></tr>
+  <tr><td class="c">2</td><td><span class="bl" data-a="예악(禮樂)"></span> — 겉으로 드러나는 예절과 음악</td><td>좋다, 그러나 아직 멀었다</td></tr>
+  <tr><td class="c">3</td><td>몸, 감각, <span class="bl" data-a="앎(지식)"></span>까지 모두 잊고 도와 하나가 됨 = <span class="bl" data-a="좌망"></span></td><td>훌륭하다, 나도 따르겠다</td></tr>
+</table></div>
+
+<p>그런데 ‘잊는다’는 것은 정신을 잃는다는 뜻이 아닙니다. 장자는 이를 신발에 빗대어 설명합니다.</p>
+
+<div class="src">
+  <div class="sh">[원문 ⑤] <span>『장자』 「달생(達生)」</span></div>
+  <p class="hm">忘足 屨之適也 … 忘適之適也</p>
+  <p class="yin">망족 구지적야 … 망적지적야</p>
+  <p class="ko">발을 잊는 것은 신발이 꼭 맞기 때문이고, 허리를 잊는 것은 허리띠가 꼭 맞기 때문이다. 옳고 그름을 잊는 것은 마음이 꼭 맞기 때문이다. … 처음부터 꼭 맞아서 맞지 않은 적이 없는 것은, <b>맞는다는 것조차 잊은 맞음</b>이다.</p>
+  <div class="easy">발이 아플 때에만 우리는 발을 의식한다. 마음이 세상과 꼭 맞으면 옳다·그르다 따지는 마음도, ‘지금 잘 맞는다’는 생각도 사라진다. 그때가 가장 자유롭다.</div>
+</div>
+
+<div class="ask">
+  <p class="q"><span class="no">6.</span> ‘맞는다는 것조차 잊은 맞음’을 경험한 순간이 있나요? 내 경험에 빗대어 좌망을 설명해 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">자전거를 처음 배울 때는 페달, 핸들, 균형을 하나하나 의식하느라 몸이 굳었다. 익숙해진 지금은 그런 것들을 전혀 의식하지 않고 바람을 느끼며 달린다. 좌망은 이처럼 나를 묶던 의식과 분별이 사라져 세상과 자연스럽게 하나가 되는 상태이다.</div>
+</div>
+
+<h3>5. 쓸모없음의 쓸모 — 평가에서 풀려나기</h3>
+<div class="src">
+  <div class="sh">[원문 ⑥] <span>『장자』 「소요유」 (교과서 80쪽 「나의 쓸모」의 원문)</span></div>
+  <p class="ko">혜자: 내게 큰 나무가 있는데 사람들이 가죽나무라 하오. 줄기는 울퉁불퉁해 먹줄을 칠 수 없고 가지는 비비 꼬여 자를 댈 수 없으니, 길가에 서 있어도 목수가 거들떠보지 않소. 그대의 말도 이처럼 크기만 하고 쓸모가 없소.<br>
+  장자: 그대는 큰 나무가 쓸모없다고 걱정하는구려. 어째서 아무것도 없는 마을, 드넓은 들판에 심어 두고 그 곁을 하는 일 없이 거닐다가 그 아래 누워 <b>노닐지[逍遙]</b> 않소? 도끼에 일찍 찍힐 일도 없고 해칠 자도 없으니, 쓸모가 없다고 해서 어찌 괴로워하겠소!</p>
+  <div class="easy">‘쓸모 있다·없다’는 목수의 기준이다. 그 기준을 내려놓으면 나무는 그대로 그늘이 되고, 사람은 그 아래에서 소요할 수 있다.</div>
+</div>
+<div class="ask">
+  <p class="q"><span class="no">7.</span> 혜자의 걱정과 장자의 대답을 ‘분별’과 ‘소요유’라는 낱말을 넣어 비교해 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">혜자는 목수의 기준으로 쓸모 있음과 없음을 분별하고, 그 분별에 묶여 나무를 걱정한다. 장자는 그 분별을 내려놓고 나무를 있는 그대로 보기 때문에, 오히려 그 아래에서 걸림 없이 노니는 소요유를 누린다.</div>
+</div>
+
+<div class="recall">
+  <div class="rh">장자의 자유 정리</div>
+  <p>장자의 자유는 <span class="bl" data-a="도(道)"></span>와 하나가 되는 <span class="bl" data-a="절대적"></span> 자유이다. 감각과 앎에서 비롯된 분별과 차별을 떠나 <span class="bl" data-a="물(物)"></span>의 구속에서 벗어나고[무물], 나조차 없는[<span class="bl" data-a="무기"></span>] 경지에 머물며 그 머무름마저 잊는[<span class="bl" data-a="좌망"></span>] 것이다. 그렇게 걸림 없이 노니는 경지가 <span class="bl" data-a="소요유"></span>이다.</p>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2 class="part">[3] 칸트 <small>스스로 법을 세우는 자유</small></h2>
+
+<h3>1. 인과 법칙에 묶인 세계 — 욕망을 따르는 것은 자유일까</h3>
+<p>칸트는 자유의 근거를 <b>자연의 기계적 인과 법칙을 넘어서는 인간의 능력</b>에서 찾았습니다. 먼저 ‘자연’이 무엇인지부터 봅시다. 칸트에게 자연은 장자의 ‘스스로 그러함’과 달리, <b>원인과 결과의 법칙이 빈틈없이 지배하는 세계</b>입니다.</p>
+
+<div class="src">
+  <div class="sh">[원문 ⑦] <span>칸트, 『윤리형이상학 정초』 2절</span></div>
+  <p class="ko">자연의 모든 사물은 법칙에 따라 작용한다. 오직 이성적 존재만이 법칙의 표상에 따라, 곧 원리에 따라 행위하는 능력, 다시 말해 의지를 가진다.</p>
+  <div class="easy">돌은 중력 법칙을 ‘모른 채’ 떨어진다. 사람은 ‘이렇게 해야 한다’는 원리를 머릿속에 떠올리고, 그 원리에 따라 행동할 수 있다. 바로 이 능력에 자유의 실마리가 있다.</div>
+</div>
+
+<p>손에서 놓은 물체는 만유인력 법칙에 따라 떨어지고, 몸이 움직이려면 에너지 보존 법칙에 따라 에너지를 공급받아야 합니다. 칸트는 <b>인간의 욕망도 이 법칙에 따라 작동한다</b>고 보았습니다. 욕망은 몸에서 비롯되고, 몸은 자연의 인과 과정의 한 부분이기 때문입니다. 그래서 욕망을 따르는 것은 <b>강풍에 몸이 떠밀리듯 자신을 인과 법칙에 내맡기는 것</b>과 같고, 거기에는 자유가 없습니다.</p>
+
+<div class="warn">
+  <div class="rh">헷갈리기 쉬운 점</div>
+  <p>“하고 싶은 것을 마음대로 하는 것”은 칸트에게 자유가 아닙니다. ‘하고 싶다’는 마음은 배고픔이나 졸음처럼 원인이 있어서 생긴 결과이므로, 그것을 따르는 것은 원인에 끌려가는 것입니다.</p>
+</div>
+
+<div class="readbox">
+  <div class="rh">자율과 타율</div>
+  <p><span class="key">타율(他律)</span>: 의지가 자기 바깥에서 법칙을 받는 것. 욕망, 보상에 대한 기대, 처벌에 대한 두려움, 남의 시선 때문에 행동하는 경우이다.<br>
+  <span class="key">자율(自律)</span>: 의지가 스스로에게 법칙을 주는 것. 이성이 옳다고 판단한 원칙을 스스로 법으로 삼아 따르는 경우이다.</p>
+  <p style="font-family:var(--serif)">“의지의 자율이란, 의지가 그 자신에게 법칙이 되는 의지의 성질이다.” <span style="font-family:var(--sans);font-size:.85em;color:var(--sub)">— 『윤리형이상학 정초』 2절</span></p>
+</div>
+
+<h4>두 세계에 사는 인간 — 감성계와 예지계</h4>
+<p>칸트는 인간이 <b>두 세계에 동시에 속한다</b>고 보았습니다. 몸을 가진 존재로서 인간은 <span class="key">감성계(感性界)</span>, 곧 감각으로 경험하는 자연의 세계에 속합니다. 이곳에서는 모든 것이 인과 법칙을 따르므로, 배고픔이 식욕을 낳고 식욕이 야식 주문을 낳는 것처럼 <b>욕망도 원인과 결과의 사슬</b> 속에 있습니다. 한편 이성을 가진 존재로서 인간은 <span class="key">예지계(叡智界)</span>, 곧 감각이 아니라 이성으로만 생각할 수 있는 세계에도 속합니다. 이곳에서 이성은 인과의 사슬에 끌려가지 않고 <b>스스로 법칙을 세웁니다</b>. 그래서 인간은 감성계 안에서 행동하면서도, 그 행동을 욕망이 아닌 이성의 명령에서 시작할 수 있습니다. 이것이 칸트가 말하는 자유입니다.</p>
+
+<div class="fig">
+<svg class="kd" viewBox="0 0 680 470" role="img" aria-labelledby="kdT kdD"><title id="kdT">칸트의 예지계와 감성계</title><desc id="kdD">위쪽 예지계에서 이성, 정언 명령, 선의지가 이어져 자율적 행위를 낳고, 아래쪽 감성계에서는 배고픔, 욕망, 야식 주문이 인과 법칙으로 이어지는 타율의 사슬을 이룬다. 인간은 두 세계에 동시에 속한다.</desc>
+<defs>
+<marker id="kmA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9z" class="tu"/></marker>
+<marker id="kmB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9z" style="fill:var(--sub)"/></marker>
+</defs>
+<rect class="up" x="20" y="14" width="640" height="158" rx="16"/>
+<text class="tt" x="40" y="42" style="fill:var(--acc)">예지계 (이성의 세계)</text>
+<text class="st" x="40" y="62">스스로 세운 도덕 법칙 · 내 안의 도덕 법칙 · 자유</text>
+<rect class="bx" x="160" y="88" width="140" height="58" rx="8"/>
+<text class="bt" x="230" y="112" text-anchor="middle">이성</text>
+<text class="bs" x="230" y="132" text-anchor="middle">스스로 법칙을 세움</text>
+<rect class="bx" x="330" y="88" width="140" height="58" rx="8"/>
+<text class="bt" x="400" y="112" text-anchor="middle">정언 명령</text>
+<text class="bs" x="400" y="132" text-anchor="middle">무조건적 명령</text>
+<rect class="bx" x="500" y="88" width="140" height="58" rx="8"/>
+<text class="bt" x="570" y="112" text-anchor="middle">선의지</text>
+<text class="bs" x="570" y="132" text-anchor="middle">명령에 복종하려는 의지</text>
+<line class="ln" x1="300" y1="117" x2="326" y2="117" marker-end="url(#kmB)"/>
+<line class="ln" x1="470" y1="117" x2="496" y2="117" marker-end="url(#kmB)"/>
+<rect class="hm" x="40" y="186" width="240" height="58" rx="29"/>
+<text class="bt" x="160" y="210" text-anchor="middle">인간</text>
+<text class="bs" x="160" y="230" text-anchor="middle">두 세계에 동시에 속함</text>
+<text class="bs" x="556" y="222" text-anchor="end" style="fill:var(--acc);font-weight:700">이성의 명령에서 시작된 행위</text>
+<rect class="dn" x="20" y="260" width="640" height="168" rx="16"/>
+<text class="tt" x="40" y="288" style="fill:var(--ask)">감성계 (자연의 세계)</text>
+<text class="st" x="40" y="308">인과 법칙이 지배 · 별이 빛나는 하늘 · 몸과 욕망</text>
+<line class="la" x1="570" y1="146" x2="570" y2="334" marker-end="url(#kmA)"/>
+<rect class="bx" x="40" y="340" width="120" height="58" rx="8"/>
+<text class="bt" x="100" y="364" text-anchor="middle">배고픔</text>
+<text class="bs" x="100" y="384" text-anchor="middle">원인</text>
+<rect class="bx" x="190" y="340" width="120" height="58" rx="8"/>
+<text class="bt" x="250" y="364" text-anchor="middle">먹고 싶다</text>
+<text class="bs" x="250" y="384" text-anchor="middle">욕망 (결과이자 원인)</text>
+<rect class="bx" x="340" y="340" width="120" height="58" rx="8"/>
+<text class="bt" x="400" y="364" text-anchor="middle">야식 주문</text>
+<text class="bs" x="400" y="384" text-anchor="middle">타율적 행위</text>
+<line class="ln" x1="160" y1="369" x2="186" y2="369" marker-end="url(#kmB)"/>
+<line class="ln" x1="310" y1="369" x2="336" y2="369" marker-end="url(#kmB)"/>
+<rect class="bxa" x="500" y="340" width="140" height="58" rx="8"/>
+<text class="bt" x="570" y="364" text-anchor="middle">지갑 돌려줌</text>
+<text class="bs" x="570" y="384" text-anchor="middle">자율적 행위</text>
+<text class="bs" x="340" y="454" text-anchor="middle">실선 사슬: 원인에 끌려가는 행위(타율) · 점선 화살표: 스스로 세운 법칙에서 나온 행위(자율)</text>
+</svg>
+<div class="cap">[그림] 칸트의 두 세계 — 감성계와 예지계</div>
+</div>
+
+<div class="recall">
+  <div class="rh">바로 확인</div>
+  <p>• 감각으로 경험하며 <span class="bl" data-a="인과 법칙"></span>이 지배하는 세계: <span class="bl" data-a="감성계"></span></p>
+  <p>• 이성으로만 생각할 수 있고, 이성이 스스로 법칙을 세우는 세계: <span class="bl" data-a="예지계"></span></p>
+  <p>• 인간은 몸으로는 감성계에, 이성으로는 예지계에 속하므로 <span class="bl" data-a="두 세계"></span>에 동시에 속한다.</p>
+  <p>• ‘지갑 돌려줌’은 감성계에서 일어나지만, 그 행위가 시작된 곳은 <span class="bl" data-a="예지계"></span>이므로 자율적 행위이다.</p>
+</div>
+
+<div class="ask">
+  <p class="q"><span class="no">8.</span> 칸트의 기준으로 판단할 때, 다음 행동은 자율과 타율 가운데 무엇인가요?</p>
+  <ol class="items">
+    <li>배가 고파서 밤 11시에 야식을 시켜 먹었다. <span class="ch" data-o="자율|타율" data-a="타율"></span></li>
+    <li>선생님께 혼날까 봐 숙제를 했다. <span class="ch" data-o="자율|타율" data-a="타율"></span></li>
+    <li>생활기록부에 좋게 쓰이고 싶어서 봉사 활동을 했다. <span class="ch" data-o="자율|타율" data-a="타율"></span></li>
+    <li>아무도 보지 않았지만, 주운 지갑을 주인에게 돌려주는 것이 옳기에 돌려주었다. <span class="ch" data-o="자율|타율" data-a="자율"></span></li>
+    <li>반 친구들이 다 사길래 나도 같은 운동화를 샀다. <span class="ch" data-o="자율|타율" data-a="타율"></span></li>
+    <li>손해를 보게 되었지만, 약속은 지켜야 하기에 약속을 지켰다. <span class="ch" data-o="자율|타율" data-a="자율"></span></li>
+  </ol>
+</div>
+
+<div class="readbox">
+  <div class="rh">더 알아보기 — 두 겹의 자유</div>
+  <p>칸트는 자유를 두 겹으로 설명합니다. <b>소극적 자유</b>는 욕망 같은 바깥 원인에 휘둘리지 않는 것, 곧 ‘~로부터의 자유’입니다. <b>적극적 자유</b>는 거기서 멈추지 않고 스스로 법칙을 세워 따르는 것, 곧 자율입니다. 칸트에게 진짜 자유는 적극적 자유까지 나아갈 때 완성됩니다.</p>
+  <p>칸트는 루소의 다음 생각에서 큰 영향을 받았습니다. “욕구의 충동만을 따르는 것은 노예 상태이며, 스스로 정한 법에 복종하는 것이 자유이다.” <span style="font-size:.85em;color:var(--sub)">— 루소, 『사회계약론』 1권 8장</span></p>
+</div>
+
+<h3>2. 준칙(準則) — 내가 나에게 주는 규칙</h3>
+<p>칸트는 사람이 행동할 때 어떤 <span class="key">준칙</span>을 떠올리고 그 준칙에 따르려 한다는 점에 주목했습니다. 준칙은 <b>행동의 기준이 되는 주관적 규칙</b>입니다. 예를 들어 신호등 앞에서 ‘초록 신호일 때만 횡단보도를 건넌다’는 준칙을 떠올리고, 빨간 신호에서는 걸음을 멈춥니다. 바람이 불면 떠밀릴 수밖에 없는 나뭇잎과 달리, 사람은 준칙을 떠올리고 그에 따라 멈출 수 있습니다. <b>바로 이 능력에 자유의 단서가 있습니다.</b></p>
+<p>준칙에는 ‘거짓말을 하지 않는다’ 같은 도덕적 준칙도 있고, ‘필요하면 훔친다’ 같은 비도덕적 준칙도 있습니다. 칸트는 그 가운데 <b>도덕적 준칙을 따르려는 인간의 의지</b>에 주목했습니다.</p>
+<div class="ask">
+  <p class="q"><span class="no">9.</span> 내가 평소에 따르는 준칙 두 가지를 ‘나는 ~할 때 ~한다’ 꼴로 써 봅시다.</p>
+  <div class="write s"></div>
+  <div class="sample">나는 친구가 발표할 때 휴대 전화를 보지 않는다. 나는 시험 기간에 피곤하면 밤을 새우지 않고 일찍 잔다.</div>
+</div>
+
+<h3>3. 정언 명령과 가언 명령</h3>
+<p>자유는 외부의 속박에서 벗어나 <b>자신의 뜻에 따르는 것</b>입니다. 그런데 ‘오롯이 나의 뜻’이라고 할 수 있는 것은 무엇일까요? 칸트는 그것이 <b>나의 이성이 스스로 결정하여 스스로에게 내리는 무조건적 명령</b>, 곧 <span class="key">정언 명령(定言命令)</span>뿐이라고 답합니다.</p>
+<div class="tw"><table>
+  <tr><th style="width:20%"></th><th>가언 명령 (假言命令)</th><th>정언 명령 (定言命令)</th></tr>
+  <tr><td>형식</td><td>‘X를 원한다면 Y를 하라’</td><td>단적으로 ‘Y를 하라’</td></tr>
+  <tr><td>조건</td><td><span class="bl" data-a="조건적"></span> — 목적을 원할 때만 따름</td><td><span class="bl" data-a="무조건적"></span> — 누구나 언제나 따름</td></tr>
+  <tr><td>행위의 성격</td><td>다른 목적을 이루기 위한 수단</td><td>행위 그 자체가 선(善)</td></tr>
+  <tr><td>명령을 내리는 것</td><td>내가 원하는 목적 (결국 욕망)</td><td>나의 <span class="bl" data-a="이성"></span></td></tr>
+  <tr><td>자유와의 관계</td><td><span class="bl" data-a="타율"></span></td><td><span class="bl" data-a="자율"></span></td></tr>
+</table></div>
+<div class="warn">
+  <div class="rh">왜 가언 명령을 따르는 것은 자유가 아닐까?</div>
+  <p>‘대학에 가고 싶으면 공부하라’를 따를 때, 명령의 힘은 ‘대학에 가고 싶다’는 바람에서 나옵니다. 바람이 사라지면 명령도 힘을 잃습니다. 결국 나를 움직인 것은 이성이 아니라 바람이므로, 열자가 바람에 기대 날았듯 이것도 기대는 자유입니다.</p>
+</div>
+<div class="ask">
+  <p class="q"><span class="no">10.</span> 다음 명령은 정언 명령과 가언 명령 가운데 무엇인가요?</p>
+  <ol class="items">
+    <li>대학에 가고 싶다면 열심히 공부하라. <span class="ch" data-o="정언|가언" data-a="가언"></span></li>
+    <li>거짓말을 하지 마라. <span class="ch" data-o="정언|가언" data-a="정언"></span></li>
+    <li>건강해지려면 매일 운동하라. <span class="ch" data-o="정언|가언" data-a="가언"></span></li>
+    <li>곤경에 처한 사람을 도와라. <span class="ch" data-o="정언|가언" data-a="정언"></span></li>
+    <li>칭찬받고 싶으면 친구를 도와라. <span class="ch" data-o="정언|가언" data-a="가언"></span></li>
+    <li>약속을 지켜라. <span class="ch" data-o="정언|가언" data-a="정언"></span></li>
+  </ol>
+</div>
+
+<h3>4. 정언 명령의 첫 번째 정식 — 보편화할 수 있는가</h3>
+<p>정언 명령은 우리가 따를 준칙이 어떤 것이어야 하는지 알려 줍니다.</p>
+<div class="src">
+  <div class="sh">[원문 ⑧] <span>칸트, 『윤리형이상학 정초』 2절</span></div>
+  <p class="ko">그 준칙이 보편적 법칙이 되기를 네가 동시에 바랄 수 있는, 그런 준칙에 따라서만 행위하라. … 마치 너의 행위의 준칙이 너의 의지를 통해 보편적 자연법칙이 되어야 하는 것처럼, 그렇게 행위하라.</p>
+  <div class="easy">‘나만 예외’가 되는 규칙은 안 된다. 내 준칙을 세상 모든 사람이 언제나 따르는 법칙으로 바꾸어 보아도 괜찮은지 따져 보라.</div>
+</div>
+
+<div class="readbox">
+  <div class="rh">보편화 테스트 — 칸트의 예: 거짓 약속</div>
+  <p><b>① 준칙 세우기</b> 돈이 급하면, 갚을 수 없음을 알면서도 갚겠다고 약속하고 돈을 빌린다.<br>
+  <b>② 모두가 따른다고 상상하기</b> 급한 사람은 누구나 거짓 약속을 한다.<br>
+  <b>③ 그 세계가 가능한지 따지기</b> 아무도 약속을 믿지 않게 되어, ‘약속’이라는 것 자체가 사라진다. 그러면 거짓 약속으로 돈을 빌리는 일도 불가능해진다.<br>
+  <b>④ 결론</b> 보편화하면 스스로 무너지는 준칙이므로, 따라서는 안 된다.</p>
+</div>
+<div class="ask">
+  <p class="q"><span class="no">11.</span> 다음 두 준칙에 보편화 테스트를 적용해 봅시다.</p>
+  <div class="tw"><table>
+    <tr><th style="width:22%">준칙</th><th>모두가 따른다면?</th><th style="width:28%">결론</th></tr>
+    <tr><td>들키지 않을 것 같으면 시험에서 커닝을 한다.</td><td></td><td></td></tr>
+    <tr><td>급할 때는 줄을 새치기한다.</td><td></td><td></td></tr>
+  </table></div>
+  <div class="sample">커닝: 모두가 커닝하면 시험 점수가 실력을 전혀 보여 주지 못해 시험이 의미를 잃고, 커닝으로 얻으려던 좋은 점수의 가치도 사라진다. 따를 수 없는 준칙이다. 새치기: 급한 사람이 모두 새치기하면 줄 자체가 없어져 ‘새치기’도 할 수 없게 된다. 보편화하면 스스로 무너지므로 따를 수 없는 준칙이다.</div>
+</div>
+
+<h3>5. 선의지 — 복종하는데 왜 자유일까</h3>
+<p>이성은 각자의 준칙이 자기에게만 적용되어서는 안 되고, <b>모두에게 적용되는 보편성</b>을 지녀야 한다고 명령합니다. <b>내면의 목소리로 주어지는 이 명령에 복종하고자 하는 의지</b>가 바로 <span class="key">선의지(善意志)</span>입니다. 칸트는 선의지에 따를 때 우리는 <b>욕망을 비롯한 모든 외적 속박에서 벗어난 자유로운 존재</b>가 된다고 보았습니다.</p>
+<div class="src">
+  <div class="sh">[원문 ⑨] <span>칸트, 『윤리형이상학 정초』 1절</span></div>
+  <p class="ko">이 세계 안에서, 아니 이 세계 밖에서조차, 제한 없이 선하다고 여길 수 있는 것은 오직 선의지뿐이다. … 선의지는 그것이 일으키는 결과나 이루어 낸 성과 때문이 아니라, 오직 그 의욕함 때문에 그 자체로 선하다. … 설령 아무것도 이루지 못하더라도, 선의지는 보석처럼 그 자체로 빛날 것이다.</p>
+  <div class="easy">돕다가 실패해도 ‘옳기에 돕고자 한 의지’는 그 자체로 귀하다. 좋은 결과를 얻으려고 착하게 구는 것은 결과라는 바깥 것에 기대는 것이다.</div>
+</div>
+
+<div class="warn">
+  <div class="rh">자유의 역설 풀기</div>
+  <p>“명령에 복종하는 것이 어떻게 자유인가?” 답은 <b>명령을 내린 이가 누구인가</b>에 있습니다. 남이 정한 규칙을 처벌이 무서워 지키면 타율이지만, 내 이성이 옳다고 판단해 스스로 법으로 세운 명령을 따르면 나는 <b>법을 세운 사람이자 그 법을 따르는 사람</b>입니다. 내가 나에게 복종하는 것이니, 그것이 곧 자율이고 자유입니다.</p>
+</div>
+
+<div class="ask">
+  <p class="q"><span class="no">12.</span> 교과서 82쪽의 영화 「유령 신부」에서 헬레나는 자신의 꿈을 이룰 수 있었는데도 꿈을 접습니다. 헬레나의 선택이 칸트에게 ‘자유로운 선택’인 까닭을 준칙, 보편화, 자율이라는 낱말을 넣어 설명해 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">헬레나의 욕망은 결혼하고 싶다는 꿈이었지만, ‘내 꿈을 위해서라면 산 사람을 죽게 해도 된다’는 준칙은 보편화할 수 없다. 모두가 그렇게 한다면 누구의 생명도 지켜지지 않기 때문이다. 헬레나는 욕망에 끌려가지 않고 이성이 내린 명령을 스스로 따랐으므로, 이는 타율이 아닌 자율이며 칸트가 말하는 자유로운 선택이다.</div>
+</div>
+
+<h3>6. 별이 빛나는 하늘과 내 안의 도덕 법칙</h3>
+<div class="src">
+  <div class="sh">[원문 ⑩] <span>칸트, 『실천이성비판』 맺음말</span></div>
+  <p class="ko">생각을 자주, 그리고 오래 거듭할수록 언제나 새롭고 더 커지는 감탄과 경외로 마음을 가득 채우는 두 가지가 있다. 내 위의 별이 빛나는 하늘과 내 안의 도덕 법칙이다.</p>
+  <div class="easy">별이 빛나는 하늘은 인과 법칙이 지배하는 끝없는 자연이다. 그 앞에서 나는 먼지 같은 존재이다. 그러나 내 안의 도덕 법칙은 그 인과의 사슬을 넘어 스스로 법을 세우는 나, 곧 자유로운 나를 보여 준다.</div>
+</div>
+<div class="tw"><table>
+  <tr><th style="width:22%"></th><th>내 위의 별이 빛나는 하늘</th><th>내 안의 도덕 법칙</th></tr>
+  <tr><td>지배하는 법칙</td><td>자연의 <span class="bl" data-a="인과 법칙"></span></td><td>이성이 스스로 세운 <span class="bl" data-a="도덕 법칙"></span></td></tr>
+  <tr><td>그 안의 나</td><td>법칙에 끌려가는 작은 존재</td><td>법칙을 세우는 <span class="bl" data-a="자유로운"></span> 존재</td></tr>
+</table></div>
+<div class="readbox">
+  <div class="rh">더 알아보기 — ‘해야 한다’면 ‘할 수 있다’</div>
+  <p>칸트는 자유와 도덕 법칙이 서로를 가리킨다고 보았습니다. 우리는 욕망을 거슬러서라도 ‘해야 한다’는 도덕 법칙을 의식합니다. 해야 한다는 것을 안다면, 그렇게 할 수 있다는 것, 곧 욕망의 인과에서 벗어날 자유가 있다는 것도 알게 됩니다. 칸트의 말로는 <b>자유는 도덕 법칙이 존재하는 근거</b>이고, <b>도덕 법칙은 우리가 자유를 알게 되는 근거</b>입니다.</p>
+</div>
+
+<div class="recall">
+  <div class="rh">칸트의 자유 정리</div>
+  <p>칸트는 자유의 근거를 자연의 기계적 <span class="bl" data-a="인과 법칙"></span>을 넘어서는 인간의 능력에서 찾았다. 욕망을 따르는 것은 <span class="bl" data-a="타율"></span>이다. 오롯이 나의 뜻이라 할 수 있는 것은 이성이 스스로에게 내리는 무조건적 명령인 <span class="bl" data-a="정언 명령"></span>뿐이며, 그 명령에 복종하고자 하는 의지가 <span class="bl" data-a="선의지"></span>이다. 선의지에 따를 때 우리는 모든 외적 속박에서 벗어나 스스로에게 법칙을 주는 <span class="bl" data-a="자율"></span>적 존재, 곧 자유로운 존재가 된다.</p>
+</div>
+
+<!-- ============ 4 ============ -->
+<h2 class="part">[4] 장자와 칸트, 나란히 놓기</h2>
+
+<h3>1. 한눈에 비교하기</h3>
+<div class="tw"><table>
+  <tr><th style="width:22%">비교 기준</th><th>장자</th><th>칸트</th></tr>
+  <tr><td>나를 묶는 것<br>(질문 1)</td><td>인위에서 생긴 <span class="bl" data-a="분별"></span>과 차별, 물(物)</td><td>자연의 인과 법칙, 몸에서 비롯된 <span class="bl" data-a="욕망"></span></td></tr>
+  <tr><td>자유의 의미</td><td><span class="bl" data-a="자연"></span> — 스스로 그러함</td><td><span class="bl" data-a="자율"></span> — 스스로 법칙을 세워 따름</td></tr>
+  <tr><td>자유에 이르는 길<br>(질문 2)</td><td>잊음 — 무물, 무기, <span class="bl" data-a="좌망"></span></td><td>이성의 명령 — 정언 명령, <span class="bl" data-a="선의지"></span></td></tr>
+  <tr><td>앎과 이성의 자리</td><td>분별하는 앎을 <span class="bl" data-a="버림"></span> (離形去知)</td><td>이성이 스스로 법칙을 <span class="bl" data-a="세움"></span></td></tr>
+  <tr><td>도덕의 자리</td><td>인의예악도 잊어야 할 <span class="bl" data-a="인위"></span></td><td>도덕 법칙을 따르는 것이 곧 <span class="bl" data-a="자유"></span></td></tr>
+  <tr><td>자유의 모습</td><td>걸림 없이 노니는 <span class="bl" data-a="소요유"></span></td><td>스스로 법을 세우고 지키는 이성적 존재</td></tr>
+</table></div>
+<div class="recall">
+  <div class="rh">공통점</div>
+  <p>두 사람 모두 자유를 ‘하고 싶은 것을 마음대로 하는 것’으로 보지 않는다. 욕망, 남의 평가처럼 <span class="bl" data-a="바깥"></span>의 것에 휘둘리지 않는 <span class="bl" data-a="내면"></span>의 자유를 추구한다는 점에서 같다.</p>
+</div>
+
+<h3>2. 같은 고민, 두 가지 처방</h3>
+<div class="readbox">
+  <div class="rh">사례</div>
+  <p>민서는 SNS에 사진을 올린 뒤 ‘좋아요’ 수를 계속 확인한다. 친구 게시물보다 반응이 적으면 하루 종일 기분이 가라앉고, 반응이 좋을 만한 사진을 찍으려고 가고 싶지 않은 곳에도 간다.</p>
+</div>
+<div class="ask">
+  <p class="q"><span class="no">13.</span> 장자와 칸트는 민서에게 각각 어떤 말을 해 줄까요? 오늘 배운 개념을 하나 이상 넣어 써 봅시다.</p>
+  <div class="two" style="margin:8px 0">
+    <div><h4>장자</h4><div class="write"></div></div>
+    <div><h4>칸트</h4><div class="write"></div></div>
+  </div>
+  <div class="sample">장자: “‘좋아요가 많다·적다’는 분별이 너를 묶는 물(物)이다. 바람이 불어야만 나는 열자처럼 너는 남의 반응에 기대고 있구나. 그 분별을 잊으면, 사진은 그저 네가 좋았던 하루의 모습으로 남을 것이다.” 칸트: “남의 반응을 얻으려고 행동을 고르는 것은 바깥에서 법칙을 받는 타율이다. ‘무엇을 할지는 남의 반응이 아니라 내가 옳다고 판단한 원칙으로 정한다’는 준칙을 스스로 세우고 따를 때, 너는 자유롭다.”</div>
+</div>
+
+<h3>3. 비판적으로 따져 보기</h3>
+<div class="ask">
+  <p class="q"><span class="no">14.</span> 장자: 교과서 83쪽 루쉰의 「기사(起死)」를 떠올려 봅시다. 모든 분별을 잊는 장자의 자유는 부당한 억압이나 차별 앞에서도 힘을 가질 수 있을까요?</p>
+  <div class="write"></div>
+  <div class="sample">장자의 자유는 스스로를 괴롭히는 분별과 비교에서 벗어나게 해 준다는 점에서 의미가 있다. 그러나 차별을 ‘잊는’ 데 머문다면, 실제로 차별받는 사람에게는 현실을 그대로 받아들이라는 말이 될 수 있다. 내면의 자유와 함께 부당한 외적 구속을 바꾸려는 노력도 필요하다고 생각한다.</div>
+</div>
+<div class="ask">
+  <p class="q"><span class="no">15.</span> 칸트: 친구가 좋아서, 불쌍한 마음이 들어서 도운 행동은 감정에서 나온 것이니 자유로운 행동이 아닐까요? 칸트의 입장을 쓰고, 나의 생각을 덧붙여 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">칸트에 따르면 감정은 몸에서 비롯되어 인과 법칙을 따르므로, 감정만으로 한 행동은 자율이라 하기 어렵다. 그러나 나는 따뜻한 감정이 옳은 행동을 하게 돕는다면 그 가치도 인정해야 한다고 본다. 다만 감정이 식었을 때도 옳은 일을 하려면 칸트가 말한 이성의 원칙이 필요하다.</div>
+</div>
+
+<h3>4. 나의 자유 정의하기</h3>
+<div class="ask">
+  <p class="q"><span class="no">16.</span> “나에게 자유란 ____________이다.” 문장을 완성하고, 장자와 칸트 가운데 누구의 생각에 더 가까운지 근거와 함께 써 봅시다.</p>
+  <div class="write"></div>
+  <div class="sample">나에게 자유란 ‘다른 사람과 나를 비교하는 마음을 내려놓고 내가 옳다고 정한 길을 걷는 것’이다. 비교를 내려놓는다는 점은 분별을 잊으라는 장자에 가깝지만, 나는 길을 스스로 정해야 한다고 생각하므로 이성이 스스로 법칙을 세우는 칸트의 자율에 더 가깝다.</div>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 class="part">[5] 한눈에 정리하기</h2>
+<div class="two">
+  <div>
+    <h4>장자 — 잊어서 자유롭다</h4>
+    <p>인위 → 분별·차별 → <span class="bl" data-a="물(物)"></span>에 매임</p>
+    <p>↓ 벗어나려면</p>
+    <p>무물 → <span class="bl" data-a="무기"></span>(나조차 없음) → <span class="bl" data-a="좌망"></span>(머무름마저 잊음)</p>
+    <p>↓</p>
+    <p><b>도와 하나 되는 절대적 자유 = <span class="bl" data-a="소요유"></span></b></p>
+  </div>
+  <div>
+    <h4>칸트 — 스스로 법을 세워 자유롭다</h4>
+    <p>욕망 = 인과 법칙 → <span class="bl" data-a="타율"></span></p>
+    <p>↓ 벗어나려면</p>
+    <p>준칙을 <span class="bl" data-a="보편화"></span>할 수 있는지 따짐 → 정언 명령에 복종하려는 <span class="bl" data-a="선의지"></span></p>
+    <p>↓</p>
+    <p><b>스스로에게 법칙을 주는 자유 = <span class="bl" data-a="자율"></span></b></p>
+  </div>
+</div>
+
+<div class="foot">2026-2 세화여자고등학교 · 인문학과 윤리 · 원전 기반 학습 자료 ⑧ · 장자와 칸트가 말하는 자유</div>
+</main>
+
+<script>
+(function(){
+  document.querySelectorAll('.bl').forEach(function(b){
+    b.textContent = b.dataset.a;
+    b.tabIndex = 0;
+    b.setAttribute('role','button');
+    b.setAttribute('aria-label','빈칸, 눌러서 정답 확인');
+    function t(){ b.classList.toggle('on'); }
+    b.addEventListener('click', t);
+    b.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t(); }});
+  });
+  document.querySelectorAll('.ch').forEach(function(c){
+    var ans = c.dataset.a;
+    c.dataset.o.split('|').forEach(function(o){
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = o;
+      if(o===ans) btn.setAttribute('data-right','');
+      btn.addEventListener('click', function(){
+        c.querySelectorAll('button').forEach(function(x){ x.classList.remove('ok','no'); });
+        btn.classList.add(o===ans ? 'ok' : 'no');
+      });
+      c.appendChild(btn);
+    });
+  });
+  var root = document.documentElement, fs = 16.5;
+  var bShow = document.getElementById('bShow');
+  bShow.addEventListener('click', function(){
+    var on = document.body.classList.toggle('show');
+    bShow.setAttribute('aria-pressed', on);
+    bShow.textContent = on ? '정답 숨기기' : '정답 모두 보기';
+  });
+  document.getElementById('bPlus').addEventListener('click', function(){ fs=Math.min(22,fs+1); root.style.setProperty('--fs',fs+'px'); });
+  document.getElementById('bMinus').addEventListener('click', function(){ fs=Math.max(13,fs-1); root.style.setProperty('--fs',fs+'px'); });
+  var bFocus = document.getElementById('bFocus');
+  bFocus.addEventListener('click', function(){
+    var on = document.body.classList.toggle('focus');
+    bFocus.setAttribute('aria-pressed', on);
+  });
+  document.getElementById('bNew').addEventListener('click', function(){ window.open(location.href, '_blank'); });
+  document.getElementById('bPrint').addEventListener('click', function(){ window.print(); });
+})();
+</script>
+</body>
+</html>
