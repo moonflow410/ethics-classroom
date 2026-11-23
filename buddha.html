@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>석가모니와 초기 불교 학습지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<style>
+/* 원전 기반 학습 자료 계열(에피쿠로스·밀·격몽요결·장자·엘리아데)과 같은 바이올렛-슬레이트 규격 */
+:root{
+  --paper:#F7F5FA; --card:#FFFFFF; --ink:#1F1D2B; --ink2:#494657; --dim:#7E7A8C;
+  --rule:#DDD8E7; --thead:#EFEAF7; --theadInk:#4A3374;
+  --acc:#5B3E86; --accFace:#F2EDF9; --ans:#B4262B;
+  --ask:#A2622A; --askFace:#FBF3E4; --askRule:#EDDCC0;
+  --shadow:0 1px 2px rgba(31,29,43,.04),0 8px 24px rgba(31,29,43,.06);
+  --fs:1rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+    --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+    --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+    --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151221; --card:#1E1A2C; --ink:#EDEAF4; --ink2:#BDB7CC; --dim:#8E88A0;
+  --rule:#352E48; --thead:#2A2340; --theadInk:#C7B4EA;
+  --acc:#B79BE6; --accFace:#251E38; --ans:#FF8A87;
+  --ask:#E0A868; --askFace:#2A2213; --askRule:#463618;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:var(--fs); line-height:1.75; -webkit-text-size-adjust:100%; word-break:keep-all; overflow-wrap:break-word;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:50; background:var(--paper)}
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid var(--rule)}
+.bar .in{max-width:980px; margin:0 auto; padding-block:8px; padding-left:max(20px,env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px)); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.bar .sp{flex:1 1 auto; min-width:8px}
+.btn{font:inherit; font-size:.82rem; font-weight:500; letter-spacing:.01em; color:var(--ink2); background:var(--card);
+  border:1px solid var(--rule); border-radius:999px; padding:6px 14px; cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap}
+.btn:hover{border-color:var(--acc); color:var(--acc)}
+.btn.on{background:var(--acc); border-color:var(--acc); color:var(--card)}
+.btn:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.grp{display:inline-flex; border:1px solid var(--rule); border-radius:999px; overflow:hidden; background:var(--card)}
+.grp .btn{border:0; border-radius:0; padding:6px 11px}
+.grp .btn+.btn{border-left:1px solid var(--rule)}
+
+.wrap{max-width:980px; margin:0 auto; padding-block:26px 72px; padding-left:max(20px,env(safe-area-inset-left,0px)); padding-right:max(20px,env(safe-area-inset-right,0px))}
+.masthead{border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:6px;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; justify-content:space-between}
+.masthead .l{font-size:.8rem; letter-spacing:.02em; color:var(--ink2)}
+.masthead .r{font-size:.8rem; color:var(--dim)}
+.titlebox{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;
+  border:1px solid var(--rule); border-left:4px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:14px 18px; margin:14px 0 34px; box-shadow:var(--shadow)}
+.titlebox h1{font-family:"Noto Serif KR",serif; font-size:1.32rem; font-weight:600; margin:0; letter-spacing:-.01em; text-wrap:balance}
+.titlebox .who{font-size:.82rem; color:var(--dim); white-space:nowrap}
+
+h2.part{font-family:"Noto Serif KR",serif; font-size:1.16rem; font-weight:700; color:var(--acc);
+  margin:52px 0 18px; padding-bottom:8px; border-bottom:1.5px solid var(--acc); text-wrap:balance}
+h2.part:first-of-type{margin-top:8px}
+h2.part small{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.78rem; color:var(--ink2); margin-top:4px}
+h3{font-family:"Noto Serif KR",serif; font-size:1.02rem; font-weight:600; margin:30px 0 10px;
+   padding-bottom:5px; border-bottom:1px solid var(--rule); text-wrap:balance}
+h3 .n{color:var(--acc); margin-right:.35em}
+p{margin:.55em 0}
+.lead{color:var(--ink2)}
+small.src{display:block; text-align:right; color:var(--dim); font-size:.76rem; margin-top:6px}
+
+.src-box{border:1px dashed var(--acc); background:var(--card); border-radius:3px; padding:13px 16px; margin:14px 0}
+.src-box .tag{font-size:.74rem; font-weight:700; letter-spacing:.04em; color:var(--acc); display:block; margin-bottom:8px}
+.src-box .hm{margin:0; font-family:"Noto Serif KR",serif; font-weight:600; color:var(--acc); font-size:.98rem; line-height:1.9; letter-spacing:.04em}
+.src-box .yin{margin:2px 0 10px; padding-bottom:9px; border-bottom:1px dotted var(--rule); font-size:.78rem; color:var(--dim); line-height:1.7}
+.tr{margin:0; font-size:.97rem; line-height:1.9}
+.tr + .tr{margin-top:.5em}
+.tr .who{font-weight:700; color:var(--acc); margin-right:.3em}
+.src-box cite{display:block; text-align:right; font-style:normal; font-size:.78rem; color:var(--dim); margin-top:8px}
+.easy{margin:10px 0 0; padding-top:8px; border-top:1px dotted var(--rule); font-size:.88rem; color:var(--ink2)}
+.easy b{color:var(--acc)}
+
+.tw{overflow-x:auto; margin:14px 0; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:.9rem; background:var(--card)}
+th,td{border:1px solid var(--rule); padding:9px 11px; vertical-align:middle; text-align:left}
+thead th{background:var(--thead); color:var(--theadInk); font-weight:700; text-align:center; font-size:.86rem}
+td.c,th.c{text-align:center}
+tbody th{background:var(--thead); color:var(--theadInk); font-weight:600; text-align:center; width:1%; white-space:nowrap}
+tbody th .hz{display:block; font-family:"Noto Serif KR",serif; font-weight:500; font-size:.8rem; opacity:.85}
+tr.hi td,tr.hi th{background:var(--accFace)}
+td.fill{height:52px}
+.tbl-note{font-size:.83rem; color:var(--ink2); margin:6px 0 0; padding-left:1.1em; text-indent:-1.1em}
+
+.flow{display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; margin:16px 0 4px}
+.flow .f{flex:1 1 150px; border:1px solid var(--rule); border-top:3px solid var(--acc); background:var(--card);
+  border-radius:3px; padding:10px 12px; text-align:center; box-shadow:var(--shadow)}
+.flow .f b{display:block; font-family:"Noto Serif KR",serif; color:var(--acc); font-size:1rem}
+.flow .f span{display:block; font-size:.82rem; color:var(--ink2); margin-top:3px}
+.flow .a{flex:0 0 auto; display:grid; place-items:center; color:var(--acc); font-weight:700}
+
+.ask{border:1px solid var(--askRule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:3px; padding:13px 16px; margin:18px 0}
+.ask .tag{font-size:.76rem; font-weight:700; letter-spacing:.03em; color:var(--ask); display:block; margin-bottom:6px}
+.ask ol{margin:0; padding-left:1.25em}
+.ask li{margin:.35em 0}
+.ask li::marker{color:var(--ask); font-weight:700}
+.ask .tw table{background:var(--card)}
+.lines{margin:10px 0 4px}
+.lines i{display:block; border-bottom:1px dotted var(--rule); height:30px}
+.sample{display:block; margin:10px 0 0; padding:11px 13px; border-left:3px solid var(--ans);
+  background:var(--card); border-radius:0 3px 3px 0; font-size:.88rem; color:var(--ink2); line-height:1.8}
+.sample b{color:var(--ans)}
+.video{border:1px solid var(--rule); background:var(--card); border-radius:4px; margin:16px 0; overflow:hidden; box-shadow:var(--shadow)}
+.video .vh{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--rule)}
+.video .vh b{font-size:.86rem; color:var(--acc)}
+.video .vh span{display:block; font-size:.78rem; color:var(--dim); font-weight:400}
+.video .frame{position:relative; aspect-ratio:16/9; max-width:100%; background:#000}
+.video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+.bl{display:inline-block; min-width:4.6em; padding:0 .35em; margin:0 .12em;
+  border-bottom:1.4px solid var(--ink2); text-align:center; cursor:pointer;
+  color:var(--dim); font-size:.82em; letter-spacing:.06em; vertical-align:baseline;
+  border-radius:2px 2px 0 0; transition:background .12s}
+.bl:hover{background:var(--accFace)}
+.bl:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.bl.show{color:var(--ans); font-weight:700; font-size:1em; letter-spacing:0; border-bottom-color:var(--ans)}
+.bl.w6{min-width:6.4em}
+.ch{cursor:pointer; border-radius:2px; padding:0 .15em}
+.ch:hover{background:var(--accFace)}
+.ch:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.ch .o{color:var(--ink)}
+.ch .o+.o::before{content:" / "; color:var(--dim)}
+.ch.show .o{color:var(--dim)}
+.ch.show .o.a{color:var(--ans); font-weight:700; text-decoration:underline; text-underline-offset:3px}
+
+.recall{border:1px solid var(--acc); background:var(--card); border-radius:4px; margin:26px 0; overflow:hidden; box-shadow:var(--shadow)}
+.recall > h4{margin:0; padding:12px 18px; background:var(--acc); color:var(--card);
+  font-family:"Noto Serif KR",serif; font-size:1rem; font-weight:600}
+.recall > h4 span{display:block; font-family:"Noto Sans KR",sans-serif; font-weight:400; font-size:.76rem; opacity:.85; margin-top:2px}
+.recall .body{padding:16px 18px}
+.recall .body > :first-child{margin-top:0}
+.warn{border-left:3px solid var(--ans); background:var(--accFace); padding:11px 14px; margin:14px 0 0; border-radius:0 3px 3px 0; font-size:.92rem}
+.warn b{color:var(--ans)}
+
+.readbox{border:1px solid var(--rule); border-left:4px solid var(--ask); background:var(--askFace);
+  border-radius:4px; padding:20px 24px; margin:14px 0 26px}
+.readbox .tag{display:block; font-size:.76rem; font-weight:700; letter-spacing:.05em; color:var(--ask); margin-bottom:10px}
+.readbox blockquote{margin:0; font-family:"Noto Serif KR",serif; font-size:1.06rem; line-height:2.05; text-indent:.5em}
+.readbox cite{display:block; text-align:right; font-style:normal; font-size:.82rem; color:var(--ink2); margin-top:12px}
+.readbox .note{font-size:.8rem; color:var(--dim); line-height:1.7; margin:12px 0 0; padding-top:10px; border-top:1px dotted var(--askRule)}
+
+.arrow{color:var(--acc); font-weight:700}
+.foot{margin-top:60px; padding-top:14px; border-top:1px solid var(--rule); color:var(--dim); font-size:.78rem}
+.modal{position:fixed; inset:0; z-index:80; display:none; place-items:center; background:rgba(20,16,32,.55); padding:20px}
+.modal.on{display:grid}
+.modal .box{background:var(--card); color:var(--ink); border-radius:8px; padding:20px; max-width:520px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal .url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; word-break:break-all;
+  background:var(--accFace); border:1px solid var(--rule); border-radius:4px; padding:10px; margin:12px 0; user-select:all}
+body.immersive .bar{position:static}
+body.immersive .wrap{max-width:100%; padding-block:12px 40px}
+
+@media (max-width:640px){
+  .titlebox{flex-direction:column; align-items:flex-start; gap:8px}
+  .wrap,.bar .in{padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .flow .a{display:none}
+  .readbox{padding:16px 18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@media print{
+  .bar,.modal,.no-print{display:none!important}
+  body{background:#fff; color:#000; font-size:10.2pt}
+  body::before{display:none}
+  .wrap{max-width:none; padding:0}
+  .bl.show{color:#000; border-bottom-color:#000}
+  .ch.show .o.a{color:#000}
+  .video .frame,.video .vh .btn{display:none}
+  h2.part{break-after:avoid} h3{break-after:avoid}
+  .src-box,.tw,.ask,.recall,.readbox{break-inside:avoid}
+}
+
+/* 개요식 정리 */
+.outline{margin:.6em 0 .4em}
+.outline .oh{margin:.7em 0 .25em;font-weight:700;color:var(--ink,inherit)}
+.outline ul{margin:.1em 0 .3em;padding-left:1.4em;list-style:disc}
+.outline ul ul{list-style:circle;margin:.15em 0 .2em}
+.outline li{margin:.22em 0;line-height:1.75}
+
+/* 스케치 칸 */
+.sketch{height:520px;margin:.5em 0 .4em;border:1.5px dashed var(--line,#bbb);border-radius:10px;background-image:radial-gradient(circle,rgba(120,120,140,.28) 1px,transparent 1.2px);background-size:22px 22px}
+@media print{.sketch{height:150mm;break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="in">
+    <button class="btn" id="all" type="button">정답 모두 보기</button>
+    <div class="grp" role="group" aria-label="글자 크기">
+      <button class="btn" id="fmin" type="button" aria-label="글자 작게">A−</button>
+      <button class="btn" id="fplus" type="button" aria-label="글자 크게">A+</button>
+    </div>
+    <button class="btn no-print" id="imm" type="button">몰입 모드</button>
+    <span class="sp"></span>
+    <a class="btn" id="pop" href="#" target="_blank" rel="noopener" hidden>새 창에서 크게 보기</a>
+    <button class="btn no-print" id="prt" type="button">인쇄</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="l">2026-2 세화여자고등학교 &middot; 인문학과 윤리</div>
+    <div class="r">원전 기반 학습 자료 ⑨ &middot; Ⅵ. 삶의 의미에 대한 물음 (Ⅰ단원 연계)</div>
+  </div>
+
+  <div class="titlebox">
+    <h1>석가모니, 『숫타니파타』·『잡아함경』<br>고통에서 벗어나는 길은 무엇일까?</h1>
+    <div class="who">2학년 (　　)반　이름 ____________</div>
+  </div>
+
+  <!-- ===================== 0 ===================== -->
+  <h2 class="part">0. 수업 열기</h2>
+
+  <div class="readbox">
+    <span class="tag">♦ 좋은 문구 읽기 — 소리 내어 함께 읽어 봅시다</span>
+    <blockquote>큰 소리에도 놀라지 않는 사자와 같이<br>그물에 걸리지 않는 바람과 같이<br>물에 젖지 않는 연꽃과 같이<br>저 광야를 가고 있는 <b>코뿔소의 외뿔처럼</b><br>혼자 가라.</blockquote>
+    <cite>— 『숫타니파타』 · 천재 Ⅰ단원 31쪽</cite>
+    <p class="note">※ ‘혼자 가라’는 외톨이가 되라는 말이 아니다. 남의 시선과 쾌락·고통에 휘둘리지 않고 자기 길을 묵묵히 가라는 말이다. 2,500년 전 인도의 한 수행자는 무엇을 깨달았기에 이렇게 말했을까? 오늘 학습지는 그 깨달음을 따라가는 과정이다.</p>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각 열기 ♣ 끼사 고따미와 겨자씨 · 천재 Ⅰ단원 32쪽</span>
+    <p style="margin:.2em 0 .5em">부처가 살아 있던 시절, 인도에 끼사 고따미라는 여인이 있었다. 어렵게 얻은 어린 아들이 죽자, 그녀는 죽음을 받아들이지 못하고 아이를 안은 채 살려 달라고 애원하며 다녔다. 부처를 찾아간 그녀에게 부처는 말했다. “아들을 살릴 약을 주겠다. 단, 마을에서 <b>한 번도 사람이 죽은 적이 없는 집</b>을 찾아 겨자씨를 얻어 오너라.” 그녀는 발이 헤어지도록 마을을 돌아다녔지만 죽은 사람이 없는 집은 한 집도 없었다. 해가 저물 무렵, 그녀는 문득 깨달았다. ‘지금 살아 있는 사람보다 이미 죽은 사람이 훨씬 많구나.’ 그 순간 그녀는 아들의 육신에 대한 집착을 놓을 수 있었다.</p>
+    <ol>
+      <li>만약 부처가 아들을 살려 주었다면 끼사 고따미의 삶은 행복했을까, 고통스러웠을까? 그렇게 생각한 이유는?</li>
+      <li>내가 요즘 겪고 있는 고통 하나를 떠올리고, 그 고통이 어디에서 비롯되었는지 생각해 보자.</li>
+    </ol>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — ① 아들이 살아난 순간에는 아주 기뻤겠지만, 삶에는 피할 수 없는 이별과 죽음이 있으므로 그녀는 결국 또다시 잃을지 모른다는 불안과 슬픔 속에서 살았을 것이다. ② 작년에 가장 친했던 친구와 반이 갈린 뒤 사이가 멀어져 속상하다. 돌아보면 관계가 언제까지나 변하지 않을 것이라는 집착이 나를 괴롭게 한 것 같다. 관계도 상황에 따라 달라질 수 있음을 받아들이면 덜 괴로울 것이다.</div>
+  </div>
+
+  <!-- ===================== 1 ===================== -->
+  <h2 class="part">[1] 석가모니와 초기 불교 경전 만나기</h2>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>사상가</th><td>석가모니(고타마 싯다르타, B.C. 6~5세기경) — 고대 인도 샤카족의 왕자로 태어났으나, 늙고 병들고 죽는 인간의 <span class="bl" data-a="고통" tabindex="0" role="button">ㄱㅌ</span>을 보고 출가하였다. 극단적인 고행을 버리고 보리수 아래에서 깨달음을 얻어 ‘깨달은 자’, 곧 <span class="bl" data-a="부처" tabindex="0" role="button">ㅂㅊ</span>가 되었다.</td></tr>
+        <tr><th>『숫타니파타』</th><td>‘숫타’는 말의 묶음[經], ‘니파타’는 모음[集]을 뜻하는 ‘말의 <span class="bl" data-a="모음집" tabindex="0" role="button">ㅁㅇㅈ</span>’. 부처가 열반에 든 후 제자들이 그의 말을 외우기 쉽게 <span class="bl" data-a="운문시" tabindex="0" role="button">ㅇㅁㅅ</span>의 형식으로 간추렸다. 가르침이 체계화되기 이전의, 원형에 가까운 부처의 말씀을 담고 있다.</td></tr>
+        <tr><th>『잡아함경』</th><td>석가모니의 가르침을 담고 있는 초기 경전이다. 연기(緣起)의 가르침이 잘 드러나 있다.</td></tr>
+        <tr class="hi"><th>삼보 사찰</th><td>불교에서 귀하게 여기는 세 보물[三寶]을 간직한 사찰. 진신사리를 모신 통도사는 <span class="bl" data-a="불보" tabindex="0" role="button">ㅂㅂ</span> 사찰, 『고려 대장경』을 모신 해인사는 <span class="bl" data-a="법보" tabindex="0" role="button">ㅂㅂ</span> 사찰, 지눌 이후 16명의 국사를 배출한 송광사는 <span class="bl" data-a="승보" tabindex="0" role="button">ㅅㅂ</span> 사찰이다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 Ⅰ단원 25쪽 · Ⅵ단원 196쪽 · 석가모니 생애는 일반적 설명</small>
+
+  <h3><span class="n">1.</span>초기 불교의 열쇠말</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:20%">개념</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><th>연기<span class="hz">緣起</span></th><td>모든 존재는 원인과 조건이 모여 생겨나며 서로 <span class="bl" data-a="의존" tabindex="0" role="button">ㅇㅈ</span>하므로, 홀로 존재할 수 없다.</td></tr>
+        <tr><th>제행무상<span class="hz">諸行無常</span></th><td>‘일체는 <span class="bl w6" data-a="변하고 지나간다" tabindex="0" role="button">ㅂㅎㄱ ㅈㄴㄱㄷ</span>.’ 모든 것은 생멸(生滅)하여 영원한 것이 없다.</td></tr>
+        <tr><th>제법무아<span class="hz">諸法無我</span></th><td>모든 것에는 변하지 않는 고정된 <span class="bl" data-a="실체" tabindex="0" role="button">ㅅㅊ</span>(나)가 없다. <i style="color:var(--dim);font-style:normal">(교과서 밖 심화)</i></td></tr>
+        <tr><th>오온<span class="hz">五蘊</span></th><td>생멸 변화하는 모든 것을 구성하는 <span class="bl" data-a="다섯" tabindex="0" role="button">ㄷㅅ</span> 가지 요소. 인간은 인연에 의해 오온이 일시적으로 결합한 것이다.</td></tr>
+        <tr><th>번뇌<span class="hz">煩惱</span></th><td>마음이나 몸을 괴롭히는 노여움이나 욕망 따위의 망념. 쾌락과 고통에 <span class="bl" data-a="집착" tabindex="0" role="button">ㅈㅊ</span>할 때 생긴다.</td></tr>
+        <tr class="hi"><th>니르바나<span class="hz">涅槃</span></th><td>모든 번뇌의 얽매임에서 벗어나 진리를 깨달은 경지. 불교의 궁극적인 실천 목적으로, <span class="bl" data-a="열반" tabindex="0" role="button">ㅇㅂ</span>이라고도 한다.</td></tr>
+        <tr><th>업·윤회<span class="hz">業·輪廻</span></th><td>의도가 개입된 행위가 업이 되어 결과[과보]를 낳고, 중생은 업에 따라 삶과 죽음의 세계를 끊임없이 돌고 돈다.</td></tr>
+        <tr><th>자비<span class="hz">慈悲</span></th><td>살아 있는 모든 것의 <span class="bl" data-a="행복" tabindex="0" role="button">ㅎㅂ</span>을 바라고, 그 고통을 함께 아파하는 마음.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 Ⅰ단원 27·28·31·36쪽 · Ⅵ단원 196~197쪽</small>
+
+  <p class="lead" style="font-size:.88rem">바로 확인 — 각 사례와 가장 가까운 가르침은? 괄호를 누르면 답이 나온다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:60%">사례</th><th>가까운 가르침</th></tr></thead>
+      <tbody>
+        <tr><td>밥 한 그릇에도 농부, 운송하는 사람, 요리한 사람의 수고가 들어 있다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">연기|제행무상</span></td></tr>
+        <tr><td>지금 가장 힘든 시험 기간도 결국은 지나간다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">연기|제행무상</span></td></tr>
+        <tr><td>“나는 원래 이런 사람이야.”라고 단정하지 않고 변화할 수 있다고 믿는다.</td><td class="c"><span class="ch" data-a="1" tabindex="0" role="button">자비|제법무아</span></td></tr>
+        <tr><td>길고양이와 미물에게도 해를 끼치지 않으려 조심한다.</td><td class="c"><span class="ch" data-a="0" tabindex="0" role="button">자비|오온</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flow">
+    <div class="f"><b>모든 것은 이어져 있다</b><span>연기 · 자타불이</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>모든 것은 변한다</b><span>무상 · 오온 · 업</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>고통에서 벗어나는 길</b><span>사성제 · 팔정도 · 중도</span></div>
+    <div class="a">▶</div>
+    <div class="f"><b>모두의 자비로</b><span>절제 · 자비의 실천</span></div>
+  </div>
+
+  <!-- ===================== 2 ===================== -->
+  <h2 class="part">[2] 모든 것은 서로 이어져 있다 — 연기<small>학습 목표 · 인생의 유한성을 자각한 사람의 삶의 태도에 대해 설명할 수 있다.</small></h2>
+
+  <h3><span class="n">2.</span>나는 어떻게 이 세상에 왔을까?</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ①] 연기의 가르침 · 천재 196쪽</span>
+    <p class="hm">此有故彼有 此起故彼起 此無故彼無 此滅故彼滅</p>
+    <p class="yin">차유고피유 차기고피기 차무고피무 차멸고피멸</p>
+    <p class="tr">이것이 있기 때문에 저것이 있고, 이것이 생기기 때문에 저것이 생긴다. 이것이 없기 때문에 저것이 없고, 이것이 소멸하기 때문에 저것이 소멸한다.</p>
+    <cite>— 『잡아함경』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 무엇이든 <b>원인과 조건</b>이 모여서 생겨나고, 그 조건이 흩어지면 사라진다. 그 무엇도 혼자 힘만으로 존재하지 않는다.</p>
+  </div>
+
+  <p>불교의 연기 사상에 따르면, 사람을 포함한 모든 존재는 상호 의존하므로 <span class="bl" data-a="홀로" tabindex="0" role="button">ㅎㄹ</span> 존재할 수 없다. ‘나’는 출생을 통해 모체와 분리되어 이 세상에 존재하게 되었지만, 애초에 부모님이 계셨기에 존재할 수 있었다. 살아가는 동안 부모님, 형제, 친족, 친구 등 수많은 사람과 관계를 맺는데, 이들은 나를 세상에 계속 존재하게 하는 <span class="bl" data-a="인연" tabindex="0" role="button">ㅇㅇ</span>이다.</p>
+  <p><span class="arrow">→</span> 나는 타(他)와 단절된 존재가 아니며, 나와 너는 둘이 아니다[<span class="bl" data-a="자타불이" tabindex="0" role="button">ㅈㅌㅂㅇ</span>(自他不二)]. 따라서 출생은 삶의 시작으로서 자신뿐만 아니라 <span class="bl" data-a="타인" tabindex="0" role="button">ㅌㅇ</span>에게도 유의미하며 소중하다는 점을 명심해야 한다.</p>
+  <small class="src">천재 196쪽</small>
+
+  <div class="ask">
+    <span class="tag">♣ 활동 ♣ 나를 존재하게 하는 인연 찾기</span>
+    <p style="margin:.2em 0 .5em">오늘 아침부터 지금까지 나를 ‘나’로 존재하게 해 준 인연을 다섯 가지 이상 찾아 적고, 그중 하나가 없었다면 나의 하루가 어떻게 달라졌을지 써 보자.</p>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><th>사람</th><td class="fill"></td></tr>
+          <tr><th>사물·자연</th><td class="fill"></td></tr>
+          <tr><th>그중 하나가 없었다면</th><td class="fill"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sample"><b>예시 답안</b> — 사람: 아침을 차려 주신 어머니, 버스를 운전하신 기사님, 급식을 만들어 주신 조리사님, 모르는 문제를 알려 준 짝. 사물·자연: 쌀을 키운 햇빛과 비, 교과서를 만든 나무. 버스 기사님이 없었다면 나는 학교에 늦어 첫 수업을 놓쳤을 것이다. 내가 ‘혼자 힘으로’ 산다고 생각했던 하루가 사실은 수많은 인연에 기대어 있었다.</div>
+  </div>
+
+  <!-- ===================== 3 ===================== -->
+  <h2 class="part">[3] 모든 것은 변한다 — 무상과 고통</h2>
+
+  <h3><span class="n">3.</span>묵은 허물을 벗어 버리듯</h3>
+  <div class="src-box">
+    <span class="tag">[원문 ②] 뱀의 허물 · 천재 Ⅰ단원 27쪽</span>
+    <p class="tr">뱀의 독이 퍼지는 것을 다스리듯 / 분노가 일어나는 것을 제압하는 사람은 / 이 언덕과 저 언덕을 모두 떠난다. / 뱀이 묵은 허물을 벗어 버리듯.</p>
+    <p class="tr">저 홍수가 부실한 다리를 무너뜨리듯 / 이 모든 교만을 부숴 버린 사람은 / 이 언덕과 저 언덕을 모두 떠난다. / 뱀이 묵은 허물을 벗어 버리듯.</p>
+    <p class="tr">안으로는 미워하는 마음이 없고 / 부귀영화에 흔들리지 않는 사람은 / 이 언덕과 저 언덕을 모두 떠난다. / 뱀이 묵은 허물을 벗어 버리듯.</p>
+    <cite>— 『숫타니파타』</cite>
+    <p class="easy"><b>쉽게 말하면</b> — 뱀은 허물을 벗어야 성장한다. 우리도 나를 옥죄는 작고 낡은 외피에서 벗어나야 더 크고 단단한 자아로 성장할 수 있다.</p>
+  </div>
+  <p>우리의 성장을 가로막는 묵은 허물은 쾌락과 고통을 제대로 성찰하지 않는 태도이다. 쾌락과 고통을 다스리지 못하여 생기는 <span class="bl" data-a="교만" tabindex="0" role="button">ㄱㅁ</span>하고 어리석은 태도와 <span class="bl" data-a="부귀영화" tabindex="0" role="button">ㅂㄱㅇㅎ</span>에 흔들리는 마음이 묵은 허물이 된다.</p>
+
+  <h3><span class="n">4.</span>일체는 변하고 지나간다 — 제행무상</h3>
+  <p>우리는 한정된 시간을 살아가는 유한한 존재이며, 모든 것은 <span class="bl" data-a="생멸" tabindex="0" role="button">ㅅㅁ</span>(生滅)하여 영원한 것이 없다. 행복한 순간도 지나가고, 고통스러운 순간도 언젠가는 지나간다. 그러므로 미련을 갖지 않아야 할 것을 붙들지 말아야 한다. 탐욕으로 살아 있는 것들을 미워하고, 제 마음에 맞지 않는다고 분노하여 사리 분별이 어두워지면, <span class="bl" data-a="집착" tabindex="0" role="button">ㅈㅊ</span>이 나를 사로잡아 자기 독에 자기가 해를 입는다.</p>
+  <small class="src">천재 Ⅰ단원 28쪽</small>
+
+  <div class="src-box">
+    <span class="tag">[원문 ③] 번뇌의 화살 · 천재 Ⅰ단원 28쪽</span>
+    <p class="tr">인간의 목숨은 예측할 수 없고 언제까지 살지도 알 수 없다. 그리고 살아가는 동안에도 괴로움은 언제나 그림자처럼 뒤따른다. …(중략)… 자신의 진정한 행복을 추구하는 사람은 번뇌의 화살을 뽑아 버려야 한다. 비판과 고뇌와 불만에 찬 그 화살을 뽑아야 한다. 그 화살을 뽑아 버린 사람은 그 어떤 것에도 의존하는 일 없이 마음의 평화를 얻게 될 것이다.</p>
+    <cite>— 『숫타니파타』</cite>
+  </div>
+
+  <h3><span class="n">5.</span>나는 무엇으로 이루어져 있을까? — 오온과 죽음</h3>
+  <p>불교에서는 죽음을 인간이 피할 수 없는 고통인 <span class="bl" data-a="생로병사" tabindex="0" role="button">ㅅㄹㅂㅅ</span>(生老病死)의 하나로 본다. 그리고 인간은 인연에 의해 오온이 일시적으로 결합한 것이므로 오온의 <span class="bl" data-a="분리" tabindex="0" role="button">ㅂㄹ</span>가 곧 죽음이라고 가르친다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:20%">오온</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><th>색<span class="hz">色</span></th><td><span class="bl" data-a="신체" tabindex="0" role="button">ㅅㅊ</span>, 물질</td></tr>
+        <tr><th>수<span class="hz">受</span></th><td>느낌, 감각 인상</td></tr>
+        <tr><th>상<span class="hz">想</span></th><td><span class="bl" data-a="지각" tabindex="0" role="button">ㅈㄱ</span> 또는 표상</td></tr>
+        <tr><th>행<span class="hz">行</span></th><td>의지, 마음의 작용</td></tr>
+        <tr><th>식<span class="hz">識</span></th><td>인식, 마음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 197쪽 · 길벗 197쪽</small>
+  <p>불교에서는 고정된 실체가 있지 않다고 보고, 세상을 생겨나고 사라지는 무한한 현상으로 이해하였다. 내가 경험하는 세계가 나의 감각과 인식에 따라 <span class="bl" data-a="재구성" tabindex="0" role="button">ㅈㄱㅅ</span>된 것임을 깨닫는다면, 내 마음을 괴롭게 하는 사건이나 잃어버릴까 봐 전전긍긍하는 지위, 명예, 재산 등도 일시적으로 나타났다가 흩어지는 현상에 불과하다. <span class="arrow">→</span> 고통에서 벗어나 <span class="bl w6" data-a="자유로워지는" tabindex="0" role="button">ㅈㅇㄹㅇㅈㄴ</span> 것이다.</p>
+  <small class="src">길벗 197쪽</small>
+
+  <div class="recall">
+    <h4>교과서 밖 심화 — 세 가지 진리의 도장, 삼법인(三法印)<span>불교의 가르침인지를 판별하는 세 가지 기준</span></h4>
+    <div class="body">
+      <div class="tw">
+        <table>
+          <tbody>
+            <tr><th>제행무상<span class="hz">諸行無常</span></th><td>모든 것은 끊임없이 변한다.</td></tr>
+            <tr><th>제법무아<span class="hz">諸法無我</span></th><td>모든 것에는 고정된 실체로서의 ‘나’가 없다. 오온이 인연에 따라 잠시 모인 것을 ‘나’라고 부를 뿐이다.</td></tr>
+            <tr><th>열반적정<span class="hz">涅槃寂靜</span></th><td>번뇌의 불이 꺼진 열반의 경지는 고요하고 평안하다.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tbl-note">※ 열반적정 대신 ‘모든 것은 괴로움이다[<span class="bl" data-a="일체개고" tabindex="0" role="button">ㅇㅊㄱㄱ</span>(一切皆苦)]’를 넣어 삼법인이라 하기도 하며, 넷을 모두 묶어 사법인이라고도 한다. 변하는 것을 변하지 않기를 바라며 붙잡는 데서 괴로움이 생긴다.</p>
+    </div>
+  </div>
+
+  <h3><span class="n">6.</span>나의 행위가 나를 만든다 — 업과 윤회</h3>
+  <p>불교에서는 인간의 죽음을 모든 것의 끝이 아닌 <span class="bl" data-a="윤회" tabindex="0" role="button">ㅇㅎ</span>의 시작이라고 가르친다. 전생에서 쌓은 업에 의해 현재의 삶이 결정되고, 현재 삶에서 쌓고 있는 업이 다음 생을 결정한다. 즉, 현재 우리의 삶은 다음 생을 만들어 나가는 과정이다. 따라서 우리는 죽음을 통해 다음 생을 생각하게 되고, 동시에 현재의 삶을 어떻게 살아가야 할지도 고민한다.</p>
+  <p>행위가 바로 업이며, 업을 지으면 업보라는 결과를 받는다. 의도가 개입되지 않은 행위[<span class="bl" data-a="무위행" tabindex="0" role="button">ㅁㅇㅎ</span>(無爲行)]는 업이 아니고, 의도가 개입된 행위[유위행(有爲行)]만이 업을 초래한다. 업은 몸으로 한 행위만이 아니라 말로 한 행위, 그저 생각만으로 하는 무형의 행위도 업이 된다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:20%">삼업<span class="hz">三業</span></th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>신업<span class="hz">身業</span></th><td><span class="bl" data-a="몸" tabindex="0" role="button">ㅁ</span>으로 짓는 업 — 살생(생명을 죽이는 것), 투도(도둑질), 사음(간사하고 음탕함)</td></tr>
+        <tr><th>구업<span class="hz">口業</span></th><td>입으로 짓는 업 — 망어(거짓말), 양설(이간질), 악구(악한 말), 기어(꾸며 낸 말)</td></tr>
+        <tr><th>의업<span class="hz">意業</span></th><td><span class="bl" data-a="뜻" tabindex="0" role="button">ㄸ</span>으로 짓는 업 — 탐심(탐욕), 진심(성내는 마음), 치심(어리석은 마음)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-note">※ 의업의 탐심·진심·치심을 줄여 탐·진·치, 삼독(三毒)이라고 한다. 괴로움을 만드는 세 가지 독이라는 뜻이다.</p>
+  <small class="src">천재 197쪽 「인문학과 나」</small>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 업의 가르침 · 천재 197쪽</span>
+    <p style="margin:.2em 0 .5em">신업, 구업, 의업 중에서 가장 중요하게 다루어야 할 것은 무엇이며, 그렇게 생각한 까닭을 설명해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 의업이 가장 중요하다. 몸으로 하는 행동과 입으로 하는 말은 모두 마음에서 먼저 시작되기 때문이다. 친구를 미워하는 마음(진심)을 다스리지 못하면 결국 험담(구업)이나 따돌림(신업)으로 이어진다. 반대로 구업이 가장 중요하다고 볼 수도 있다. 온라인에서 쓴 댓글 한 줄이 다른 사람에게 큰 상처를 남기는 것처럼, 오늘날에는 말로 짓는 업의 영향력이 매우 크기 때문이다.</div>
+  </div>
+
+  <!-- ===================== 4 ===================== -->
+  <h2 class="part">[4] 고통에서 벗어나는 길<small>※ 이 부분의 사성제·팔정도·중도는 교과서 밖 심화 내용이다. 기출에서 자주 묻는 석가모니 사상의 핵심이므로 함께 정리해 둔다.</small></h2>
+
+  <h3><span class="n">7.</span>네 가지 성스러운 진리 — 사성제(四聖諦)</h3>
+  <p class="lead">부처는 깨달음을 얻은 뒤 처음 한 설법에서, 의사가 병을 치료하듯 고통을 다루는 네 가지 진리를 가르쳤다.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:18%">사성제</th><th>내용</th><th style="width:22%">의사에 비유하면</th></tr></thead>
+      <tbody>
+        <tr><th>고성제<span class="hz">苦聖諦</span></th><td>삶은 <span class="bl" data-a="괴로움" tabindex="0" role="button">ㄱㄹㅇ</span>이다. 생로병사의 네 가지 괴로움에, 사랑하는 이와 헤어지는 괴로움, 미워하는 이와 만나는 괴로움, 구하는 것을 얻지 못하는 괴로움, 오온에 집착하는 괴로움을 더해 팔고(八苦)라 한다.</td><td>병의 진단</td></tr>
+        <tr><th>집성제<span class="hz">集聖諦</span></th><td>괴로움에는 원인이 있다. 그 원인은 진리를 알지 못하는 어리석음[무명]과, 끝없이 갈구하는 욕망[갈애]과 <span class="bl" data-a="집착" tabindex="0" role="button">ㅈㅊ</span>이다.</td><td>병의 원인</td></tr>
+        <tr class="hi"><th>멸성제<span class="hz">滅聖諦</span></th><td>괴로움의 원인을 없애면 괴로움이 사라진 경지, 곧 <span class="bl" data-a="열반" tabindex="0" role="button">ㅇㅂ</span>에 이를 수 있다.</td><td>완치된 상태</td></tr>
+        <tr><th>도성제<span class="hz">道聖諦</span></th><td>괴로움을 없애는 방법이 있다. 그것이 여덟 가지 바른 길, 곧 <span class="bl" data-a="팔정도" tabindex="0" role="button">ㅍㅈㄷ</span>이다.</td><td>치료법·처방</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="n">8.</span>여덟 가지 바른 길 — 팔정도(八正道)와 중도(中道)</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:20%">팔정도</th><th>뜻</th><th style="width:30%">나의 실천으로 바꾸면</th></tr></thead>
+      <tbody>
+        <tr><th>정견<span class="hz">正見</span></th><td>사성제와 연기를 바르게 <span class="bl" data-a="보는" tabindex="0" role="button">ㅂㄴ</span> 것</td><td class="fill"></td></tr>
+        <tr><th>정사유<span class="hz">正思惟</span></th><td>탐욕과 성냄, 해치려는 마음 없이 바르게 생각하는 것</td><td class="fill"></td></tr>
+        <tr><th>정어<span class="hz">正語</span></th><td>거짓말, 이간질, 악한 말, 꾸며 낸 말을 하지 않는 것</td><td class="fill"></td></tr>
+        <tr><th>정업<span class="hz">正業</span></th><td>살생, 도둑질 등을 하지 않고 바르게 행동하는 것</td><td class="fill"></td></tr>
+        <tr><th>정명<span class="hz">正命</span></th><td>정당한 방법으로 바르게 생활하는 것</td><td class="fill"></td></tr>
+        <tr><th>정정진<span class="hz">正精進</span></th><td>악은 끊고 선은 키우도록 꾸준히 바르게 노력하는 것</td><td class="fill"></td></tr>
+        <tr><th>정념<span class="hz">正念</span></th><td>지금 여기의 몸과 마음을 바르게 <span class="bl w6" data-a="알아차리는" tabindex="0" role="button">ㅇㅇㅊㄹㄴ</span> 것</td><td class="fill"></td></tr>
+        <tr><th>정정<span class="hz">正定</span></th><td>마음을 한곳에 모아 바르게 집중하는 것</td><td class="fill"></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sample"><b>예시 답안</b> (나의 실천으로 바꾸면) — 정어: 단톡방에서 친구 험담에 동조하지 않기 · 정정진: 하루 30분 영어 공부를 미루지 않고 이어 가기 · 정념: 화가 날 때 바로 반응하지 않고 숨을 세 번 쉬며 내 마음을 살펴보기</div>
+
+  <div class="recall">
+    <h4>중도 — 쾌락도 고행도 아닌 길<span>교과서 밖 심화</span></h4>
+    <div class="body">
+      <p>석가모니는 왕자로서 누린 <span class="bl" data-a="쾌락" tabindex="0" role="button">ㅋㄹ</span>의 삶도, 출가 후 6년 동안 몸을 혹독하게 괴롭힌 <span class="bl" data-a="고행" tabindex="0" role="button">ㄱㅎ</span>의 삶도 깨달음에 이르는 길이 아님을 알았다. 그래서 두 극단을 떠난 바른 길, 곧 중도를 가르쳤다. 팔정도가 바로 중도의 구체적 실천이다.</p>
+      <p>• <b>거문고 줄의 비유</b> — 너무 애쓰다 지친 제자에게 부처는 물었다. “거문고 줄이 너무 팽팽하면 어떠냐?” “끊어집니다.” “너무 느슨하면?” “소리가 나지 않습니다.” 수행도 이와 같아서, 지나치게 조이지도 느슨하게 풀어 두지도 않아야 한다.</p>
+      <p class="warn"><b>1단원 연결</b> — 에피쿠로스는 쾌락을 최고선으로 삼되 몸과 마음의 고통이 없는 평온을 추구하였다. 부처는 쾌락과 고통 모두에 집착하지 말고 그로부터 벗어나라고 가르쳤다.</p>
+    </div>
+  </div>
+
+  <h3><span class="n">9.</span>부처가 들려준 두 가지 비유</h3>
+  <div class="src-box">
+    <span class="tag">[교과서 밖 심화] 독화살의 비유 — 부처의 이야기를 쉽게 풀어 씀</span>
+    <p class="tr">어떤 제자가 부처에게 “세계는 영원합니까, 영원하지 않습니까? 죽은 뒤에도 존재합니까?”라고 묻고, 답해 주지 않으면 떠나겠다고 하였다. 부처가 답하였다. “어떤 사람이 독화살을 맞았다고 하자. 그가 ‘화살을 쏜 사람이 누구인지, 활은 무엇으로 만들었는지 알기 전에는 화살을 뽑지 않겠다.’라고 한다면, 그는 그것을 알기도 전에 죽고 말 것이다. 지금 해야 할 일은 <b>화살을 뽑고 상처를 치료하는 것</b>이다.”</p>
+    <p class="easy"><b>생각할 점</b> — 부처는 답할 수 없는 형이상학적 질문에 매달리기보다, 지금 겪는 괴로움을 없애는 일이 먼저라고 보았다. [원문 ③]의 ‘번뇌의 화살을 뽑아 버려야 한다’와 연결된다.</p>
+  </div>
+  <div class="src-box">
+    <span class="tag">[교과서 밖 심화] 뗏목의 비유 — 부처의 이야기를 쉽게 풀어 씀</span>
+    <p class="tr">어떤 사람이 뗏목을 만들어 거센 강을 건넜다. 강을 건넌 뒤 “이 뗏목 덕분에 살았으니 머리에 이고 가야겠다.”라고 한다면 옳은 일이겠는가? 강을 건넜으면 뗏목은 내려놓고 가야 한다. <b>나의 가르침도 이와 같다.</b> 가르침은 건너가기 위한 것이지 붙잡고 있기 위한 것이 아니다.</p>
+    <p class="easy"><b>생각할 점</b> — 진리를 얻게 해 준 가르침조차 집착의 대상이 되어서는 안 된다. 부처는 열반에 들기 전 제자들에게 “자기 자신을 등불로 삼고, 진리[法]를 등불로 삼으라[자등명 법등명(自燈明 法燈明)].”라고 당부하였다.</p>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 생각해 보기 ♣ 코뿔소의 외뿔처럼 · 천재 Ⅰ단원 31쪽</span>
+    <div class="src-box" style="margin-top:6px">
+      <p class="tr">쾌락과 고통을 버려라. / 기쁨과 근심도 버려라. / 그리고 맑고 편안하고 순수한 마음만으로 / 저 광야를 가고 있는 코뿔소의 외뿔처럼 / 혼자 가라. / 최고의 목적을 달성하기 위해 노력하라. / 조금도 겁내지 말고 부지런히 나아가라.</p>
+      <cite>— 『숫타니파타』</cite>
+    </div>
+    <p style="margin:.2em 0 .5em">이 글이 말하는 삶의 자세를 나의 삶과 관련지어 이해하고, 어떤 마음가짐으로 삶에 임해야 할지 써 보자.</p>
+    <div class="lines"><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 이 글은 코뿔소가 광야를 묵묵히 홀로 나아가듯, 집착과 번뇌를 버리고 자기 길을 가라는 가르침이다. 나는 성적 때문에 친구들과 나를 비교하며 조급해지고, 실패가 두려워 시도조차 하지 못할 때가 있다. 앞으로는 남과 비교하기보다 나만의 목표를 정하고, 실수하더라도 거기에 집착하지 않고 다시 꾸준히 나아가겠다.</div>
+  </div>
+
+  <!-- ===================== 5 ===================== -->
+  <h2 class="part">[5] 나의 깨달음에서 모두의 자비로</h2>
+
+  <div class="src-box">
+    <span class="tag">[원문 ④] 살아 있는 모든 것들이여, 부디 행복하라 · 천재 Ⅰ단원 36쪽</span>
+    <p class="tr">니르바나에 이른 사람이 이 편안한 경지에서 해야 할 일은 다음과 같다. / 공명하고 성실하며 말은 부드럽고 점잖아야 하며 / 잘난 체 뽐내지 않는 것이다. / 만족할 줄 알며, 변변치 않은 음식으로 생활하라. / 잡일을 줄이고 생활을 되도록 간소하게 하라. …(중략)…</p>
+    <p class="tr">어떠한 생명체라도 / 약한 것이건, 강한 것이건, 제아무리 미미하고 보잘것없는 것일지라도 / … / 살아 있는 모든 것들이여, 부디 행복하라. …(중략)… / 어머니가 하나뿐인 자식을 보호하듯 / 살아 있는 이 모든 생명체에게 / 한없는 연민의 마음을 일으켜야 한다.</p>
+    <cite>— 『숫타니파타』</cite>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:22%">니르바나에 이르는 방법</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><th>자기 <span class="bl" data-a="절제" tabindex="0" role="button">ㅈㅈ</span></th><td>뽐내지 않고 생활을 간소하게 하여 모든 감각 기관을 편안하게 한다.</td></tr>
+        <tr class="hi"><th><span class="bl" data-a="자비" tabindex="0" role="button">ㅈㅂ</span>의 실천</th><td>자신의 행복을 바라는 마음으로 살아 있는 모든 것의 행복을 바란다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:18%"></th><th>에피쿠로스 『쾌락』</th><th>부처 『숫타니파타』</th></tr></thead>
+      <tbody>
+        <tr><th>공통점</th><td colspan="2">소박하고 간소한 생활 · 마음의 평정을 추구함</td></tr>
+        <tr><th>차이점</th><td>평정한 상태의 쾌락으로써 행복에 이르려는 <span class="bl w6" data-a="소극적 쾌락주의" tabindex="0" role="button">ㅅㄱㅈ ㅋㄹㅈㅇ</span>를 도덕으로 다룸. 쾌락과 고통에 어떻게 대처해야 하는지 알려 줌.</td><td>자기 절제와 살아 있는 모든 것들의 행복을 바라는 자비의 도덕을 전함. 살아 있는 모든 존재의 <span class="bl" data-a="고통" tabindex="0" role="button">ㄱㅌ</span>과 마주하여 어떤 태도를 가져야 하는지 깨닫게 함.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <small class="src">천재 Ⅰ단원 36~37쪽</small>
+
+  <!-- ===================== 6 ===================== -->
+  <h2 class="part">[6] 깊이 생각하기</h2>
+
+  <div class="ask">
+    <span class="tag">♣ 서술형 ♣ 모든 것이 변한다면, 왜 열심히 살아야 할까?</span>
+    <p style="margin:.2em 0 .5em">친구 A가 말했다. “모든 것은 변하고 결국 다 사라진다면서? 그럼 열심히 살 이유가 없잖아. 대충 살자.” 불교의 관점(연기, 제행무상, 업 중 둘 이상 활용)에서 A의 생각을 평가해 보자.</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — A의 생각은 불교를 잘못 이해한 것이다. <b>제행무상</b>은 모든 것이 사라지니 무의미하다는 뜻이 아니라, 영원하지 않은 것에 집착하지 말고 지금 이 순간을 소중히 하라는 뜻이다. 인간 삶의 마감인 죽음이 있기에 오히려 삶의 모든 순간이 가치를 갖는다. 또 <b>업</b>의 가르침에 따르면 지금 나의 몸과 말과 뜻으로 짓는 행위가 앞으로의 나를 만들어 가므로 대충 사는 것 역시 하나의 업이 된다. 나아가 <b>연기</b>에 따르면 나는 수많은 인연 속에 존재하므로 나의 삶은 나만의 것이 아니다. 삶이 유한하다고 해서 허무주의에 빠질 것이 아니라 주체적으로 가치 있게 살아야 한다.</div>
+  </div>
+
+  <div class="ask">
+    <span class="tag">♣ 비판적으로 따져 보기 ♣ ‘나’가 없다면, 누가 업을 받는가?</span>
+    <p style="margin:.2em 0 .5em">“불교는 고정된 ‘나’가 없다[무아]고 하면서, 내가 지은 업에 따라 다음 생이 결정된다[업·윤회]고 한다. 이것은 모순이다.” 이 비판에 대해 불교의 입장에서 어떻게 답할 수 있을지, 그리고 그 답이 충분한지 나의 생각을 써 보자.</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+    <div class="sample"><b>예시 답안</b> — 불교에서 무아는 아무것도 없다는 뜻이 아니라 변하지 않는 고정된 실체가 없다는 뜻이다. 한 촛불의 불꽃이 다른 초로 옮겨 붙을 때, 두 불꽃은 같은 것도 아니고 전혀 다른 것도 아니다. 업과 윤회도 이처럼 고정된 영혼이 옮겨 가는 것이 아니라, 원인과 결과의 흐름이 끊이지 않고 이어지는 것이라고 답할 수 있다. 이 설명은 연기 사상과 잘 맞지만, 그렇다면 다음 생의 존재가 왜 ‘나’의 업에 대한 책임을 져야 하는지는 여전히 질문으로 남는다고 생각한다.</div>
+  </div>
+
+  <!-- ===================== 7 ===================== -->
+  <h2 class="part">[7] 한눈에 정리하기</h2>
+  <div class="tw">
+    <table>
+      <tbody>
+        <tr><th>석가모니</th><td>생로병사의 고통을 보고 출가 · 고행을 버리고 깨달음 · 『숫타니파타』, 『잡아함경』</td></tr>
+        <tr class="hi"><th>연기</th><td>모든 존재는 상호 의존 → 자타불이 → 출생은 나와 타인 모두에게 소중함</td></tr>
+        <tr><th>제행무상</th><td>일체는 변하고 지나감 → 쾌락과 고통에 집착하지 말 것 · 번뇌의 화살을 뽑을 것</td></tr>
+        <tr><th>오온과 죽음</th><td>색·수·상·행·식이 인연에 의해 일시적으로 결합 → 오온의 분리가 죽음 · 고정된 실체는 없음</td></tr>
+        <tr><th>업과 윤회</th><td>의도가 개입된 행위가 업 · 신업·구업·의업 · 현재의 삶이 다음 생을 만드는 과정</td></tr>
+        <tr class="hi"><th>사성제·팔정도</th><td>고(괴로움) → 집(원인: 무명·갈애·집착) → 멸(열반) → 도(팔정도) · 중도: 쾌락과 고행의 양극단을 떠남</td></tr>
+        <tr><th>자비</th><td>자기 절제 + 살아 있는 모든 것의 행복을 바라는 자비의 실천 → 니르바나</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    ※ ‘천재’는 천재교육 『인문학과 윤리』 Ⅵ-2(196~197쪽)와 Ⅰ-2(25·27·28·31·32·36·37쪽), ‘길벗’은 길벗 『인문학과 윤리』 Ⅵ-2(197쪽)이다. 경전 번역은 교과서를 따랐으며, ‘교과서 밖 심화’ 표시 부분(삼법인, 사성제·팔정도·중도, 독화살·뗏목의 비유)은 초기 불교 경전의 내용을 학습지용으로 정리한 것이다.<br>
+    2026-2 세화여자고등학교 인문학과 윤리 · 원전 기반 학습 자료 ⑨ 석가모니 『숫타니파타』·『잡아함경』
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <p style="margin-top:0"><b>새 창이 열리지 않았습니다.</b><br>아래 주소를 복사해 사파리 주소창에 붙여 넣으면 전체 화면으로 볼 수 있습니다.</p>
+    <div class="url" id="murl"></div>
+    <div style="display:flex; gap:8px; justify-content:flex-end">
+      <button class="btn" id="mcopy" type="button">주소 복사</button>
+      <button class="btn" id="mclose" type="button">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  document.querySelectorAll(".bl").forEach(function(el){
+    el.dataset.hint = el.textContent;
+    function t(){ var on = el.classList.toggle("show"); el.textContent = on ? el.dataset.a : el.dataset.hint; }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+  document.querySelectorAll(".ch").forEach(function(el){
+    var opts = el.textContent.split("|"), idx = parseInt(el.dataset.a, 10);
+    el.innerHTML = opts.map(function(o,i){ return '<span class="o' + (i===idx?" a":"") + '">' + o + '</span>'; }).join("");
+    function t(){ el.classList.toggle("show"); }
+    el.addEventListener("click", t);
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); t(); } });
+  });
+
+  var allOn = false, allBtn = document.getElementById("all");
+  allBtn.addEventListener("click", function(){
+    allOn = !allOn;
+    allBtn.classList.toggle("on", allOn);
+    allBtn.textContent = allOn ? "정답 숨기기" : "정답 모두 보기";
+    document.querySelectorAll(".bl").forEach(function(el){ el.classList.toggle("show", allOn); el.textContent = allOn ? el.dataset.a : el.dataset.hint; });
+    document.querySelectorAll(".ch").forEach(function(el){ el.classList.toggle("show", allOn); });
+  });
+
+  var fs = 1;
+  function setFs(v){
+    fs = Math.min(1.6, Math.max(0.85, v));
+    document.documentElement.style.setProperty("--fs", fs.toFixed(2) + "rem");
+    try{ localStorage.setItem("bd-fs", String(fs)); }catch(e){}
+  }
+  try{ var s = localStorage.getItem("bd-fs"); if(s) setFs(parseFloat(s)); }catch(e){}
+  document.getElementById("fplus").addEventListener("click", function(){ setFs(fs + 0.08); });
+  document.getElementById("fmin").addEventListener("click", function(){ setFs(fs - 0.08); });
+  document.getElementById("prt").addEventListener("click", function(){ window.print(); });
+
+  var immBtn = document.getElementById("imm");
+  immBtn.addEventListener("click", function(){
+    var el = document.documentElement;
+    if(document.fullscreenElement){ document.exitFullscreen(); return; }
+    var p = el.requestFullscreen ? el.requestFullscreen() : null;
+    if(p && p.catch){ p.catch(fallback); } else { setTimeout(function(){ if(!document.fullscreenElement) fallback(); }, 400); }
+    function fallback(){ var on = document.body.classList.toggle("immersive"); immBtn.classList.toggle("on", on); }
+  });
+
+  (function(){
+    [["apple-mobile-web-app-capable","yes"],["apple-mobile-web-app-status-bar-style","default"],["mobile-web-app-capable","yes"],["apple-mobile-web-app-title","석가모니와 초기 불교"]].forEach(function(m){
+      if(document.querySelector('meta[name="'+m[0]+'"]')) return;
+      var e = document.createElement("meta"); e.name = m[0]; e.content = m[1]; document.head.appendChild(e);
+    });
+  })();
+
+  var framed = false; try{ framed = window.self !== window.top; }catch(e){ framed = true; }
+  if(framed){
+    var pop = document.getElementById("pop");
+    pop.hidden = false; pop.href = location.href;
+    pop.addEventListener("click", function(){
+      setTimeout(function(){
+        if(document.hasFocus()){
+          document.getElementById("murl").textContent = location.href;
+          document.getElementById("modal").classList.add("on");
+        }
+      }, 500);
+    });
+    document.getElementById("mclose").addEventListener("click", function(){ document.getElementById("modal").classList.remove("on"); });
+    document.getElementById("mcopy").addEventListener("click", function(){
+      var btn = this, t = location.href;
+      function sel(){ var n = document.getElementById("murl"), r = document.createRange(); r.selectNodeContents(n); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try{ navigator.clipboard.writeText(t).then(function(){ btn.textContent = "복사됨"; }, sel); }catch(e){ sel(); }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
